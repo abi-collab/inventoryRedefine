@@ -3,8 +3,8 @@
         <div class="container">
 <div class="row justify-content-left">
     <div class="col-lg-7 offset-1">
-        <div class="card shadow-lg border-primary rounded-lg mt-5">
-            <div class="card-header"><h3 class="text-center text-primary font-weight-bold my-4">Register New Account</h3></div>
+        <div class="card shadow-lg border-secondary rounded-lg mt-5">
+            <div class="card-header"><h3 class="text-center text-dark font-weight-bold my-4">Register New Account</h3></div>
             <div class="card-body">
 
                 <form @submit.prevent="signup">
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="form-group mt-4 mb-0">
-                        <button type="submit" class="btn btn-primary btn-block"> Sign up </button>
+                        <button type="submit" class="btn btn-dark btn-block"> Sign up </button>
                     </div>
                 </form>
             </div>

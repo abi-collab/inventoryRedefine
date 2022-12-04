@@ -8,18 +8,18 @@
             <li class="breadcrumb-item active">All Category</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row card container ml-3 border-primary shadow mb-3">
-            <div class="card-header text-primary" style="font-size: 20px; font-weight:700;">
+        <div class="row card container ml-3 border-secondary shadow mb-3">
+            <div class="card-header text-dark" style="font-size: 20px; font-weight:700;">
                 <i class="fas fa-chart-area"></i>
                 All Category
-                <router-link to="/store-category" class="btn btn-primary" id="add_new"> Add New</router-link>
+                <router-link to="/store-category" class="btn btn-dark" id="add_new"> Add New</router-link>
             </div>
             <div class="card-body pt-0">
                 <div class="card-body">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
-                        <table class="table table-bordered table-striped table-hover table-warning border-primary" id="" width="100%" cellspacing="0">
+                        <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">
 
                             <thead>
                             <tr class="bg-info text-white">

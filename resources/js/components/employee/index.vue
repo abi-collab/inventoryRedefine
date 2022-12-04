@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="border-dark">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">    <!-----f----->
             <li class="breadcrumb-item">
@@ -8,18 +8,18 @@
             <li class="breadcrumb-item active">All Employee</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row card container ml-3 border-primary shadow mb-3">  <!-----f----->
-            <div class="card-header text-primary" style="font-size: 20px; font-weight:700;">
+        <div class="row card container-fluid shadow mb-3">  <!-----f----->
+            <div class="card-header" style="font-size: 20px; font-weight:700;">
                 <i class="fas fa-chart-area"></i>
                 All Employee
-                <router-link to="/store-employee" class="btn btn-primary" id="add_new"> Add Employee</router-link>  <!-----f----->
+                <router-link to="/store-employee" class="btn btn-dark" id="add_new"> Add Employee</router-link>  <!-----f----->
             </div>
             <div class="card-body pt-0">       <!-----f----->
                 <div class="card-body">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>   <!-----f----->
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by name"><br> <br>    <!-----f----->
-                        <table class="table table-bordered table-striped table-hover table-warning border-primary" id="" width="100%" cellspacing="0">  <!-----f----->
+                        <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">  <!-----f----->
 
                             <thead>
                             <tr class="bg-info text-white"> <!-----f----->

@@ -19,16 +19,16 @@
 
     <!-----------start_Top_Navbar----------->
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" id="topbar" v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true" style="display: none;"> <!-------------------->
-            <router-link class="navbar-brand" to="/home"> Inventory_Vue+Laravel </router-link>
+            <router-link class="navbar-brand" to="/home"> Inventory System </router-link>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button>
                     </div>
-                </div>
+                </div> -->
             </form>
 
             <ul class="navbar-nav ml-auto ml-md-0">
@@ -54,13 +54,14 @@
 
                         <div class="nav">                       <!----------------------------->
                             {{-- <div class="sb-sidenav-menu-heading">Core</div> --}}
-                            <marquee class="text-white">#&nbsp&nbsp Laraval-5.8 &nbsp&nbsp#&nbsp&nbsp Vue  &nbsp&nbsp#&nbsp&nbsp Api &nbsp&nbsp#&nbsp&nbsp JWT &nbsp&nbsp#&nbsp&nbsp Inventory_POS</marquee>
+                            <!-- <marquee class="text-white">#&nbsp&nbsp Laraval-5.8 &nbsp&nbsp#&nbsp&nbsp Vue  &nbsp&nbsp#&nbsp&nbsp Api &nbsp&nbsp#&nbsp&nbsp JWT &nbsp&nbsp#&nbsp&nbsp Inventory_POS</marquee> -->
+                            <marquee class="text-white">Kuya  Allan Computer Center Sales and Inventory System</marquee>
                             <router-link class="nav-link" to="/home">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </router-link>
 
-                            <router-link class="nav-link bg-danger" to="/pos">
+                            <router-link class="nav-link" to="/pos">
                                 <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
                                 <b> POS </b>
                             </router-link>
@@ -68,12 +69,12 @@
                     <!--------------Employee----------->
                             {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Employee
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-employee">Add Employee</router-link>
                                     <router-link class="nav-link" to="/employee">All Employee</router-link>
                                 </nav>
@@ -81,12 +82,12 @@
 
                     <!--------------Supplier----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Suppliers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-supplier">Add Supplier</router-link>
                                     <router-link class="nav-link" to="/supplier">All Supplier</router-link>
                                 </nav>
@@ -94,12 +95,12 @@
 
                     <!--------------Categories----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Categories
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-category">Add Category</router-link>
                                     <router-link class="nav-link" to="/category">All Category</router-link>
                                 </nav>
@@ -107,12 +108,12 @@
 
                     <!--------------Product----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Products
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-product">Add Product</router-link>
                                     <router-link class="nav-link" to="/product">All Product</router-link>
                                 </nav>
@@ -120,12 +121,12 @@
 
                     <!--------------Customer----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#LayoutsC" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Customers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="LayoutsC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-Customer">Add Customer</router-link>
                                     <router-link class="nav-link" to="/Customer">All Customer</router-link>
                                 </nav>
@@ -133,12 +134,12 @@
 
                     <!--------------Expense----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Expense
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/store-expense">Add Expense</router-link>
                                     <router-link class="nav-link" to="/expense">All Expense</router-link>
                                 </nav>
@@ -146,12 +147,12 @@
 
                     <!--------------Salary----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts6" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/given-salary">Pay Salary</router-link>
                                     <router-link class="nav-link" to="/salary">All Salary</router-link>
                                 </nav>
@@ -159,12 +160,12 @@
 
                     <!--------------Orders----------->
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Orders
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav" style="background-color: #3b3a3ac5">
+                                <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/order">Today Order</router-link>
                                     <router-link class="nav-link" to="/searchorder">Search</router-link>
                                 </nav>
@@ -172,7 +173,7 @@
 
                     <!--------------Stock----------->
                             <router-link class="nav-link collapsed" to="/stock">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>
 
@@ -185,7 +186,7 @@
 
 
 <!--------------------Dashboard/Body------------------------>
-        <div id="layoutSidenav" style="background-color: #faffd3">
+        <div id="layoutSidenav" style="background-color: #f4f4f8">
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">

@@ -48,8 +48,8 @@
 <!------Stock_Out_Products------>
 <div class="row my-3">
     <div class="col-xl-12">
-        <div class="card border-primary">
-            <div class="card-header text-primary font-weight-bold">
+        <div class="card border-dark">
+            <div class="card-header text-dark font-weight-bold">
                 <i class="fas fa-chart-area mr-1"></i>
                 Stock Out Products
             </div>

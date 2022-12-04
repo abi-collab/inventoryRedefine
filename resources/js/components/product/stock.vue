@@ -8,8 +8,8 @@
             <li class="breadcrumb-item active">Stock</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row card container ml-3 border-primary shadow mb-3">
-            <div class="card-header text-primary" style="font-size: 20px; font-weight:700;">
+        <div class="row card container-fluid shadow mb-3">
+            <div class="card-header text-dark" style="font-size: 20px; font-weight:700;">
                 <i class="fas fa-chart-area"></i>
                 Stock
             </div>
@@ -30,7 +30,6 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
-
                             <tbody>
                             <tr v-for="product in filtersearch" :key="product.id">
                                 <td>{{ product.product_name}}</td>

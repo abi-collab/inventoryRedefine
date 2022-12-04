@@ -9,9 +9,9 @@
         </ol>
 
         <!-----Order------->
-        <div class="row container">
-            <div class="card col-lg-12 border-primary shadow mb-3">
-                <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+        <div class="row container-fluid">
+            <div class="card col-lg-12 border-secondary shadow mb-3">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Order
                 </div>
@@ -45,9 +45,9 @@
 
 
         <!--------Order Details--------->
-        <div class="row container">
-            <div class="card col-lg-12 border-primary shadow mb-3">
-                <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+        <div class="row container-fluid">
+            <div class="card col-lg-12 border-secondary shadow mb-3">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Order Details
                 </div>
@@ -55,7 +55,7 @@
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
-                        <table class="table table-bordered table-striped table-hover table-warning border-primary" id="" width="100%" cellspacing="0">
+                        <table class="table table-bordered table-striped table-hover table-warning border-dark" id="" width="100%" cellspacing="0">
 
                             <thead>
                                 <tr class="bg-info text-white">

@@ -8,12 +8,12 @@
             <li class="breadcrumb-item active">Orders / Search Order</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row container">
-            <div class="card col-lg-12 border-primary shadow">
-                <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+        <div class="row container-fluid">
+            <div class="card col-lg-12 border-secondary shadow">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Search Orders
-                    <router-link to="/order" class="btn btn-primary" id="add_new"> Today Order</router-link>
+                    <router-link to="/order" class="btn btn-dark" id="add_new"> Today Order</router-link>
                 </div>
 
 <!------------Search By Date---------------->
@@ -69,15 +69,15 @@
 
 
 <!-----------Search_Result------------------>
-    <div class="row container pt-4">
-        <div class="card col-lg-12 border-primary shadow mb-3">
-            <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+    <div class="row container-fluid pt-4">
+        <div class="card col-lg-12 border-secondary shadow mb-3">
+            <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                 <i class="fas fa-chart-area"></i>
                 Searched Order Details
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover table-warning border-primary" id="" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">
 
                         <thead>
                             <tr class="bg-info text-white">

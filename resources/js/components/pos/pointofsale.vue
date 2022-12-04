@@ -10,8 +10,8 @@
 
         <div class="row mb-4">
     <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
-            <div class="card col-lg-5 border-primary shadow">
-                <div class="card-header text-primary">
+            <div class="card col-lg-5 shadow">
+                <div class="card-header">
                     <i class="fas fa-chart-area"></i>
                     <b>Expense Insert</b>
                     <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new"> Add Customer</a>
@@ -169,8 +169,8 @@
 
 
 <!--------------Right_Side_"Product"----------1st_task----------1----->
-            <div class="card col-lg-7 border-primary">
-                <div class="card-header text-primary">
+            <div class="card col-lg-7 border-secondary">
+                <div class="card-header text-dark">
                     <i class="fas fa-chart-area"></i>
                     <b>Products</b>
                 </div>
@@ -194,12 +194,12 @@
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="product in filtersearch" :key="product.id">
                                     <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product.id)">  <!--------3------->
                                         <div class="card" style="width: 9rem; height: 180px;">
-                                            <img :src="product.image" class="card-img-top" style="height: 100px; width: 100px;">
+                                            <img :src="product.image" class="card-img-top mx-auto w-full" style="height: 100px;">
                                             <div class="card-body">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
                                                 <span class="badge badge-success" v-if="product.product_quantity >= 1"> Availble ({{ product.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-primary d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -210,7 +210,7 @@
                                                 <small class="card-title">{{ product.product_name }}</small><br>
                                                 <span class="badge badge-success" v-if="product.product_quantity >= 1"> Availble ({{ product.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-primary d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -229,7 +229,7 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success" v-if="getproduct.product_quantity >= 1"> Availble ({{ getproduct.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-primary d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -240,7 +240,7 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success" v-if="getproduct.product_quantity >= 1"> Availble ({{ getproduct.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-primary d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>

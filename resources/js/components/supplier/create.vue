@@ -9,11 +9,11 @@
         </ol>
         <!-- Icon Cards-->
         <div class="row container">
-            <div class="card col-lg-12 border-primary shadow">
-                <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+            <div class="card col-lg-12 border-secondary shadow">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Supplier Insert
-                    <router-link to="/supplier" class="btn btn-primary" id="add_new"> All Supplier</router-link>    <!----------->
+                    <router-link to="/supplier" class="btn btn-dark" id="add_new"> All Supplier</router-link>    <!----------->
                 </div>
 
                 <div class="card-body">

@@ -9,11 +9,11 @@
         </ol>
         <!-- Icon Cards-->
         <div class="row container">
-            <div class="card col-lg-12 border-primary shadow mb-3">
-                <div class="card-header text-primary" style="font-size: 20px; font-weight: 700;">
+            <div class="card col-lg-12 border-secondary shadow mb-3">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Product Update
-                    <router-link to="/product" class="btn btn-primary" id="add_new"> All Product</router-link>
+                    <router-link to="/product" class="btn btn-dark" id="add_new"> All Product</router-link>
                 </div>
                 <div class="card-body">
                     <form @submit.prevent="productUpdate" enctype="multipart/form-data">

@@ -3,8 +3,8 @@
         <div class="container">
 <div class="row justify-content-left">
     <div class="col-lg-5 offset-2">
-        <div class="card shadow-lg border-primary rounded-lg mt-5">
-            <div class="card-header"><h3 class="text-center text-primary font-weight-bold my-3">Login</h3></div>
+        <div class="card shadow-lg border-secondary rounded-lg mt-5">
+            <div class="card-header"><h3 class="text-center text-dark font-weight-bold my-3">Login</h3></div>
             <div class="card-body">
 
                 <form @submit.prevent="login">      <!--------------------------------------------->
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                         <router-link to="/forget">Forgot Password?</router-link>
-                        <button type="submit" class="btn btn-primary"> Login </button>
+                        <button type="submit" class="btn btn-dark"> Login </button>
                     </div>
                 </form>
 

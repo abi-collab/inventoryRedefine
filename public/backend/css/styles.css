@@ -48,7 +48,7 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -1813,13 +1813,13 @@ pre code {
 .table-warning,
 .table-warning > th,
 .table-warning > td {
-  background-color: #ffeeba;
+  background-color:  #e6e6ea;
 }
 .table-warning th,
 .table-warning td,
 .table-warning thead th,
 .table-warning tbody + tbody {
-  border-color: #ffdf7e;
+  border-color: #e6e6ea;
 }
 
 .table-hover .table-warning:hover {
@@ -6222,7 +6222,7 @@ button.bg-dark:focus {
   border-left: 0 !important;
 }
 
-.border-primary {
+.border-secondary {
   border-color: #007bff !important;
 }
 
@@ -9812,11 +9812,11 @@ button.bg-dark:focus {
   color: #fff !important;
 }
 
-.text-primary {
+.text-dark {
   color: #007bff !important;
 }
 
-a.text-primary:hover, a.text-primary:focus {
+a.text-dark:hover, a.text-dark:focus {
   color: #0056b3 !important;
 }
 
