@@ -56,30 +56,34 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Sub Total:
-                            <strong>{{ subtotal }} Tk</strong>
+                            <strong> &#8369; {{ subtotal }} </strong>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                             Vat:
                             <strong> {{ vats.vat }} % </strong>
-                        </li>
+                        </li> -->
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Total:
-                            <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong>
+                            <!-- <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong> -->
+                            <strong> &#8369; {{ subtotal }} </strong>
                         </li>
                     </ul>
                     <br>                   <!-----Expense_Insert_Table(Bottom_Left)------>
                     <form @submit.prevent="orderdone">          <!--------------2----------------->
-                        <label>Customer Name</label>
-                        <select class="form-control" v-model="customer_id">
+                        <div class="row">
+                            <div class="col-lg-6">
+                             <label>Customer Name</label>
+                        <select class="form-control mb-2" v-model="customer_id">
                             <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
                         </select>
 
                         <label>Pay</label>
-                        <input type="text" class="form-control" required v-model="pay">
-
-                        <label>Due</label>                              <!---------"due" dynamic kora hoyeche------------>
+                        <input type="text" class="form-control mb-2" required v-model="pay">
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Due</label>                              <!---------"due" dynamic kora hoyeche------------>
                         <!-- <input type="text" class="form-control" required v-model="due"> -->
-                        <input type="text" class="form-control" required :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)">
+                        <input type="text" class="form-control mb-2" required :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)">sdcvs
 
                         <label>Pay By</label>
                         <select class="form-control" v-model="payby">
@@ -87,6 +91,12 @@
                             <option value="Cheaque">Cheaque</option>
                             <option value="GiftCard">Gift Card</option>
                         </select>
+                            </div>
+
+                        </div>
+                       
+
+                        
 
                         <br>
                         <button type="submit" class="btn btn-success mb-4">Submit</button>

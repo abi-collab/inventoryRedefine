@@ -122,6 +122,10 @@
 					nid : '',
 					joining_date:''
 				},
+				form2:{
+					activity :'creates ' + 'bentot' + ' as new employee',
+					user_id :2
+				},
 				errors:{}
 			}
 		},
@@ -146,6 +150,15 @@
 				.then(() => {
 					this.$router.push({ name: 'employee' })   //(index.vue)all-employee vue page e jabe
 					Notification.success()
+				})
+				.catch(error => this.errors = error.response.data.errors)
+
+
+				axios.post('/api/activitylog',this.form2)  //resource_route|api.php|post_method+route= go>Controller>Store()
+				.then((r) => {
+					// this.$router.push({ name: 'log' })   //(index.vue)all-employee vue page e jabe
+					// Notification.success()
+					console.log('logssss',r)
 				})
 				.catch(error => this.errors = error.response.data.errors)
 			},

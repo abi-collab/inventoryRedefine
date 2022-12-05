@@ -1,5 +1,5 @@
 <?php
-
+// use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Route;  //--Eita dile ar "route" er niche error er red-wave ta r show kore na.
 
 // use Illuminate\Http\Request;
@@ -67,3 +67,5 @@ Route::get('/today/due','Api\PosController@TodayDue');
 Route::get('/today/expense','Api\PosController@TodayExpense');
 Route::get('/stockout','Api\PosController@Stockout');
 
+
+Route::post('/activitylog','ActivitylogController@savelog');
