@@ -24,9 +24,10 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    // Route::get('me', 'AuthController@me');
 });
 
-
+Route::Get('/me', 'AuthController@me');
 //----------------------For_CRUD-----------------------------------
 Route::apiResource('/employee','Api\EmployeeController');      //--Employee
 Route::apiResource('/supplier','Api\SupplierController');      //--Supplier
@@ -67,5 +68,7 @@ Route::get('/today/due','Api\PosController@TodayDue');
 Route::get('/today/expense','Api\PosController@TodayExpense');
 Route::get('/stockout','Api\PosController@Stockout');
 
-
 Route::post('/activitylog','ActivitylogController@savelog');
+Route::get('/activitylog','ActivitylogController@getlog');
+
+Route::get('/users','UserController@getUsers');

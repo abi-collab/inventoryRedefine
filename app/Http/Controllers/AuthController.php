@@ -110,6 +110,8 @@ class AuthController extends Controller
             'name'         => auth()->user()->name,             //--OR-- Auth::user()->name
             'user_id'      => auth()->user()->id,
             'email'        => auth()->user()->email,            //-- Auth::user()->email
+            'username'     => auth()->user()->username, 
+            'user_role'    => auth()->user()->user_role
         ]);
     }
 }

@@ -90,6 +90,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; 
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -106,9 +107,18 @@
                     photo :'',
                     shopname:''
                 },
+                form2:{
+					activity :'',
+					createdby : Cookies.get('usersname')
+				},
                 errors:{},
             }
         },
+        computed: {
+					nameIs() {
+						return this.form.name;
+					}
+				},
         methods:{
             onFileselected(event){
                 //console.log(event)
@@ -125,12 +135,19 @@
                 }
             },
             supplierInsert(){
+                this.form2.activity = `creates ${this.nameIs} as new supplier`;
                 axios.post('/api/supplier/',this.form)
                     .then(() => {
                         this.$router.push({ name: 'supplier' })
                         Notification.success()
                     })
                     .catch(error => this.errors = error.response.data.errors)
+
+                    axios.post('/api/activitylog',this.form2)  //resource_route|api.php|post_method+route= go>Controller>Store()
+				.then((r) => {
+					console.log('logssss',r)
+				})
+				.catch(error => this.errors = error.response.data.errors)
             },
         }
     }

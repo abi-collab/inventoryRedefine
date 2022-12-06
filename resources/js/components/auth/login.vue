@@ -10,7 +10,7 @@
                 <form @submit.prevent="login">      <!--------------------------------------------->
                     <div class="form-group">
                         <label class="mb-1" for="inputEmailAddress">Email</label>
-                        <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter Email Address" v-model="form.email"/>     <!------------------------------------>
+                        <input class="form-control py-4" id="inputEmailAddress" type="text" placeholder="Enter Email Address" v-model="form.email"/>     <!------------------------------------>
 
                         <small class="text-danger" v-if="errors.email" style="color:red">{{ errors.email[0] }}</small>  <!---------->
                     </div>
@@ -48,7 +48,8 @@
 </template>
 
 
-<script>            //-------------------------------------------
+<script> 
+import Cookies from 'js-cookie';           //-------------------------------------------
     export default {
         created(){                  //--will load created() before others
             if(User.loggedIn()){
@@ -70,6 +71,9 @@
                 axios.post('/api/auth/login',this.form)
                 //.then(response => console.log(response.data))   //--here,(token+other's_info) situated in 'data' property
                 .then(response => {
+                    Cookies.set('userNow', response.data.user_role);
+                    Cookies.set('userId', response.data.user_id);
+                    Cookies.set('usersname', response.data.name);
                     User.responseAfterLogin(response)
                     Toast.fire({
                         icon: 'success',

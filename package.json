@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "js-cookie": "^3.0.1",
         "noty": "^3.2.0-beta",
         "sweetalert2": "^10.0.2",
         "vue-router": "^3.4.3"

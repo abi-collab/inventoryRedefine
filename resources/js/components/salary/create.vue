@@ -77,6 +77,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
     	mounted(){
             if (!User.loggedIn()) {
@@ -91,9 +92,21 @@
         			salary:'',
         			salary_month:'',
         		},
+						form2:{ //2
+              activity :'',
+              createdby : Cookies.get('usersname')
+            },
         		errors:{},
         	}
         },
+				computed: { //3
+					nameIs() {
+						return this.form.name;
+					},
+					monthIs() {
+						return this.form.salary_month;
+					}
+				},
         created(){
         	let id = this.$route.params.id
         	axios.get('/api/employee/'+id)
@@ -102,6 +115,7 @@
         },
         methods:{
         	SalaryPaid(){
+						this.form2.activity = `paid the salary of ${this.nameIs} for the month of ${this.monthIs}`;//4
         		let id = this.$route.params.id
         		axios.post('/api/salary/paid/'+id,this.form)
         		.then(() => {
@@ -109,6 +123,12 @@
         			Notification.success()
         		})
         		.catch(error => this.errors = error.response.data.errors)
+
+						axios.post('/api/activitylog',this.form2)  //5
+              .then((r) => {
+                  console.log('logssss',r)
+              })
+              .catch(error => this.errors = error.response.data.errors)
         	},
         }
     }

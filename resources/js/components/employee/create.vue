@@ -98,18 +98,21 @@
 				</div>
 				<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 			</div>
-		</div>
+		</div>{{nameIs}} - {{form2.activity}}
 	</div>
+	
 </template>
 
 
 <script>
+import Cookies from 'js-cookie'; 
 	export default {
 		mounted(){
             if (!User.loggedIn()) {
                 this.$router.push({ name:'/' })
             }
         },
+			
 		data(){
 			return{
 				form:{
@@ -123,13 +126,17 @@
 					joining_date:''
 				},
 				form2:{
-					activity :'creates ' + 'bentot' + ' as new employee',
-					user_id :2
+					activity :'',
+					createdby : Cookies.get('usersname')
 				},
 				errors:{}
 			}
 		},
-
+		computed: {
+					nameIs() {
+						return this.form.name;
+					}
+				},
 		methods:{
 			onFileselected(event){        //click korlei ai 'event' er vitor pic er sob details chole asbe
 				//console.log(event)
@@ -146,6 +153,7 @@
 				}
 			},
 			employeeInsert(){
+				this.form2.activity = `creates ${this.nameIs} as new employee`;
 				axios.post('/api/employee/',this.form)  //resource_route|api.php|post_method+route= go>Controller>Store()
 				.then(() => {
 					this.$router.push({ name: 'employee' })   //(index.vue)all-employee vue page e jabe

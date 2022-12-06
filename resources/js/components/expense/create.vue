@@ -47,6 +47,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
     	mounted(){
             if (!User.loggedIn()) {
@@ -59,17 +60,34 @@
         			details :'',
         			amount:''
         		},
+            form2:{ //2
+              activity :'',
+              createdby : Cookies.get('usersname')
+            },
         		errors:{},
         	}
         },
+        computed: { //3
+					nameIs() {
+						return this.form.details;
+					}
+				},
         methods:{
         	expenseInsert(){
+            this.form2.activity = `create expense, details: ${this.nameIs}`;//4
         		axios.post('/api/expense/',this.form)
         		.then(() => {
         			this.$router.push({ name: 'expense' })
         			Notification.success()
         		})
         		.catch(error => this.errors = error.response.data.errors)
+
+
+            axios.post('/api/activitylog',this.form2)  //5
+              .then((r) => {
+                  console.log('logssss',r)
+              })
+              .catch(error => this.errors = error.response.data.errors)
         	},
         }
     }

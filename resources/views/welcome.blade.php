@@ -60,15 +60,28 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </router-link>
-
+                          
                             <router-link class="nav-link" to="/pos">
                                 <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
                                 <b> POS </b>
                             </router-link>
+                         
+                              <!--------------Orders----------->
+                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                                Orders
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <router-link class="nav-link" to="/order">Today Order</router-link>
+                                    <router-link class="nav-link" to="/searchorder">Search</router-link>
+                                </nav>
+                            </div>
 
                     <!--------------Employee----------->
                             {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Employee
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -79,9 +92,8 @@
                                     <router-link class="nav-link" to="/employee">All Employee</router-link>
                                 </nav>
                             </div>
-
                     <!--------------Supplier----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Suppliers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -94,7 +106,7 @@
                             </div>
 
                     <!--------------Categories----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Categories
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -107,7 +119,7 @@
                             </div>
 
                     <!--------------Product----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Products
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -133,7 +145,7 @@
                             </div>
 
                     <!--------------Expense----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Expense
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -146,7 +158,7 @@
                             </div>
 
                     <!--------------Salary----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -158,21 +170,8 @@
                                 </nav>
                             </div>
 
-                    <!--------------Orders----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts">
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
-                                Orders
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link class="nav-link" to="/order">Today Order</router-link>
-                                    <router-link class="nav-link" to="/searchorder">Search</router-link>
-                                </nav>
-                            </div>
-
                     <!--------------Stock----------->
-                            <router-link class="nav-link collapsed" to="/stock">
+                            <router-link class="nav-link collapsed" to="/stock" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>
@@ -212,6 +211,8 @@
                 $("#topbar").css("display","");
                 $("#leftbar").css("display","");
             }
+
+         
         </script>
 
         {{-- <script src="{{ asset('backend/assets/demo/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script> --}}

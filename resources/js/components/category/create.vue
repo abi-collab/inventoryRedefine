@@ -39,6 +39,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -50,17 +51,33 @@
                 form:{
                     category_name :''
                 },
+                form2:{ //2
+					activity :'',
+					createdby : Cookies.get('usersname')
+				},
                 errors:{},
             }
         },
+        computed: { //3
+					nameIs() {
+						return this.form.category_name;
+					}
+				},
         methods:{
             categoryInsert(){
+                this.form2.activity = `creates ${this.nameIs} as category`;//4
                 axios.post('/api/category/',this.form)
                     .then(() => {
                         this.$router.push({ name: 'category' })
                         Notification.success()
                     })
                     .catch(error => this.errors = error.response.data.errors)
+
+                axios.post('/api/activitylog',this.form2)  //5
+				.then((r) => {
+					console.log('logssss',r)
+				})
+				.catch(error => this.errors = error.response.data.errors)
             },
         }
     }

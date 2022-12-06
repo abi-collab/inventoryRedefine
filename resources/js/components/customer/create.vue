@@ -77,6 +77,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
     	mounted(){
             if (!User.loggedIn()) {
@@ -92,9 +93,18 @@
         			photo :'',
         			phone:'',
         		},
+						form2:{ //2
+							activity :'',
+							createdby : Cookies.get('usersname')
+						},
         		errors:{},
         	}
         },
+				computed: { //3
+					nameIs() {
+						return this.form.name;
+					}
+				},
         methods:{
         	onFileselected(event){
         		let file=event.target.files[0];
@@ -110,12 +120,19 @@
         		}
         	},
         	customerInsert(){
+						this.form2.activity = `create ${this.nameIs} as customer`;//4
         		axios.post('/api/Customer/',this.form)
         		.then(() => {
         			this.$router.push({ name: 'Customer' })
         			Notification.success()
         		})
         		.catch(error => this.errors = error.response.data.errors)
+
+						axios.post('/api/activitylog',this.form2)  //5
+                    .then((r) => {
+                        console.log('logssss',r)
+                    })
+                    .catch(error => this.errors = error.response.data.errors)
         	},
         }
     }

@@ -17,7 +17,7 @@ class CreateActivitylogsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('activity');
-            $table->integer('user_id');
+            $table->string('createdby');
         });
     }
 

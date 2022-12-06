@@ -12,28 +12,27 @@
         <div class="card-header text-dark" style="font-size: 20px; font-weight:700;">
           <i class="fas fa-chart-area"></i>
           Activity Logs
-
         </div>
         <div class="card-body">
           <div class="card-body">
             <div class="table-responsive">
               <label class="d-inline">Search : </label>
-             <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
+             <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
               <table class="table table-bordered table-striped table-hover table-warning border-secondarys" id="" width="100%" cellspacing="0">
                 <thead>
                   <tr class="bg-info text-white">
                     <th>Activity</th>
                     <th>Date</th>
-                    <th>User</th>
+                    <th>Created&nbsp;By</th>
                    
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr v-for="customer in filtersearch" :key="customer.id">
-                    <td>{{ customer.name }}</td>
-                    <td><img :src="customer.photo" id="em_photo"></td>
-                    <td>{{ customer.phone }}</td>
+                  <tr v-for="log in filtersearch2" :key="log.id">
+                    <td>{{ log.activity }}</td>
+                    <td>{{log.created_at}}</td>
+                    <td>{{log.createdby}}</td>
                     
                   </tr>
                 </tbody>
@@ -45,9 +44,8 @@
      </div>
  </div>
 </template>
-
-
 <script>
+import Cookies from 'js-cookie';
   export default {
     mounted(){
           if (!User.loggedIn()) {
@@ -55,57 +53,41 @@
           }
       },
       created(){
-          this.allCustomer();
+          axios.get('/api/activitylog')
+          .then(({data}) => (this.logs = data))
+          .catch()
+
+          axios.get('/api/users')
+          .then(({data}) => (this.users = data, console.log('users', data)))
+          .catch()
+
+          
       },
       data(){
         return{
           customers:[],
+          logs:[],
+          users:[],
           searchTerm:'',
+          searchTerm2:'',
+          userNow: Cookies.get('userNow')
+        
         }
       },
      computed:{
-       filtersearch(){
-        return this.customers.filter(customer => {
+       filtersearch2(){
+        return this.logs.filter(log => {
           //return customer.name.match(this.searchTerm)
-          return customer.name.toLowerCase().match(this.searchTerm.toLowerCase())
+          return log.activity.toLowerCase().match(this.searchTerm2.toLowerCase())
          })
        }
      },
-      methods:{
-        allCustomer(){
-          axios.get('/api/Customer/')
-          .then(({data}) => (this.customers = data))
-          .catch()
-        },
-        deleteCustomer(id){
-          Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            axios.delete('/api/Customer/'+id)
-            .then(()=>{
-               this.customers = this.customers.filter(customer =>{
-                  return customer.id !=id
-               })
-            })
-            .catch(()=>{
-               this.$router.push({name: 'Customer'})
-            })
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-          }
-         })
-        }
-      },
+      methods: {
+        // getuser(id) {
+        //   let a = this.users.filter(user => user.id = id);
+        //   return a;
+        // }
+      }
   }
 </script>
 

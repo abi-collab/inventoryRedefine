@@ -127,6 +127,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -147,11 +148,20 @@
                     image:'',
                     product_quantity:''
                 },
+                form2:{ //2
+					activity :'',
+					createdby : Cookies.get('usersname')
+				},
                 errors:{},
                 categories:{},      //--to take catagory from 'Category' controller
                 suppliers:{},       //--to take supplier from 'Supplier' controller
             }
         },
+        computed: { //3
+					nameIs() {
+						return this.form.product_name;
+					}
+				},
         methods:{
             onFileselected(event){
                 let file=event.target.files[0];
@@ -167,12 +177,20 @@
                 }
             },
             productInsert(){
+                this.form2.activity = `creates ${this.nameIs} as new product`;//4
                 axios.post('/api/product/',this.form)
                     .then(() => {
                         this.$router.push({ name: 'product' })
                         Notification.success()
                     })
                     .catch(error => this.errors = error.response.data.errors)
+                
+                    axios.post('/api/activitylog',this.form2)  //5
+                    .then((r) => {
+                        console.log('logssss',r)
+                    })
+                    .catch(error => this.errors = error.response.data.errors)
+
             },
         },
         created(){            //fatching data from Controller & keeping it in data() property

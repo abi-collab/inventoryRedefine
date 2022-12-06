@@ -1967,6 +1967,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2017,7 +2019,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//-------------------------------------------
+ //-------------------------------------------
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     //--will load created() before others
@@ -2043,6 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/api/auth/login', this.form) //.then(response => console.log(response.data))   //--here,(token+other's_info) situated in 'data' property
       .then(function (response) {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userNow', response.data.user_role);
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userId', response.data.user_id);
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('usersname', response.data.name);
         User.responseAfterLogin(response);
         Toast.fire({
           icon: 'success',
@@ -2223,6 +2229,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2263,6 +2271,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -2276,12 +2286,25 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         category_name: ''
       },
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {}
     };
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      return this.form.category_name;
+    }
   },
   methods: {
     categoryInsert: function categoryInsert() {
       var _this = this;
+
+      this.form2.activity = "creates ".concat(this.nameIs, " as category"); //4
 
       axios.post('/api/category/', this.form).then(function () {
         _this.$router.push({
@@ -2289,6 +2312,12 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this.errors = error.response.data.errors;
       });
@@ -2528,6 +2557,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2606,6 +2637,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -2623,8 +2656,19 @@ __webpack_require__.r(__webpack_exports__);
         photo: '',
         phone: ''
       },
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {}
     };
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      return this.form.name;
+    }
   },
   methods: {
     onFileselected: function onFileselected(event) {
@@ -2648,12 +2692,20 @@ __webpack_require__.r(__webpack_exports__);
     customerInsert: function customerInsert() {
       var _this2 = this;
 
+      this.form2.activity = "create ".concat(this.nameIs, " as customer"); //4
+
       axios.post('/api/Customer/', this.form).then(function () {
         _this2.$router.push({
           name: 'Customer'
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this2.errors = error.response.data.errors;
       });
@@ -2958,6 +3010,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3063,6 +3117,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -3084,11 +3140,16 @@ __webpack_require__.r(__webpack_exports__);
         joining_date: ''
       },
       form2: {
-        activity: 'creates ' + 'bentot' + ' as new employee',
-        user_id: 2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
       },
       errors: {}
     };
+  },
+  computed: {
+    nameIs: function nameIs() {
+      return this.form.name;
+    }
   },
   methods: {
     onFileselected: function onFileselected(event) {
@@ -3116,6 +3177,7 @@ __webpack_require__.r(__webpack_exports__);
     employeeInsert: function employeeInsert() {
       var _this2 = this;
 
+      this.form2.activity = "creates ".concat(this.nameIs, " as new employee");
       axios.post('/api/employee/', this.form) //resource_route|api.php|post_method+route= go>Controller>Store()
       .then(function () {
         _this2.$router.push({
@@ -3481,6 +3543,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3529,6 +3593,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -3543,12 +3609,25 @@ __webpack_require__.r(__webpack_exports__);
         details: '',
         amount: ''
       },
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {}
     };
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      return this.form.details;
+    }
   },
   methods: {
     expenseInsert: function expenseInsert() {
       var _this = this;
+
+      this.form2.activity = "create expense, details: ".concat(this.nameIs); //4
 
       axios.post('/api/expense/', this.form).then(function () {
         _this.$router.push({
@@ -3556,6 +3635,12 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this.errors = error.response.data.errors;
       });
@@ -3906,9 +3991,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: '/'
       });
-    }
+    } // window.location.reload();
+
   },
   mounted: function mounted() {
+    if (localStorage.getItem('reloaded')) {
+      // The page was just reloaded. Clear the value from local storage
+      // so that it will reload the next time this page is visited.
+      localStorage.removeItem('reloaded');
+    } else {
+      // Set a flag so that we know not to reload the page twice.
+      localStorage.setItem('reloaded', '1');
+      window.location.reload();
+    }
+
     this.TodaySell();
     this.TodayIncome();
     this.TodayDue();
@@ -3979,6 +4075,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4025,9 +4123,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -4037,59 +4133,41 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.allCustomer();
+    var _this = this;
+
+    axios.get('/api/activitylog').then(function (_ref) {
+      var data = _ref.data;
+      return _this.logs = data;
+    })["catch"]();
+    axios.get('/api/users').then(function (_ref2) {
+      var data = _ref2.data;
+      return _this.users = data, console.log('users', data);
+    })["catch"]();
   },
   data: function data() {
     return {
       customers: [],
-      searchTerm: ''
+      logs: [],
+      users: [],
+      searchTerm: '',
+      searchTerm2: '',
+      userNow: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('userNow')
     };
   },
   computed: {
-    filtersearch: function filtersearch() {
-      var _this = this;
+    filtersearch2: function filtersearch2() {
+      var _this2 = this;
 
-      return this.customers.filter(function (customer) {
+      return this.logs.filter(function (log) {
         //return customer.name.match(this.searchTerm)
-        return customer.name.toLowerCase().match(_this.searchTerm.toLowerCase());
+        return log.activity.toLowerCase().match(_this2.searchTerm2.toLowerCase());
       });
     }
   },
-  methods: {
-    allCustomer: function allCustomer() {
-      var _this2 = this;
-
-      axios.get('/api/Customer/').then(function (_ref) {
-        var data = _ref.data;
-        return _this2.customers = data;
-      })["catch"]();
-    },
-    deleteCustomer: function deleteCustomer(id) {
-      var _this3 = this;
-
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function (result) {
-        if (result.value) {
-          axios["delete"]('/api/Customer/' + id).then(function () {
-            _this3.customers = _this3.customers.filter(function (customer) {
-              return customer.id != id;
-            });
-          })["catch"](function () {
-            _this3.$router.push({
-              name: 'Customer'
-            });
-          });
-          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-        }
-      });
-    }
+  methods: {// getuser(id) {
+    //   let a = this.users.filter(user => user.id = id);
+    //   return a;
+    // }
   }
 });
 
@@ -5099,6 +5177,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5227,6 +5307,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -5249,12 +5331,23 @@ __webpack_require__.r(__webpack_exports__);
         image: '',
         product_quantity: ''
       },
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {},
       categories: {},
       //--to take catagory from 'Category' controller
       suppliers: {} //--to take supplier from 'Supplier' controller
 
     };
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      return this.form.product_name;
+    }
   },
   methods: {
     onFileselected: function onFileselected(event) {
@@ -5277,12 +5370,20 @@ __webpack_require__.r(__webpack_exports__);
     productInsert: function productInsert() {
       var _this2 = this;
 
+      this.form2.activity = "creates ".concat(this.nameIs, " as new product"); //4
+
       axios.post('/api/product/', this.form).then(function () {
         _this2.$router.push({
           name: 'product'
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this2.errors = error.response.data.errors;
       });
@@ -5314,6 +5415,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5350,6 +5453,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -5363,7 +5468,13 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         product_quantity: ''
       },
-      errors: {}
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
+      errors: {},
+      allProducts: []
     };
   },
   created: function created() {
@@ -5374,10 +5485,28 @@ __webpack_require__.r(__webpack_exports__);
       var data = _ref.data;
       return _this.form = data;
     })["catch"]();
+    axios.get('/api/product').then(function (_ref2) {
+      var data = _ref2.data;
+      return console.log(data), _this.allProducts = data;
+    })["catch"]();
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      var _pro$;
+
+      var id = this.$route.params.id;
+      var pro = this.allProducts.filter(function (item) {
+        return item.id == id;
+      });
+      return (_pro$ = pro[0]) === null || _pro$ === void 0 ? void 0 : _pro$.product_name;
+    }
   },
   methods: {
     stockUpdate: function stockUpdate() {
       var _this2 = this;
+
+      this.form2.activity = "update product quantity of ".concat(this.nameIs); //4
 
       var id = this.$route.params.id;
       axios.post('/api/stock/update/' + id, this.form).then(function () {
@@ -5386,6 +5515,12 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this2.errors = error.response.data.errors;
       });
@@ -5973,6 +6108,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -6051,6 +6188,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ //1
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -6067,8 +6206,22 @@ __webpack_require__.r(__webpack_exports__);
         salary: '',
         salary_month: ''
       },
+      form2: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {}
     };
+  },
+  computed: {
+    //3
+    nameIs: function nameIs() {
+      return this.form.name;
+    },
+    monthIs: function monthIs() {
+      return this.form.salary_month;
+    }
   },
   created: function created() {
     var _this = this;
@@ -6083,6 +6236,8 @@ __webpack_require__.r(__webpack_exports__);
     SalaryPaid: function SalaryPaid() {
       var _this2 = this;
 
+      this.form2.activity = "paid the salary of ".concat(this.nameIs, " for the month of ").concat(this.monthIs); //4
+
       var id = this.$route.params.id;
       axios.post('/api/salary/paid/' + id, this.form).then(function () {
         _this2.$router.push({
@@ -6090,6 +6245,12 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //5
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this2.errors = error.response.data.errors;
       });
@@ -6449,6 +6610,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -6540,6 +6703,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -6558,8 +6722,17 @@ __webpack_require__.r(__webpack_exports__);
         photo: '',
         shopname: ''
       },
+      form2: {
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
+      },
       errors: {}
     };
+  },
+  computed: {
+    nameIs: function nameIs() {
+      return this.form.name;
+    }
   },
   methods: {
     onFileselected: function onFileselected(event) {
@@ -6584,12 +6757,19 @@ __webpack_require__.r(__webpack_exports__);
     supplierInsert: function supplierInsert() {
       var _this2 = this;
 
+      this.form2.activity = "creates ".concat(this.nameIs, " as new supplier");
       axios.post('/api/supplier/', this.form).then(function () {
         _this2.$router.push({
           name: 'supplier'
         });
 
         Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+      axios.post('/api/activitylog', this.form2) //resource_route|api.php|post_method+route= go>Controller>Store()
+      .then(function (r) {
+        console.log('logssss', r);
       })["catch"](function (error) {
         return _this2.errors = error.response.data.errors;
       });
@@ -22859,6 +23039,159 @@ if ( typeof noGlobal === "undefined" ) {
 
 return jQuery;
 } );
+
+
+/***/ }),
+
+/***/ "./node_modules/js-cookie/dist/js.cookie.js":
+/*!**************************************************!*\
+  !*** ./node_modules/js-cookie/dist/js.cookie.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*! js-cookie v3.0.1 | MIT */
+;
+(function (global, factory) {
+   true ? module.exports = factory() :
+  undefined;
+}(this, (function () { 'use strict';
+
+  /* eslint-disable no-var */
+  function assign (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        target[key] = source[key];
+      }
+    }
+    return target
+  }
+  /* eslint-enable no-var */
+
+  /* eslint-disable no-var */
+  var defaultConverter = {
+    read: function (value) {
+      if (value[0] === '"') {
+        value = value.slice(1, -1);
+      }
+      return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent)
+    },
+    write: function (value) {
+      return encodeURIComponent(value).replace(
+        /%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,
+        decodeURIComponent
+      )
+    }
+  };
+  /* eslint-enable no-var */
+
+  /* eslint-disable no-var */
+
+  function init (converter, defaultAttributes) {
+    function set (key, value, attributes) {
+      if (typeof document === 'undefined') {
+        return
+      }
+
+      attributes = assign({}, defaultAttributes, attributes);
+
+      if (typeof attributes.expires === 'number') {
+        attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+      }
+      if (attributes.expires) {
+        attributes.expires = attributes.expires.toUTCString();
+      }
+
+      key = encodeURIComponent(key)
+        .replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent)
+        .replace(/[()]/g, escape);
+
+      var stringifiedAttributes = '';
+      for (var attributeName in attributes) {
+        if (!attributes[attributeName]) {
+          continue
+        }
+
+        stringifiedAttributes += '; ' + attributeName;
+
+        if (attributes[attributeName] === true) {
+          continue
+        }
+
+        // Considers RFC 6265 section 5.2:
+        // ...
+        // 3.  If the remaining unparsed-attributes contains a %x3B (";")
+        //     character:
+        // Consume the characters of the unparsed-attributes up to,
+        // not including, the first %x3B (";") character.
+        // ...
+        stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
+      }
+
+      return (document.cookie =
+        key + '=' + converter.write(value, key) + stringifiedAttributes)
+    }
+
+    function get (key) {
+      if (typeof document === 'undefined' || (arguments.length && !key)) {
+        return
+      }
+
+      // To prevent the for loop in the first place assign an empty array
+      // in case there are no cookies at all.
+      var cookies = document.cookie ? document.cookie.split('; ') : [];
+      var jar = {};
+      for (var i = 0; i < cookies.length; i++) {
+        var parts = cookies[i].split('=');
+        var value = parts.slice(1).join('=');
+
+        try {
+          var foundKey = decodeURIComponent(parts[0]);
+          jar[foundKey] = converter.read(value, foundKey);
+
+          if (key === foundKey) {
+            break
+          }
+        } catch (e) {}
+      }
+
+      return key ? jar[key] : jar
+    }
+
+    return Object.create(
+      {
+        set: set,
+        get: get,
+        remove: function (key, attributes) {
+          set(
+            key,
+            '',
+            assign({}, attributes, {
+              expires: -1
+            })
+          );
+        },
+        withAttributes: function (attributes) {
+          return init(this.converter, assign({}, this.attributes, attributes))
+        },
+        withConverter: function (converter) {
+          return init(assign({}, this.converter, converter), this.attributes)
+        }
+      },
+      {
+        attributes: { value: Object.freeze(defaultAttributes) },
+        converter: { value: Object.freeze(converter) }
+      }
+    )
+  }
+
+  var api = init(defaultConverter, { path: '/' });
+  /* eslint-enable no-var */
+
+  return api;
+
+})));
 
 
 /***/ }),
@@ -51163,7 +51496,7 @@ var render = function() {
                         staticClass: "form-control py-4",
                         attrs: {
                           id: "inputEmailAddress",
-                          type: "email",
+                          type: "text",
                           placeholder: "Enter Email Address"
                         },
                         domProps: { value: _vm.form.email },
@@ -53192,7 +53525,8 @@ var render = function() {
           _vm._v("Updated yesterday at 11:59 PM")
         ])
       ])
-    ])
+    ]),
+    _vm._v(_vm._s(_vm.nameIs) + " - " + _vm._s(_vm.form2.activity) + "\n\t")
   ])
 }
 var staticRenderFns = [
@@ -54616,20 +54950,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.searchTerm,
-                  expression: "searchTerm"
+                  value: _vm.searchTerm2,
+                  expression: "searchTerm2"
                 }
               ],
               staticClass: "form-control d-inline",
               staticStyle: { width: "200px" },
               attrs: { type: "text", placeholder: "Search by name" },
-              domProps: { value: _vm.searchTerm },
+              domProps: { value: _vm.searchTerm2 },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.searchTerm = $event.target.value
+                  _vm.searchTerm2 = $event.target.value
                 }
               }
             }),
@@ -54648,17 +54982,13 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.filtersearch, function(customer) {
-                    return _c("tr", { key: customer.id }, [
-                      _c("td", [_vm._v(_vm._s(customer.name))]),
+                  _vm._l(_vm.filtersearch2, function(log) {
+                    return _c("tr", { key: log.id }, [
+                      _c("td", [_vm._v(_vm._s(log.activity))]),
                       _vm._v(" "),
-                      _c("td", [
-                        _c("img", {
-                          attrs: { src: customer.photo, id: "em_photo" }
-                        })
-                      ]),
+                      _c("td", [_vm._v(_vm._s(log.created_at))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(customer.phone))])
+                      _c("td", [_vm._v(_vm._s(log.createdby))])
                     ])
                   }),
                   0
@@ -54702,7 +55032,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fas fa-chart-area" }),
-        _vm._v("\n         Activity Logs\n\n       ")
+        _vm._v("\n         Activity Logs\n       ")
       ]
     )
   },
@@ -54716,7 +55046,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("User")])
+        _c("th", [_vm._v("Created By")])
       ])
     ])
   }
