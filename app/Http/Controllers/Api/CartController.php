@@ -37,6 +37,7 @@ class CartController extends Controller
 
     public function CartProduct()
     {
+        // ->join('products','products.id', '=', 'pos.pro_id')
         $cart=DB::table('pos')->get();
         return response()->json($cart);
     }

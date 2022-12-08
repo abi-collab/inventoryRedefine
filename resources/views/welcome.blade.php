@@ -66,8 +66,9 @@
                                 <b> POS </b>
                             </router-link>
                          
-                              <!--------------Orders----------->
-                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                              <!--------------Orders----------->  
+                              
+                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Orders
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -81,7 +82,7 @@
 
                     <!--------------Employee----------->
                             {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Employee
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -93,7 +94,7 @@
                                 </nav>
                             </div>
                     <!--------------Supplier----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Suppliers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -106,7 +107,7 @@
                             </div>
 
                     <!--------------Categories----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Categories
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -119,7 +120,7 @@
                             </div>
 
                     <!--------------Product----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Products
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -145,7 +146,7 @@
                             </div>
 
                     <!--------------Expense----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Expense
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -158,7 +159,7 @@
                             </div>
 
                     <!--------------Salary----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -171,7 +172,7 @@
                             </div>
 
                     <!--------------Stock----------->
-                            <router-link class="nav-link collapsed" to="/stock" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link collapsed" to="/stock">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>

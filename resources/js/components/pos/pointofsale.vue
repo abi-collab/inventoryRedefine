@@ -10,38 +10,41 @@
 
         <div class="row mb-4">
     <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
-            <div class="card col-lg-5 shadow">
-                <div class="card-header">
-                    <i class="fas fa-chart-area"></i>
-                    <b>Expense Insert</b>
-                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new"> Add Customer</a>
+            <div class="card col-lg-6 shadow">
+                <div class="card-header flex">
+                    <!-- <i class="fas fa-chart-area"></i> -->
+                    <b>Invoice #:  {{getRandomId}}</b>
+                    <!-- <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new"> Add Customer</a> -->
                 </div>
 
                 <div class="card-body">
                     <table class="table table-sm table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col" style="text-align:left;">Name</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Unit</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Sub-Total</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
                         <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
-                            <th>{{ card.pro_name }}</th>
-                            <td><input type="text" readonly="" style="width: 20px;" :value="card.pro_quantity">
-
-                                <button @click.prevent="increment(card.id)" class="btn btn-sm btn-success">+</button>
-
-                                <button @click.prevent="decrement(card.id)" class="btn btn-sm btn-danger" v-if="card.pro_quantity >= 2">-</button>      <!----------------->
-                                <button class="btn btn-sm btn-danger" v-else="" disabled="">-</button>  <!-------------->
-
+                            <th style="text-align:left;">{{ card.pro_name }}</th>
+                            <td style="display: flex;align-items: center;justify-content: space-between;">
+                                <button @click.prevent="decrement(card.id)" class="btn btn-sm btn-danger" v-if="card.pro_quantity >= 2">-</button>      
+                                <button class="btn btn-sm btn-danger" v-else="" disabled>-</button>  <!-------------->
+                                <input type="text" readonly="" style="width: 30px; text-align: center;" :value="card.pro_quantity">
+                                <button @click.prevent="increment(card)" class="btn btn-sm btn-success" :disabled="(card.pro_quantity > card.product_quantity)">+</button>
                             </td>
-                            <td>{{ card.product_price }}</td>
-                            <td>{{ card.sub_total }}</td>
-                            <td><a @click="removeItem(card.id)" class="btn btn-sm btn-danger text-white">x</a></td>
+                            <td>
+                                <div style="display:flex; justify-content: space-between">&#8369;<p>{{ (Number(card.product_price).toLocaleString() || 0) }}</p></div></td>
+                            <td>
+                                <div style="display:flex; justify-content: space-between">
+                                    &#8369;&nbsp;<p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
+                                </div>
+                            </td>
+                            <td><a @click="removeItem(card.id)" class="btn btn-sm btn-outline-danger text-danger">x</a></td>
                         </tr>
 
                         </tbody>
@@ -54,18 +57,19 @@
                             Total Quantity:
                             <strong>{{ qty }}</strong>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                             Sub Total:
-                            <strong> &#8369; {{ subtotal }} </strong>
-                        </li>
+                            <strong> &#8369; {{ subtotal.toFixed(2) }} </strong>
+                        </li> -->
                         <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                             Vat:
                             <strong> {{ vats.vat }} % </strong>
                         </li> -->
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Total:
+                            Total Due:
                             <!-- <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong> -->
-                            <strong> &#8369; {{ subtotal }} </strong>
+                            <strong> &#8369; {{ (Number(subtotal).toLocaleString() || 0) }} </strong>
+                            
                         </li>
                     </ul>
                     <br>                   <!-----Expense_Insert_Table(Bottom_Left)------>
@@ -76,30 +80,34 @@
                         <select class="form-control mb-2" v-model="customer_id">
                             <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
                         </select>
-
-                        <label>Pay</label>
-                        <input type="text" class="form-control mb-2" required v-model="pay">
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Due</label>                              <!---------"due" dynamic kora hoyeche------------>
-                        <!-- <input type="text" class="form-control" required v-model="due"> -->
-                        <input type="text" class="form-control mb-2" required :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)">sdcvs
-
                         <label>Pay By</label>
                         <select class="form-control" v-model="payby">
                             <option value="HandCash">Hand Cash</option>
                             <option value="Cheaque">Cheaque</option>
                             <option value="GiftCard">Gift Card</option>
                         </select>
+                        
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- <label>Due</label>                              -->
+                        <!-- <input type="text" class="form-control" required v-model="due"> -->
+                        <!-- <input type="text" class="form-control mb-2" required :value="subtotal.toFixed(2)"> -->
+                        <!-- :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)" -->
+                        <label>Cash Recieved</label>
+                        <input type="text" class="form-control mb-2" required v-model="pay">
+                        
+                        <div v-if="(pay > subtotal)">
+                            <label>Change</label>
+                            <input type="text" class="form-control mb-2" required :value="(pay - subtotal)" disabled>
+                        </div>
+                        
+                        
                             </div>
 
                         </div>
                        
-
-                        
-
                         <br>
-                        <button type="submit" class="btn btn-success mb-4">Submit</button>
+                        <button type="submit" class="btn btn-success mb-4" >Submit</button>
                     </form>
                 </div>
             </div>
@@ -174,12 +182,8 @@
     <!------------end customer modal------------------------->
 
 
-
-
-
-
 <!--------------Right_Side_"Product"----------1st_task----------1----->
-            <div class="card col-lg-7 border-secondary">
+            <div class="card col-lg-6 border-secondary">
                 <div class="card-header text-dark">
                     <i class="fas fa-chart-area"></i>
                     <b>Products</b>
@@ -201,33 +205,43 @@
                             <!-----Search----->
                             <input type="text" v-model="searchTerm" class="form-control" placeholder="Search here..."><br>
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="product in filtersearch" :key="product.id">
-                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product.id)">  <!--------3------->
-                                        <div class="card" style="width: 9rem; height: 180px;">
+                                <!-- class="col-lg-3 col-md-4 col-sm-6 col-6" -->
+                                <div v-for="product in filtersearch" :key="product.id">
+                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)">  <!--------3------->
+                                        <div class="card" style="width: 9rem; height: 220px;">
                                             <img :src="product.image" class="card-img-top mx-auto w-full" style="height: 100px;">
                                             <div class="card-body">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
-                                                <span class="badge badge-success" v-if="product.product_quantity >= 1"> Availble ({{ product.product_quantity }}) </span>
-                                                <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp; {{ (Number(product.selling_price).toLocaleString() || 0)}}</span>
+                                                <div style="display: flex;flex-direction: column;">
+                                                    <span class="badge badge-success" v-if="product.product_quantity >= 1"> Available ({{ product.product_quantity }}) </span>
+                                                    <span class="badge badge-danger" v-else>Stock Out</span>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </button>
-                                    <button v-else disabled class="btn btn-sm" @click.prevent="AddToCart(product.id)">  <!--------3------->
-                                        <div class="card" style="width: 9rem; height: 180px;">
+                                    <button v-else disabled class="btn btn-sm" @click.prevent="AddToCart(product)">  <!--------3------->
+                                        <div class="card" style="width: 9rem; height: 220px;">
                                             <img :src="product.image" class="card-img-top" style="height: 100px; width: 100px;">
                                             <div class="card-body">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
-                                                <span class="badge badge-success" v-if="product.product_quantity >= 1"> Availble ({{ product.product_quantity }}) </span>
-                                                <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{product.selling_price}}</span>
+                                               
+                                                <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp;{{ (Number(product.selling_price).toLocaleString() || 0)}}</span>
+                                                    <div style="display: flex;flex-direction: column;">
+                                                        <span class="badge badge-success" style="margin-top: auto;" v-if="product.product_quantity >= 1"> Available ({{ product.product_quantity }}) </span>
+                                                        <span class="badge badge-danger" style="margin-top: auto;" v-else>Stock Out</span>
+                                                    </div>
+                                                   
+                                              
+                                                
                                             </div>
                                         </div>
                                     </button>
                                 </div>
                             </div>
                         </div>
-
+                        <!----------------------------------------------------- search ------------------------------------------------------>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                             <input type="text" v-model="getsearchTerm" class="form-control" placeholder="Search here..."><br>
                             <div class="row">
@@ -239,7 +253,7 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success" v-if="getproduct.product_quantity >= 1"> Availble ({{ getproduct.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small"> &#8369;&nbsp;{{getproduct.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -250,7 +264,7 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success" v-if="getproduct.product_quantity >= 1"> Availble ({{ getproduct.product_quantity }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span class="text-dark d-block m-0 p-0 small"> BDT: {{getproduct.selling_price}}</span>
+                                                <span class="text-dark d-block m-0 p-0 small">&#8369;&nbsp;{{getproduct.selling_price}}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -262,6 +276,24 @@
             </div>
         </div>
         <!-- Icon Cards-->
+        <hr>
+        <div id="printMe">
+            <div class="row" style="margin-top:200px">
+                <div class="col" style="display:flex; justify-content: space-between">
+                    <div style="border:solid red">
+                        <h4>KUYA ALLAN COMPUTER CENTER</h4>
+                        <p>PARADAHAN II, Tanza , 4100 Cavite</p>
+                        <p>09158974437 / 09338219106</p>
+                    </div>
+                    <p style="border:solid red">logo</p>
+                </div>
+            </div>
+            <div class="row">
+                <h5>Bill To</h5>
+                <br>
+                <p> {{selectedCustomer}} </p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -274,6 +306,7 @@
             }
         },
         created(){
+            this.invoiceNumber();
             this.allProduct();    //---------1--
             this.allCategory();   //---------1--
             this.allCustomer();     //--------2---
@@ -309,10 +342,27 @@
                 customers:'',           //-------2---
                 errors:'',         //---------1---
                 cards:[],                   //--------3--//Controller থেকে ডাটা তুলে এনে এই cards Array মধ্যে রাখবে।
-                vats:''
+                vats:'',
+                invoiceNum:0,
+                passVal:0,
+                returnx:0
             }
         },
         computed:{
+            selectedCustomer() {
+                let a = [];
+                let pangalan = [];
+            
+               if(this.customer_id) {
+                    a.push(this.customers?.filter((v) => v.id == this.customer_id))
+                    pangalan.push(a[0][0])
+               } else {
+                a = null;
+               }
+
+               console.log(pangalan[0])
+                return pangalan[0];
+            },
             filtersearch(){                          //----------------1-------
                 return this.products.filter(product => {
                     //return product.product_name.match(this.searchTerm)
@@ -339,15 +389,45 @@
                 }
                 return sum;
             },
+         
+            getRandomId (){
+                const dateNow = new Date();
+                let day = dateNow.getDay();
+                let month = dateNow.getMonth();
+                let year = dateNow.getFullYear();
+                let hour = dateNow.getHours();
+                let minutes = dateNow.getMinutes();
+                let seconds = dateNow.getSeconds();
+                let milli = dateNow.getMilliseconds();
+                let all = day + '' + month + '' + year + '' + hour + '' + minutes + '' + seconds + '' + milli;
+                return all;
+                }
         },
         methods:{
+            returnQty(val) {
+                this.passVal = val;
+                return val;
+            },
             //--start cart methods--                //------------------3----
-            AddToCart(id){
-                axios.get('/api/addTocart/'+id)
+            AddToCart(card){
+                this.returnx = this.cards.filter((x) => x.pro_id == card.id); 
+             
+                // console.log(this.returnx[0]?.pro_quantity)
+                if(card.product_quantity <= this.returnx[0]?.pro_quantity){
+                Swal.fire({
+                    title: 'Oops!',
+                    text: "quantity is greater than the available",
+                    type: 'warning',
+                    
+                })
+               } else {
+                axios.get('/api/addTocart/'+card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.cart_success()
                     })
+               }  
+              
             },
             cartProduct(){                          //selected product show in card
                 axios.get('/api/cart/product')
@@ -361,12 +441,23 @@
                         Notification.success()
                     })
             },
-            increment(id){      //id = Pos's id        //------------------4----
-                axios.get('/api/increment/'+id)
+            increment(card){      //id = Pos's id        //------------------4----
+               this.returnx = this.products.filter((x) => x.id == card.pro_id); 
+               if(card.pro_quantity >= this.returnx[0].product_quantity){
+                Swal.fire({
+                    title: 'Oops!',
+                    text: "quantity is greater than the available",
+                    type: 'warning',
+                    
+                })
+               } else {
+                axios.get('/api/increment/'+card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.success()
                     })
+               }
+                
             },
             decrement(id){      //id = Pos's id
                 axios.get('/api/decrement/'+id)
@@ -438,6 +529,18 @@
                         //     return customer.id !=id
                         // })
                     })
+            },
+
+            invoiceNumber() {
+                let getRandomId = (min = 0, max = 500000) => {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                const num =  Math.floor(Math.random() * (max - min + 1)) + min;
+                return num.toString().padStart(6, "0")
+                };
+
+                this.invoiceNum = getRandomId;
+
             }
         }
     }
@@ -451,5 +554,16 @@
     #em_photo{
         height: 100px;
         width: 90px;
+    }
+
+    th,td {
+        text-align: center;
+    }
+    .nav-link {
+        color: black;
+    }
+
+    .nav-item:active {
+        background-color: #eee;
     }
 </style>
