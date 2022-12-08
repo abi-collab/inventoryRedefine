@@ -21,7 +21,7 @@
                     <table class="table table-sm table-striped">
                         <thead>
                         <tr>
-                            <th scope="col" style="text-align:left;">Name</th>
+                            <th scope="col" style="text-align:left;">Item</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Unit</th>
                             <th scope="col">Sub-Total</th>
@@ -80,12 +80,12 @@
                         <select class="form-control mb-2" v-model="customer_id">
                             <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
                         </select>
-                        <label>Pay By</label>
+                        <!-- <label>Pay By</label>
                         <select class="form-control" v-model="payby">
                             <option value="HandCash">Hand Cash</option>
                             <option value="Cheaque">Cheaque</option>
                             <option value="GiftCard">Gift Card</option>
-                        </select>
+                        </select> -->
                         
                             </div>
                             <div class="col-lg-6">
@@ -277,21 +277,84 @@
         </div>
         <!-- Icon Cards-->
         <hr>
-        <div id="printMe">
-            <div class="row" style="margin-top:200px">
+        <div id="printMe" class="container" style=" padding: 100px;">
+            <h4>Invoice #:  {{getRandomId}}</h4>
+            <div class="row">
                 <div class="col" style="display:flex; justify-content: space-between">
-                    <div style="border:solid red">
-                        <h4>KUYA ALLAN COMPUTER CENTER</h4>
+                    <div>
+                        <h5>KUYA ALLAN COMPUTER CENTER</h5>
                         <p>PARADAHAN II, Tanza , 4100 Cavite</p>
                         <p>09158974437 / 09338219106</p>
                     </div>
-                    <p style="border:solid red">logo</p>
+                    <img src="/images/kuyaAllanLogo.png" alt="logo" style="height: 215px;">
                 </div>
             </div>
             <div class="row">
-                <h5>Bill To</h5>
-                <br>
-                <p> {{selectedCustomer}} </p>
+                <div class="col">
+                    <h5>Bill To</h5>
+                    <select class="form-control mb-2" v-model="customer_id" style="appearance: none;" disabled>
+                        <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
+                    </select>
+                </div>
+                <div class="col"></div>
+                
+            </div>
+            <div class="row">
+                <table class="table table-sm table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="text-align:left;">Item</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Sub-Total</th>
+             
+                        </tr>
+                        </thead>
+                        <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
+                        <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
+                            <th style="text-align:left;">{{ card.pro_name }}</th>
+                            <td>{{card.pro_quantity}}</td>
+                            <td>
+                                <div style="display:flex; justify-content: flex-end"><p>{{ (Number(card.product_price).toLocaleString() || 0) }}</p></div></td>
+                            <td>
+                                <div style="display:flex; justify-content: flex-end">
+                                    <p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>    
+                            <th></th>
+                            <td><b>{{qty}}</b></td>
+                            <td></td>
+                            <td style="display:flex; justify-content: flex-end"> <b>&#8369;&nbsp;</b><b>{{ (Number(subtotal).toLocaleString() || 0) }}</b></td>
+                        </tr>
+                        <br><br>
+                        <tr>    
+                            <th style="display: flex; justify-content:flex-end">Cash</th>
+                            <td></td>
+                            <td></td>
+                            <td style="display:flex; justify-content: flex-end"><b>&#8369;&nbsp;</b><b>{{ (Number(pay).toLocaleString() || 0) }}</b></td>
+                        </tr>
+                        <tr>    
+                            <th style="display: flex; justify-content:flex-end">Change</th>
+                            <td></td>
+                            <td></td>
+                            <td style="display:flex; justify-content: flex-end"> 
+                           
+                                <span v-if="(pay > subtotal)">
+                                     <b>&#8369;&nbsp;</b><b>{{ (Number(pay - subtotal).toLocaleString() || 0) }}</b>
+                                </span>
+                               
+                            </td>
+                        </tr>
+                        </tbody>
+                      
+                    </table>
+
+                    <button @click="printNa()">print na</button>
+                    <button @click="print()">print</button>
+                    
+                    {{ssImg}}
             </div>
         </div>
     </div>
@@ -299,6 +362,7 @@
 
 
 <script>
+import html2canvas from 'html2canvas';
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -333,7 +397,7 @@
                 customer_id:'',     //--customer_form-
                 pay:'',
                 due:'',
-                payby:'',
+                payby:'Hand Cash',
                 products:[],       //---------1---
                 categories:'',     //---------1---
                 getproducts:[],    //---------1---
@@ -345,22 +409,23 @@
                 vats:'',
                 invoiceNum:0,
                 passVal:0,
-                returnx:0
+                returnx:0,
+                ssImg:''
             }
         },
         computed:{
             selectedCustomer() {
-                let a = [];
+                let a;
                 let pangalan = [];
             
                if(this.customer_id) {
-                    a.push(this.customers?.filter((v) => v.id == this.customer_id))
-                    pangalan.push(a[0][0])
+                    a = this.customers?.filter((v) => v.id == this.customer_id);
+                    pangalan.push(a)
                } else {
                 a = null;
                }
 
-               console.log(pangalan[0])
+               console.log(a)
                 return pangalan[0];
             },
             filtersearch(){                          //----------------1-------
@@ -404,6 +469,16 @@
                 }
         },
         methods:{
+            async print(){
+                await this.$htmlToPaper("printMe");
+            },
+             printNa() {
+                html2canvas(document.querySelector("#printMe")).then((canvas) => {
+                    this.ssImg = canvas.toDataURL("image/png", 0.9)
+            })
+             },
+            
+            
             returnQty(val) {
                 this.passVal = val;
                 return val;
