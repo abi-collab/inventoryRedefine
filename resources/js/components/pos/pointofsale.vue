@@ -1,14 +1,14 @@
 <template>
     <div>
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb mt-3">
+        <ol class="breadcrumb mt-3 noPrint">
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Point Of Sale</li>
         </ol>
 
-        <div class="row mb-4">
+        <div class="row mb-4 noPrint">
     <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
             <div class="card col-lg-6 shadow">
                 <div class="card-header flex">
@@ -23,6 +23,7 @@
                         <tr>
                             <th scope="col" style="text-align:left;">Item</th>
                             <th scope="col">Qty</th>
+                            <!-- <th scope="col">Serials</th> -->
                             <th scope="col">Unit</th>
                             <th scope="col">Sub-Total</th>
                             <th scope="col">Action</th>
@@ -37,6 +38,7 @@
                                 <input type="text" readonly="" style="width: 30px; text-align: center;" :value="card.pro_quantity">
                                 <button @click.prevent="increment(card)" class="btn btn-sm btn-success" :disabled="(card.pro_quantity > card.product_quantity)">+</button>
                             </td>
+                            <!-- <td v-for="i in serials" :key="i"><p v-if="(i.pro_code == card.product_code)">{{i}}</p></td> -->
                             <td>
                                 <div style="display:flex; justify-content: space-between">&#8369;<p>{{ (Number(card.product_price).toLocaleString() || 0) }}</p></div></td>
                             <td>
@@ -111,6 +113,10 @@
                     </form>
                 </div>
             </div>
+
+            <!-- <ul v-for="i in cards">
+                <li>{{i}}</li>
+            </ul> -->
 
     <!------------------customer add modal------------------2-------->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
@@ -207,7 +213,7 @@
                             <div class="row">
                                 <!-- class="col-lg-3 col-md-4 col-sm-6 col-6" -->
                                 <div v-for="product in filtersearch" :key="product.id">
-                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)">  <!--------3------->
+                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)"  style="border:solid green">  <!--------3------->
                                         <div class="card" style="width: 9rem; height: 220px;">
                                             <img :src="product.image" class="card-img-top mx-auto w-full" style="height: 100px;">
                                             <div class="card-body">
@@ -232,9 +238,6 @@
                                                         <span class="badge badge-success" style="margin-top: auto;" v-if="product.product_quantity >= 1"> Available ({{ product.product_quantity }}) </span>
                                                         <span class="badge badge-danger" style="margin-top: auto;" v-else>Stock Out</span>
                                                     </div>
-                                                   
-                                              
-                                                
                                             </div>
                                         </div>
                                     </button>
@@ -276,7 +279,7 @@
             </div>
         </div>
         <!-- Icon Cards-->
-        <hr>
+      
         <div id="printMe" class="container" style=" padding: 100px;">
             <h4>Invoice #:  {{getRandomId}}</h4>
             <div class="row">
@@ -354,9 +357,50 @@
                     <button @click="printNa()">print na</button>
                     <button @click="print()">print</button>
                     
-                    {{ssImg}}
+                    <!-- {{ssImg}} -->
+                   
+                    <!-- <img :src="ssImg" alt="invoice" class="noPrint"> -->
             </div>
         </div>
+
+        <hr>
+
+        <table>
+            <thead>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Serials</th>
+            </thead>
+            <tbody>
+                <tr v-for="x in cardsx" :key="x.id">
+                    <td>{{x.pro_name}}</td>
+                    <td>
+                        {{x.pro_quantity}}
+                    </td>
+                    <td>
+                        <ul v-for="(z, index) in x.serials" :key="index">
+                            <li>
+                                <input 
+                                    type="text" 
+                                    :id="`otherFees[${index}][feeName]`" 
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/, '');" 
+                                    @onchange="func()"
+                                    v-model="z.serialnum"
+                                >
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <button @click="func()">click</button>
+        {{newArr}}
+        <br>
+        {{cardsx}}
+        
+
     </div>
 </template>
 
@@ -385,6 +429,7 @@ import html2canvas from 'html2canvas';
         },
         data(){
             return{
+                form2: {serialnum:null},
                 form:{                   //------2---
                     // details :'',
                     // amount:'',
@@ -410,10 +455,26 @@ import html2canvas from 'html2canvas';
                 invoiceNum:0,
                 passVal:0,
                 returnx:0,
-                ssImg:''
+                ssImg:'',
+                newArr:[]
+
             }
         },
         computed:{
+            cardsx() {
+                     let arr = this.cards.map(x => x);
+                            for(let i=0; i < arr.length; i++) {
+                                arr[i].serials = [];
+                                let num = parseInt(arr[i].pro_quantity);
+                                for(let j=0; j < num; j++) {
+                                        arr[i].serials.push({serialnum:'100021212'});
+                                        console.log('pushed');
+                                    }
+                            }
+
+                            this.newArr = arr;
+                return arr
+            },
             selectedCustomer() {
                 let a;
                 let pangalan = [];
@@ -469,40 +530,58 @@ import html2canvas from 'html2canvas';
                 }
         },
         methods:{
+            func() {
+                let arr = this.cards.map(x => x);
+                let thisArr = [];
+                            for(let i=0; i < arr.length; i++) {
+                                arr[i].serials = [];
+                                thisArr = arr[i];
+                                
+                                for(let j=0; j < thisArr.pro_quantity; j++) {
+                                        thisArr.serials.push({serialnum:''});
+                                        console.log('pushed');
+                                    }
+                            }
+
+                          
+
+                            this.newArr = arr;
+            },
+    
             async print(){
                 await this.$htmlToPaper("printMe");
             },
              printNa() {
                 html2canvas(document.querySelector("#printMe")).then((canvas) => {
-                    this.ssImg = canvas.toDataURL("image/png", 0.9)
+                    this.ssImg = canvas.toDataURL("image/png", 0.9);
+                    if(this.ssImg) {
+                        print();
+                    }
             })
              },
-            
-            
             returnQty(val) {
                 this.passVal = val;
                 return val;
             },
-            //--start cart methods--                //------------------3----
+            //--start cart methods--   //------------------3----
             AddToCart(card){
                 this.returnx = this.cards.filter((x) => x.pro_id == card.id); 
-             
                 // console.log(this.returnx[0]?.pro_quantity)
                 if(card.product_quantity <= this.returnx[0]?.pro_quantity){
                 Swal.fire({
                     title: 'Oops!',
                     text: "quantity is greater than the available",
                     type: 'warning',
-                    
                 })
                } else {
+                
                 axios.get('/api/addTocart/'+card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.cart_success()
+
                     })
                }  
-              
             },
             cartProduct(){                          //selected product show in card
                 axios.get('/api/cart/product')
@@ -640,5 +719,14 @@ import html2canvas from 'html2canvas';
 
     .nav-item:active {
         background-color: #eee;
+    }
+
+    @media print {
+        .noPrint {
+            display: none;
+        }
+        #printMe {
+            display: block;
+        }
     }
 </style>

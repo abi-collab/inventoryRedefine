@@ -5036,6 +5036,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -5069,6 +5113,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      form2: {
+        serialnum: null
+      },
       form: {
         //------2---
         // details :'',
@@ -5104,10 +5151,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       invoiceNum: 0,
       passVal: 0,
       returnx: 0,
-      ssImg: ''
+      ssImg: '',
+      newArr: []
     };
   },
   computed: {
+    cardsx: function cardsx() {
+      var arr = this.cards.map(function (x) {
+        return x;
+      });
+
+      for (var i = 0; i < arr.length; i++) {
+        arr[i].serials = [];
+        var num = parseInt(arr[i].pro_quantity);
+
+        for (var j = 0; j < num; j++) {
+          arr[i].serials.push({
+            serialnum: '100021212'
+          });
+          console.log('pushed');
+        }
+      }
+
+      this.newArr = arr;
+      return arr;
+    },
     selectedCustomer: function selectedCustomer() {
       var _this2 = this;
 
@@ -5178,6 +5246,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    func: function func() {
+      var arr = this.cards.map(function (x) {
+        return x;
+      });
+      var thisArr = [];
+
+      for (var i = 0; i < arr.length; i++) {
+        arr[i].serials = [];
+        thisArr = arr[i];
+
+        for (var j = 0; j < thisArr.pro_quantity; j++) {
+          thisArr.serials.push({
+            serialnum: ''
+          });
+          console.log('pushed');
+        }
+      }
+
+      this.newArr = arr;
+    },
     print: function print() {
       var _this5 = this;
 
@@ -5202,13 +5290,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       html2canvas__WEBPACK_IMPORTED_MODULE_1___default()(document.querySelector("#printMe")).then(function (canvas) {
         _this6.ssImg = canvas.toDataURL("image/png", 0.9);
+
+        if (_this6.ssImg) {
+          print();
+        }
       });
     },
     returnQty: function returnQty(val) {
       this.passVal = val;
       return val;
     },
-    //--start cart methods--                //------------------3----
+    //--start cart methods--   //------------------3----
     AddToCart: function AddToCart(card) {
       var _this$returnx$;
 
@@ -12060,7 +12152,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#add_new[data-v-e7fc9010]{\n    float: right;\n}\n#em_photo[data-v-e7fc9010]{\n    height: 100px;\n    width: 90px;\n}\nth[data-v-e7fc9010],td[data-v-e7fc9010] {\n    text-align: center;\n}\n.nav-link[data-v-e7fc9010] {\n    color: black;\n}\n.nav-item[data-v-e7fc9010]:active {\n    background-color: #eee;\n}\n", ""]);
+exports.push([module.i, "\n#add_new[data-v-e7fc9010]{\n    float: right;\n}\n#em_photo[data-v-e7fc9010]{\n    height: 100px;\n    width: 90px;\n}\nth[data-v-e7fc9010],td[data-v-e7fc9010] {\n    text-align: center;\n}\n.nav-link[data-v-e7fc9010] {\n    color: black;\n}\n.nav-item[data-v-e7fc9010]:active {\n    background-color: #eee;\n}\n@media print {\n.noPrint[data-v-e7fc9010] {\n        display: none;\n}\n#printMe[data-v-e7fc9010] {\n        display: block;\n}\n}\n", ""]);
 
 // exports
 
@@ -64665,7 +64757,7 @@ var render = function() {
   return _c("div", [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "row mb-4" }, [
+    _c("div", { staticClass: "row mb-4 noPrint" }, [
       _c("div", { staticClass: "card col-lg-6 shadow" }, [
         _c("div", { staticClass: "card-header flex" }, [
           _c("b", [_vm._v("Invoice #:  " + _vm._s(_vm.getRandomId))])
@@ -65289,6 +65381,7 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-sm",
+                                staticStyle: { border: "solid green" },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
@@ -65729,8 +65822,6 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
     _c(
       "div",
       {
@@ -65979,15 +66070,92 @@ var render = function() {
               }
             },
             [_vm._v("print")]
-          ),
-          _vm._v(
-            "\n                    \n                    " +
-              _vm._s(_vm.ssImg) +
-              "\n            "
           )
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("table", [
+      _vm._m(7),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.cardsx, function(x) {
+          return _c("tr", { key: x.id }, [
+            _c("td", [_vm._v(_vm._s(x.pro_name))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                        " +
+                  _vm._s(x.pro_quantity) +
+                  "\n                    "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              _vm._l(x.serials, function(z, index) {
+                return _c("ul", { key: index }, [
+                  _c("li", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: z.serialnum,
+                          expression: "z.serialnum"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        id: "otherFees[" + index + "][feeName]",
+                        oninput:
+                          "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*)\\./g, '$1').replace(/^0+/, '');"
+                      },
+                      domProps: { value: z.serialnum },
+                      on: {
+                        onchange: function($event) {
+                          return _vm.func()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(z, "serialnum", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.func()
+          }
+        }
+      },
+      [_vm._v("click")]
+    ),
+    _vm._v("\n        " + _vm._s(_vm.newArr) + "\n        "),
+    _c("br"),
+    _vm._v("\n        " + _vm._s(_vm.cardsx) + "\n        \n\n    ")
   ])
 }
 var staticRenderFns = [
@@ -65995,7 +66163,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ol", { staticClass: "breadcrumb mt-3" }, [
+    return _c("ol", { staticClass: "breadcrumb mt-3 noPrint" }, [
       _c("li", { staticClass: "breadcrumb-item" }, [
         _c("a", { attrs: { href: "#" } }, [_vm._v("Dashboard")])
       ]),
@@ -66131,6 +66299,18 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Sub-Total")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Item")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Qty")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Serials")])
     ])
   }
 ]
