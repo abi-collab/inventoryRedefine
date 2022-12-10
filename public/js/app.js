@@ -5080,6 +5080,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -5152,7 +5169,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       passVal: 0,
       returnx: 0,
       ssImg: '',
-      newArr: []
+      newArr: [],
+      xxx: [{
+        "id": 84,
+        "pro_id": 3,
+        "pro_name": "HP Ryzen 5",
+        "pro_quantity": "1",
+        "product_price": "31000",
+        "sub_total": "31000",
+        "created_at": null,
+        "updated_at": null,
+        "serials": [{
+          "serialnum": 0
+        }]
+      }, {
+        "id": 86,
+        "pro_id": 5,
+        "pro_name": "Rapoo Gaming Mouse",
+        "pro_quantity": "5",
+        "product_price": "700",
+        "sub_total": "3500",
+        "created_at": null,
+        "updated_at": null,
+        "serials": [{
+          "serialnum": 0
+        }, {
+          "serialnum": 0
+        }, {
+          "serialnum": 0
+        }, {
+          "serialnum": 0
+        }, {
+          "serialnum": 0
+        }]
+      }, {
+        // id: 98,
+        // pro_id: 3,
+        // pro_name: "HP Ryzen 1",
+        // pro_quantity: "3",
+        // product_price: "31000",
+        // sub_total: "31000",
+        // created_at: null,
+        // updated_at: null,
+        // serials: [
+        // {
+        //     serialnum: 500
+        // }
+        // ]
+        "id": 98,
+        "pro_id": 4,
+        "pro_name:": "HP Ryzen 1",
+        "pro_quantity": "3",
+        "product_price": "31000",
+        "sub_total": "31000",
+        "created_at": null,
+        "updated_at": null,
+        "serials": [{
+          "serialnum": 500
+        }, {
+          "serialnum": 6566500
+        }]
+      }]
     };
   },
   computed: {
@@ -5174,6 +5251,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.newArr = arr;
+      console.log('cardsx to newArr');
       return arr;
     },
     selectedCustomer: function selectedCustomer() {
@@ -66075,87 +66153,109 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("table", [
-      _vm._m(7),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.cardsx, function(x) {
-          return _c("tr", { key: x.id }, [
-            _c("td", [_vm._v(_vm._s(x.pro_name))]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(
-                "\n                        " +
-                  _vm._s(x.pro_quantity) +
-                  "\n                    "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "td",
-              _vm._l(x.serials, function(z, index) {
-                return _c("ul", { key: index }, [
-                  _c("li", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: z.serialnum,
-                          expression: "z.serialnum"
-                        }
-                      ],
-                      attrs: {
-                        type: "text",
-                        id: "otherFees[" + index + "][feeName]",
-                        oninput:
-                          "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*)\\./g, '$1').replace(/^0+/, '');"
-                      },
-                      domProps: { value: z.serialnum },
-                      on: {
-                        onchange: function($event) {
-                          return _vm.func()
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("h1", [_vm._v("xxx")]),
+        _vm._v(" "),
+        _c("table", [
+          _vm._m(7),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.xxx, function(x, sIndex) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(x.pro_name))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(x.pro_quantity) +
+                      "\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "ol",
+                    _vm._l(x.serials, function(z, iIndex) {
+                      return _c("li", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.xxx[sIndex].serials[iIndex].serialnum,
+                              expression:
+                                "xxx[sIndex].serials[iIndex].serialnum"
+                            }
+                          ],
+                          attrs: { type: "number" },
+                          domProps: {
+                            value: _vm.xxx[sIndex].serials[iIndex].serialnum
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.xxx[sIndex].serials[iIndex],
+                                "serialnum",
+                                $event.target.value
+                              )
+                            }
                           }
-                          _vm.$set(z, "serialnum", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
+                        })
+                      ])
+                    }),
+                    0
+                  )
                 ])
-              }),
-              0
-            )
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            return _vm.func()
-          }
-        }
-      },
-      [_vm._v("click")]
-    ),
-    _vm._v("\n        " + _vm._s(_vm.newArr) + "\n        "),
-    _c("br"),
-    _vm._v("\n        " + _vm._s(_vm.cardsx) + "\n        \n\n    ")
+              ])
+            }),
+            0
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" }, [
+        _c("h1", [_vm._v("xxx (locally - static declared)")]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(_vm.xxx, function(o) {
+            return _c("li", [_vm._v(_vm._s(o))])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("h1", [_vm._v("cardsx (dynamic - computed)")]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(_vm.cardsx, function(o) {
+            return _c("li", [_vm._v(_vm._s(o))])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("hr")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" }, [
+        _c("h1", [
+          _vm._v("newArr (declcared to existing data() inside computed cardsx)")
+        ]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(_vm.newArr, function(o) {
+            return _c("li", [_vm._v(_vm._s(o.serials))])
+          }),
+          0
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [

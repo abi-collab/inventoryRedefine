@@ -363,42 +363,59 @@
             </div>
         </div>
 
-        <hr>
-
-        <table>
+        <div class="row">
+            <div class="col">
+                <h1>xxx</h1>
+               <table>
             <thead>
                 <th>Item</th>
                 <th>Qty</th>
                 <th>Serials</th>
             </thead>
             <tbody>
-                <tr v-for="x in cardsx" :key="x.id">
+       
+                <tr v-for="(x, sIndex) in xxx">
                     <td>{{x.pro_name}}</td>
                     <td>
                         {{x.pro_quantity}}
                     </td>
                     <td>
-                        <ul v-for="(z, index) in x.serials" :key="index">
-                            <li>
+                        <ol>
+                            <li v-for="(z, iIndex) in x.serials">
                                 <input 
-                                    type="text" 
-                                    :id="`otherFees[${index}][feeName]`" 
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/, '');" 
-                                    @onchange="func()"
-                                    v-model="z.serialnum"
+                                    type="number" 
+                                    v-model="xxx[sIndex].serials[iIndex].serialnum"
                                 >
                             </li>
-                        </ul>
+                        </ol>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <br>
-        <button @click="func()">click</button>
-        {{newArr}}
-        <br>
-        {{cardsx}}
+            </div>
+            <div class="col">
+                <!-- <h2>xxx</h2>
+             <pre style="font-size: 14px; border:solid red">{{ xxx }}</pre> -->  
+             <h1>xxx (locally - static declared)</h1>
+            <ul>
+                <li v-for="o in xxx">{{o}}</li>
+            </ul>
+             <h1>cardsx (dynamic - computed)</h1>
+        <ul>
+            <li v-for="o in cardsx">{{o}}</li>
+        </ul>
+        <hr>
+      
+            </div>
+            <div class="col">
+                <h1>newArr (declcared to existing data() inside computed cardsx)</h1>
+                <ul>
+            <li v-for="o in newArr">{{o.serials}}</li>
+        </ul>
+            </div>
+        </div>
+
+        <!-- <button @click="test">test() - push obj to xxx</button> -->
         
 
     </div>
@@ -456,7 +473,83 @@ import html2canvas from 'html2canvas';
                 passVal:0,
                 returnx:0,
                 ssImg:'',
-                newArr:[]
+                newArr:[],
+                xxx: [{
+                    "id": 84,
+                    "pro_id": 3,
+                    "pro_name": "HP Ryzen 5",
+                    "pro_quantity": "1",
+                    "product_price": "31000",
+                    "sub_total": "31000",
+                    "created_at": null,
+                    "updated_at": null,
+                    "serials": [
+                    {
+                        "serialnum": 0
+                    }
+                    ]
+                },
+                {
+                    "id": 86,
+                    "pro_id": 5,
+                    "pro_name": "Rapoo Gaming Mouse",
+                    "pro_quantity": "5",
+                    "product_price": "700",
+                    "sub_total": "3500",
+                    "created_at": null,
+                    "updated_at": null,
+                    "serials": [
+                    {
+                        "serialnum": 0
+                    },
+                    {
+                        "serialnum": 0
+                    },
+                    {
+                        "serialnum": 0
+                    },
+                    {
+                        "serialnum": 0
+                    },
+                    {
+                        "serialnum": 0
+                    }
+                    ]
+                },
+                {
+                        // id: 98,
+                        // pro_id: 3,
+                        // pro_name: "HP Ryzen 1",
+                        // pro_quantity: "3",
+                        // product_price: "31000",
+                        // sub_total: "31000",
+                        // created_at: null,
+                        // updated_at: null,
+                        // serials: [
+                        // {
+                        //     serialnum: 500
+                        // }
+                        // ]
+                        "id": 98,
+                        "pro_id": 4,
+                        "pro_name:": "HP Ryzen 1",
+                        "pro_quantity": "3",
+                        "product_price": "31000",
+                        "sub_total": "31000",
+                        "created_at": null,
+                        "updated_at": null,
+                        "serials": [
+                        {
+                            "serialnum": 500
+                        },
+                        {
+                            "serialnum": 6566500
+                        }
+                        ]
+                    }
+               
+            ]
+
 
             }
         },
@@ -473,6 +566,7 @@ import html2canvas from 'html2canvas';
                             }
 
                             this.newArr = arr;
+                            console.log('cardsx to newArr');
                 return arr
             },
             selectedCustomer() {
