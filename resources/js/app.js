@@ -10,6 +10,8 @@ Vue.use(VueRouter)
 //----route imported-------
 import {routes} from './routes';
 
+// import {store} from './store/index';
+
 
 //---import User Class----
 import User from './helpers/User';
@@ -51,6 +53,8 @@ const router = new VueRouter({  //------------
 })
 
 const app = new Vue({
+  router,         //-----------
+    // store,
     el: '#app',
-    router         //-----------
+  
 });

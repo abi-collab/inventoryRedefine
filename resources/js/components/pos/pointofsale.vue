@@ -213,8 +213,8 @@
                             <div class="row">
                                 <!-- class="col-lg-3 col-md-4 col-sm-6 col-6" -->
                                 <div v-for="product in filtersearch" :key="product.id">
-                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)"  style="border:solid green">  <!--------3------->
-                                        <div class="card" style="width: 9rem; height: 220px;">
+                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)" >  <!--------3------->
+                                        <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top mx-auto w-full" style="height: 100px;">
                                             <div class="card-body">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
@@ -228,7 +228,7 @@
                                         </div>
                                     </button>
                                     <button v-else disabled class="btn btn-sm" @click.prevent="AddToCart(product)">  <!--------3------->
-                                        <div class="card" style="width: 9rem; height: 220px;">
+                                        <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top" style="height: 100px; width: 100px;">
                                             <div class="card-body">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
@@ -280,7 +280,7 @@
         </div>
         <!-- Icon Cards-->
       
-        <div id="printMe" class="container" style=" padding: 100px;">
+        <!-- <div id="printMe" class="container" style=" padding: 100px;">
             <h4>Invoice #:  {{getRandomId}}</h4>
             <div class="row">
                 <div class="col" style="display:flex; justify-content: space-between">
@@ -313,8 +313,8 @@
              
                         </tr>
                         </thead>
-                        <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
-                        <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
+                        <tbody> 
+                        <tr v-for="card in cards" :key="card.id">     
                             <th style="text-align:left;">{{ card.pro_name }}</th>
                             <td>{{card.pro_quantity}}</td>
                             <td>
@@ -357,74 +357,22 @@
                     <button @click="printNa()">print na</button>
                     <button @click="print()">print</button>
                     
-                    <!-- {{ssImg}} -->
-                   
-                    <!-- <img :src="ssImg" alt="invoice" class="noPrint"> -->
+                  
             </div>
-        </div>
+        </div> -->
 
-        <div class="row">
-            <div class="col">
-                <h1>xxx</h1>
-               <table>
-            <thead>
-                <th>Item</th>
-                <th>Qty</th>
-                <th>Serials</th>
-            </thead>
-            <tbody>
-       
-                <tr v-for="(x, sIndex) in xxx">
-                    <td>{{x.pro_name}}</td>
-                    <td>
-                        {{x.pro_quantity}}
-                    </td>
-                    <td>
-                        <ol>
-                            <li v-for="(z, iIndex) in x.serials">
-                                <input 
-                                    type="number" 
-                                    v-model="xxx[sIndex].serials[iIndex].serialnum"
-                                >
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-            </div>
-            <div class="col">
-                <!-- <h2>xxx</h2>
-             <pre style="font-size: 14px; border:solid red">{{ xxx }}</pre> -->  
-             <h1>xxx (locally - static declared)</h1>
-            <ul>
-                <li v-for="o in xxx">{{o}}</li>
-            </ul>
-             <h1>cardsx (dynamic - computed)</h1>
-        <ul>
-            <li v-for="o in cardsx">{{o}}</li>
-        </ul>
-        <hr>
-      
-            </div>
-            <div class="col">
-                <h1>newArr (declcared to existing data() inside computed cardsx)</h1>
-                <ul>
-            <li v-for="o in newArr">{{o.serials}}</li>
-        </ul>
-            </div>
-        </div>
-
-        <!-- <button @click="test">test() - push obj to xxx</button> -->
-        
-
+       <serials :serials="xxx"/>
     </div>
 </template>
 
 
 <script>
+import serials from './serials.vue'
 import html2canvas from 'html2canvas';
     export default {
+        components: {
+            serials
+        },
         mounted(){
             if (!User.loggedIn()) {
                 this.$router.push({ name:'/' })
@@ -447,7 +395,7 @@ import html2canvas from 'html2canvas';
         data(){
             return{
                 form2: {serialnum:null},
-                form:{                   //------2---
+                form:{    
                     // details :'',
                     // amount:'',
                     name :'',
@@ -456,111 +404,39 @@ import html2canvas from 'html2canvas';
                     photo :'',
                     phone:'',
                 },
-                customer_id:'',     //--customer_form-
+                customer_id:'', 
                 pay:'',
                 due:'',
                 payby:'Hand Cash',
-                products:[],       //---------1---
-                categories:'',     //---------1---
-                getproducts:[],    //---------1---
-                searchTerm:'',     //---------1---
-                getsearchTerm:'',  //---------1---
-                customers:'',           //-------2---
-                errors:'',         //---------1---
-                cards:[],                   //--------3--//Controller থেকে ডাটা তুলে এনে এই cards Array মধ্যে রাখবে।
+                products:[],      
+                categories:'',    
+                getproducts:[],   
+                searchTerm:'',     
+                getsearchTerm:'',  
+                customers:'',          
+                errors:'',        
+                cards:[],                   
                 vats:'',
                 invoiceNum:0,
                 passVal:0,
                 returnx:0,
                 ssImg:'',
                 newArr:[],
-                xxx: [{
-                    "id": 84,
-                    "pro_id": 3,
-                    "pro_name": "HP Ryzen 5",
-                    "pro_quantity": "1",
-                    "product_price": "31000",
-                    "sub_total": "31000",
-                    "created_at": null,
-                    "updated_at": null,
-                    "serials": [
-                    {
-                        "serialnum": 0
-                    }
-                    ]
-                },
-                {
-                    "id": 86,
-                    "pro_id": 5,
-                    "pro_name": "Rapoo Gaming Mouse",
-                    "pro_quantity": "5",
-                    "product_price": "700",
-                    "sub_total": "3500",
-                    "created_at": null,
-                    "updated_at": null,
-                    "serials": [
-                    {
-                        "serialnum": 0
-                    },
-                    {
-                        "serialnum": 0
-                    },
-                    {
-                        "serialnum": 0
-                    },
-                    {
-                        "serialnum": 0
-                    },
-                    {
-                        "serialnum": 0
-                    }
-                    ]
-                },
-                {
-                        // id: 98,
-                        // pro_id: 3,
-                        // pro_name: "HP Ryzen 1",
-                        // pro_quantity: "3",
-                        // product_price: "31000",
-                        // sub_total: "31000",
-                        // created_at: null,
-                        // updated_at: null,
-                        // serials: [
-                        // {
-                        //     serialnum: 500
-                        // }
-                        // ]
-                        "id": 98,
-                        "pro_id": 4,
-                        "pro_name:": "HP Ryzen 1",
-                        "pro_quantity": "3",
-                        "product_price": "31000",
-                        "sub_total": "31000",
-                        "created_at": null,
-                        "updated_at": null,
-                        "serials": [
-                        {
-                            "serialnum": 500
-                        },
-                        {
-                            "serialnum": 6566500
-                        }
-                        ]
-                    }
-               
-            ]
-
-
+                message:'',
+                finalArray:[],
+                productCodes:[],
+                xxx: []
             }
         },
         computed:{
+            
             cardsx() {
                      let arr = this.cards.map(x => x);
                             for(let i=0; i < arr.length; i++) {
                                 arr[i].serials = [];
                                 let num = parseInt(arr[i].pro_quantity);
                                 for(let j=0; j < num; j++) {
-                                        arr[i].serials.push({serialnum:'100021212'});
+                                        arr[i].serials.push({serialnum:'10'});
                                         console.log('pushed');
                                     }
                             }
@@ -624,23 +500,8 @@ import html2canvas from 'html2canvas';
                 }
         },
         methods:{
-            func() {
-                let arr = this.cards.map(x => x);
-                let thisArr = [];
-                            for(let i=0; i < arr.length; i++) {
-                                arr[i].serials = [];
-                                thisArr = arr[i];
-                                
-                                for(let j=0; j < thisArr.pro_quantity; j++) {
-                                        thisArr.serials.push({serialnum:''});
-                                        console.log('pushed');
-                                    }
-                            }
-
-                          
-
-                            this.newArr = arr;
-            },
+          
+        
     
             async print(){
                 await this.$htmlToPaper("printMe");
@@ -659,6 +520,42 @@ import html2canvas from 'html2canvas';
             },
             //--start cart methods--   //------------------3----
             AddToCart(card){
+               
+                if(this.productCodes.includes(card.product_code)){
+                            console.log('meron na!!!!!!!!!!!!!!!!');
+                            
+                            for(let j = 0; j < this.xxx.length; j++) {
+                                if(this.xxx[j].pro_code == card.product_code){
+                                    this.xxx[j].serials.push({serialnum:'2222222'})
+                                } else {
+                                    console.log('something wrong!!!!!!!!!!!!!')
+                                    
+                                }
+                            }
+
+                        } else {
+                            this.productCodes.push(card.product_code);
+                             card.serials = [
+                                {serialnum:'1111111'}
+                            ]
+                            console.log('card',card);
+                            this.xxx.push(
+                                {
+                                    pro_id: card.id,
+                                    pro_code:card.product_code,
+                                    pro_name: card.product_name,
+                                    pro_quantity: card.product_quantity,
+                                    product_price: "31000",  
+                                    serials: [
+                                    {
+                                        serialnum: 500
+                                    }
+                                    ]
+                                    
+                                }
+                            );
+                        }
+
                 this.returnx = this.cards.filter((x) => x.pro_id == card.id); 
                 // console.log(this.returnx[0]?.pro_quantity)
                 if(card.product_quantity <= this.returnx[0]?.pro_quantity){
