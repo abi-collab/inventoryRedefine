@@ -5042,6 +5042,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5108,11 +5109,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       passVal: 0,
       returnx: 0,
       ssImg: '',
-      newArr: [],
-      message: '',
-      finalArray: [],
-      productCodes: [],
-      xxx: []
+      productIds: [],
+      serialNumbersForItemQnty: []
     };
   },
   computed: {
@@ -5129,12 +5127,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           arr[i].serials.push({
             serialnum: '10'
           });
-          console.log('pushed');
         }
       }
 
       this.newArr = arr;
-      console.log('cardsx to newArr');
       return arr;
     },
     selectedCustomer: function selectedCustomer() {
@@ -5154,7 +5150,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         a = null;
       }
 
-      console.log(a);
       return pangalan[0];
     },
     filtersearch: function filtersearch() {
@@ -5245,25 +5240,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     AddToCart: function AddToCart(card) {
       var _this$returnx$;
 
-      if (this.productCodes.includes(card.product_code)) {
+      if (this.productIds.includes(card.id)) {
         console.log('meron na!!!!!!!!!!!!!!!!');
 
-        for (var j = 0; j < this.xxx.length; j++) {
-          if (this.xxx[j].pro_code == card.product_code) {
-            this.xxx[j].serials.push({
-              serialnum: '2222222'
-            });
+        for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+          if (this.serialNumbersForItemQnty[j].pro_id == card.id) {
+            if (this.serialNumbersForItemQnty[j].serials.length >= Number(card.product_quantity)) {
+              Swal.fire({
+                title: 'Oops!',
+                text: "quantity is greater than the available",
+                icon: "warning"
+              });
+            } else {
+              this.serialNumbersForItemQnty[j].serials.push({
+                serialnum: '22999999'
+              });
+            }
           } else {
             console.log('something wrong!!!!!!!!!!!!!');
           }
         }
       } else {
-        this.productCodes.push(card.product_code);
+        this.productIds.push(card.id);
         card.serials = [{
           serialnum: '1111111'
         }];
-        console.log('card', card);
-        this.xxx.push({
+        this.serialNumbersForItemQnty.push({
           pro_id: card.id,
           pro_code: card.product_code,
           pro_name: card.product_name,
@@ -5277,13 +5279,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       this.returnx = this.cards.filter(function (x) {
         return x.pro_id == card.id;
-      }); // console.log(this.returnx[0]?.pro_quantity)
+      });
 
       if (card.product_quantity <= ((_this$returnx$ = this.returnx[0]) === null || _this$returnx$ === void 0 ? void 0 : _this$returnx$.pro_quantity)) {
         Swal.fire({
           title: 'Oops!',
           text: "quantity is greater than the available",
-          type: 'warning'
+          icon: "warning"
         });
       } else {
         axios.get('/api/addTocart/' + card.id).then(function () {
@@ -5301,15 +5303,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _this7.cards = data;
       })["catch"]();
     },
-    removeItem: function removeItem(id) {
-      //id = Pos's id
-      axios.get('/api/remove/cart/' + id).then(function () {
+    removeItem: function removeItem(card) {
+      for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+        if (this.serialNumbersForItemQnty[j].pro_id == card.pro_id) {
+          this.serialNumbersForItemQnty.splice(j, 1);
+          this.productIds.splice(j, 1);
+        }
+      }
+
+      axios.get('/api/remove/cart/' + card.id).then(function () {
         Reload.$emit('AfterAdd');
         Notification.success();
       });
     },
     increment: function increment(card) {
-      //id = Pos's id        //------------------4----
+      console.log('in increment', card);
+
+      for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+        if (this.serialNumbersForItemQnty[j].pro_id == card.pro_id) {
+          if (this.serialNumbersForItemQnty[j].serials.length >= Number(card.pro_quantity)) {
+            Swal.fire({
+              title: 'Oops!',
+              text: "quantity is greater than the available",
+              icon: "warning"
+            });
+          } else {
+            this.serialNumbersForItemQnty[j].serials.push({
+              serialnum: '2222222'
+            });
+          }
+        } //  else {
+        //     console.log('something wrong!!!!!!!!!!!!!')
+        // }
+
+      }
+
       this.returnx = this.products.filter(function (x) {
         return x.id == card.pro_id;
       });
@@ -5318,7 +5346,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         Swal.fire({
           title: 'Oops!',
           text: "quantity is greater than the available",
-          type: 'warning'
+          icon: "warning"
         });
       } else {
         axios.get('/api/increment/' + card.id).then(function () {
@@ -5327,9 +5355,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
       }
     },
-    decrement: function decrement(id) {
-      //id = Pos's id
-      axios.get('/api/decrement/' + id).then(function () {
+    decrement: function decrement(card) {
+      for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+        if (this.serialNumbersForItemQnty[j].pro_id == card.pro_id) {
+          this.serialNumbersForItemQnty[j].serials.pop();
+        }
+      }
+
+      axios.get('/api/decrement/' + card.id).then(function () {
         Reload.$emit('AfterAdd');
         Notification.success();
       });
@@ -5463,6 +5496,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -64834,7 +64869,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.decrement(card.id)
+                                    return _vm.decrement(card)
                                   }
                                 }
                               },
@@ -64930,7 +64965,7 @@ var render = function() {
                             "btn btn-sm btn-outline-danger text-danger",
                           on: {
                             click: function($event) {
-                              return _vm.removeItem(card.id)
+                              return _vm.removeItem(card)
                             }
                           }
                         },
@@ -65898,7 +65933,14 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("serials", { attrs: { serials: _vm.xxx } })
+      _c("h1", [_vm._v("ids")]),
+      _vm._v("\n" + _vm._s(_vm.productIds) + "\n       "),
+      _c("serials", {
+        attrs: {
+          serials: _vm.serialNumbersForItemQnty,
+          computedSerials: _vm.cardsx
+        }
+      })
     ],
     1
   )
@@ -66044,12 +66086,14 @@ var render = function() {
             "tbody",
             _vm._l(_vm.serials, function(x, sIndex) {
               return _c("tr", [
+                _c("td", [_vm._v(_vm._s(x.pro_id))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(x.pro_name))]),
                 _vm._v(" "),
                 _c("td", [
                   _vm._v(
                     "\n                " +
-                      _vm._s(x.pro_quantity) +
+                      _vm._s(x.serials.length) +
                       "\n            "
                   )
                 ]),
@@ -66110,6 +66154,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
+      _c("th", [_vm._v("prod id")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Item")]),
       _vm._v(" "),
       _c("th", [_vm._v("Qty")]),
@@ -86821,15 +86867,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./resources/js/components/pos/serials.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _serials_vue_vue_type_template_id_b98cc56e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./serials.vue?vue&type=template&id=b98cc56e& */ "./resources/js/components/pos/serials.vue?vue&type=template&id=b98cc56e&");
 /* harmony import */ var _serials_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./serials.vue?vue&type=script&lang=js& */ "./resources/js/components/pos/serials.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _serials_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _serials_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -86859,7 +86904,7 @@ component.options.__file = "resources/js/components/pos/serials.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/components/pos/serials.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

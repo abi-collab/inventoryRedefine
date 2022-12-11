@@ -33,7 +33,7 @@
                         <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
                             <th style="text-align:left;">{{ card.pro_name }}</th>
                             <td style="display: flex;align-items: center;justify-content: space-between;">
-                                <button @click.prevent="decrement(card.id)" class="btn btn-sm btn-danger" v-if="card.pro_quantity >= 2">-</button>      
+                                <button @click.prevent="decrement(card)" class="btn btn-sm btn-danger" v-if="card.pro_quantity >= 2">-</button>      
                                 <button class="btn btn-sm btn-danger" v-else="" disabled>-</button>  <!-------------->
                                 <input type="text" readonly="" style="width: 30px; text-align: center;" :value="card.pro_quantity">
                                 <button @click.prevent="increment(card)" class="btn btn-sm btn-success" :disabled="(card.pro_quantity > card.product_quantity)">+</button>
@@ -46,7 +46,7 @@
                                     &#8369;&nbsp;<p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
                                 </div>
                             </td>
-                            <td><a @click="removeItem(card.id)" class="btn btn-sm btn-outline-danger text-danger">x</a></td>
+                            <td><a @click="removeItem(card)" class="btn btn-sm btn-outline-danger text-danger">x</a></td>
                         </tr>
 
                         </tbody>
@@ -360,8 +360,9 @@
                   
             </div>
         </div> -->
-
-       <serials :serials="xxx"/>
+        <h1>ids</h1>
+{{productIds}}
+       <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx"/>
     </div>
 </template>
 
@@ -369,6 +370,7 @@
 <script>
 import serials from './serials.vue'
 import html2canvas from 'html2canvas';
+
     export default {
         components: {
             serials
@@ -421,11 +423,8 @@ import html2canvas from 'html2canvas';
                 passVal:0,
                 returnx:0,
                 ssImg:'',
-                newArr:[],
-                message:'',
-                finalArray:[],
-                productCodes:[],
-                xxx: []
+                productIds:[],
+                serialNumbersForItemQnty: []
             }
         },
         computed:{
@@ -437,12 +436,12 @@ import html2canvas from 'html2canvas';
                                 let num = parseInt(arr[i].pro_quantity);
                                 for(let j=0; j < num; j++) {
                                         arr[i].serials.push({serialnum:'10'});
-                                        console.log('pushed');
+                      
                                     }
                             }
 
                             this.newArr = arr;
-                            console.log('cardsx to newArr');
+           
                 return arr
             },
             selectedCustomer() {
@@ -456,7 +455,7 @@ import html2canvas from 'html2canvas';
                 a = null;
                }
 
-               console.log(a)
+       
                 return pangalan[0];
             },
             filtersearch(){                          //----------------1-------
@@ -500,9 +499,6 @@ import html2canvas from 'html2canvas';
                 }
         },
         methods:{
-          
-        
-    
             async print(){
                 await this.$htmlToPaper("printMe");
             },
@@ -519,14 +515,22 @@ import html2canvas from 'html2canvas';
                 return val;
             },
             //--start cart methods--   //------------------3----
-            AddToCart(card){
-               
-                if(this.productCodes.includes(card.product_code)){
+            AddToCart(card){       
+                if(this.productIds.includes(card.id)){
                             console.log('meron na!!!!!!!!!!!!!!!!');
                             
-                            for(let j = 0; j < this.xxx.length; j++) {
-                                if(this.xxx[j].pro_code == card.product_code){
-                                    this.xxx[j].serials.push({serialnum:'2222222'})
+                            for(let j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+                                if(this.serialNumbersForItemQnty[j].pro_id == card.id){
+                                    if(this.serialNumbersForItemQnty[j].serials.length >= Number(card.product_quantity)){
+                                        Swal.fire({
+                                            title: 'Oops!',
+                                            text: "quantity is greater than the available",
+                                            icon: "warning",
+                                        });
+                                    } else {
+                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:'22999999'})
+                                    }
+                                    
                                 } else {
                                     console.log('something wrong!!!!!!!!!!!!!')
                                     
@@ -534,12 +538,12 @@ import html2canvas from 'html2canvas';
                             }
 
                         } else {
-                            this.productCodes.push(card.product_code);
+                            this.productIds.push(card.id);
                              card.serials = [
                                 {serialnum:'1111111'}
                             ]
-                            console.log('card',card);
-                            this.xxx.push(
+               
+                            this.serialNumbersForItemQnty.push(
                                 {
                                     pro_id: card.id,
                                     pro_code:card.product_code,
@@ -557,12 +561,12 @@ import html2canvas from 'html2canvas';
                         }
 
                 this.returnx = this.cards.filter((x) => x.pro_id == card.id); 
-                // console.log(this.returnx[0]?.pro_quantity)
+
                 if(card.product_quantity <= this.returnx[0]?.pro_quantity){
                 Swal.fire({
                     title: 'Oops!',
                     text: "quantity is greater than the available",
-                    type: 'warning',
+                    icon: "warning",
                 })
                } else {
                 
@@ -579,20 +583,47 @@ import html2canvas from 'html2canvas';
                     .then(({data}) => (this.cards = data))
                     .catch()
             },
-            removeItem(id){                         //id = Pos's id
-                axios.get('/api/remove/cart/'+id)
+            removeItem(card){ 
+                for(let j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+                    if(this.serialNumbersForItemQnty[j].pro_id == card.pro_id){
+                        this.serialNumbersForItemQnty.splice(j, 1);
+                        this.productIds.splice(j, 1);
+                    }
+                }
+
+                axios.get('/api/remove/cart/'+card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.success()
                     })
             },
-            increment(card){      //id = Pos's id        //------------------4----
+            increment(card){             
+                console.log('in increment',card)
+                for(let j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+                    if(this.serialNumbersForItemQnty[j].pro_id == card.pro_id){
+                        if(this.serialNumbersForItemQnty[j].serials.length >= Number(card.pro_quantity)){
+                                        Swal.fire({
+                                            title: 'Oops!',
+                                            text: "quantity is greater than the available",
+                                            icon: "warning",
+                                        });
+                                    } else {
+                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:'2222222'})
+                                    }
+                        
+                    }
+                    //  else {
+                    //     console.log('something wrong!!!!!!!!!!!!!')
+                        
+                    // }
+                }
+
                this.returnx = this.products.filter((x) => x.id == card.pro_id); 
                if(card.pro_quantity >= this.returnx[0].product_quantity){
                 Swal.fire({
                     title: 'Oops!',
                     text: "quantity is greater than the available",
-                    type: 'warning',
+                    icon: "warning",
                     
                 })
                } else {
@@ -604,8 +635,14 @@ import html2canvas from 'html2canvas';
                }
                 
             },
-            decrement(id){      //id = Pos's id
-                axios.get('/api/decrement/'+id)
+            decrement(card){
+            for(let j = 0; j < this.serialNumbersForItemQnty.length; j++) {
+                    if(this.serialNumbersForItemQnty[j].pro_id == card.pro_id){
+                        this.serialNumbersForItemQnty[j].serials.pop();
+                    }
+                }
+
+                axios.get('/api/decrement/'+card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.success()

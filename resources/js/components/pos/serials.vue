@@ -5,6 +5,7 @@
   <form @submit.prevent="save(serials)">
    <table>
     <thead>
+      <th>prod id</th>
         <th>Item</th>
         <th>Qty</th>
         <th>Serials</th>
@@ -12,9 +13,10 @@
     <tbody>
 
         <tr v-for="(x, sIndex) in serials">
+          <td>{{x.pro_id}}</td>
             <td>{{x.pro_name}}</td>
             <td>
-                {{x.pro_quantity}}
+                {{x.serials.length}}
             </td>
             <td>
                 <ol>
