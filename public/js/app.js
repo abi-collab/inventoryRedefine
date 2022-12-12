@@ -5187,7 +5187,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       returnx: 0,
       ssImg: '',
       productIds: [],
-      serialNumbersForItemQnty: []
+      serialNumbersForItemQnty: [],
+      invoiceRandomNumber: ''
     };
   },
   computed: {
@@ -5292,6 +5293,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var seconds = dateNow.getSeconds();
       var milli = dateNow.getMilliseconds();
       var all = day + '' + month + '' + year + '' + hour + '' + minutes + '' + seconds + '' + milli;
+      this.invoiceRandomNumber = all;
       return all;
     }
   },
@@ -5463,7 +5465,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     orderSave: function orderSave(serialsRecieved) {
       var _this9 = this;
 
-      console.log('serialsRecieved', serialsRecieved);
       var total = this.subtotal * this.vats.vat / 100 + this.subtotal;
       var due = (total - this.pay).toFixed(2); //variable.toFixed(2)=take 2 specified decimal number
 
@@ -5478,13 +5479,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         total: total
       }; //due:this.due //due_dynamic
 
-      axios.post('/api/orderdone/', data).then(function () {
+      axios.post('/api/orderdone/', data).then(function (res) {
         Notification.success();
 
         _this9.$router.push({
           name: 'home'
         });
+
+        console.log('res', res);
       });
+      console.log('serialsRecieved', serialsRecieved);
+      var serialList = [];
+
+      for (var j = 0; j < serialsRecieved.length; j++) {
+        for (var x = 0; x < serialsRecieved[j].serials.length; x++) {
+          serialList.push({
+            invoiceNumber: this.getRandomId,
+            customerId: this.customer_id,
+            serialNo: serialsRecieved[j].serials[x].serialnum,
+            id: serialsRecieved[j].id,
+            product_id: serialsRecieved[j].pro_id,
+            product_name: serialsRecieved[j].pro_name,
+            product_quantity: serialsRecieved[j].pro_quantity,
+            product_price: serialsRecieved[j].product_price
+          });
+        }
+      }
+
+      console.log(this.getRandomId);
+      console.log('serialList', serialList);
+
+      for (var l = 0; l < serialList.length; l++) {
+        axios.post('/api/serials', serialList[l]).then(function (res) {
+          // Notification.success()
+          // this.$router.push({ name: 'home' })
+          console.log('res', res);
+        });
+      }
     },
     //---End_cart_methods----
     allProduct: function allProduct() {

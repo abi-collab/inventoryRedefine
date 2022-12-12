@@ -72,3 +72,5 @@ Route::post('/activitylog','ActivitylogController@savelog');
 Route::get('/activitylog','ActivitylogController@getlog');
 
 Route::get('/users','UserController@getUsers');
+
+Route::post('/serials','SerialsController@saveSerials');

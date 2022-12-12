@@ -499,7 +499,8 @@ export default {
             returnx: 0,
             ssImg: '',
             productIds: [],
-            serialNumbersForItemQnty: []
+            serialNumbersForItemQnty: [],
+            invoiceRandomNumber:''
         }
     },
     computed: {
@@ -587,6 +588,7 @@ export default {
             let seconds = dateNow.getSeconds();
             let milli = dateNow.getMilliseconds();
             let all = day + '' + month + '' + year + '' + hour + '' + minutes + '' + seconds + '' + milli;
+            this.invoiceRandomNumber = all;
             return all;
         }
     },
@@ -735,16 +737,49 @@ export default {
         },
 
         orderSave(serialsRecieved) {
-            console.log('serialsRecieved', serialsRecieved);
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
             var data = { qty: this.qty, subtotal: this.subtotal, customer_id: this.customer_id, payby: this.payby, pay: this.pay, due: due, vat: this.vats.vat, total: total }       //due:this.due //due_dynamic
 
             axios.post('/api/orderdone/', data)
-                .then(() => {
+                .then((res) => {
                     Notification.success()
                     this.$router.push({ name: 'home' })
+                    console.log('res', res);
                 })
+
+            console.log('serialsRecieved', serialsRecieved);
+            let serialList = [];
+            for (let j = 0; j < serialsRecieved.length; j++) {
+                for (let x = 0; x < serialsRecieved[j].serials.length; x++) {
+                    serialList.push({
+                        invoiceNumber: this.getRandomId,
+                        customerId: this.customer_id,
+                        serialNo:serialsRecieved[j].serials[x].serialnum,
+                        id:serialsRecieved[j].id,
+                        product_id:serialsRecieved[j].pro_id,
+                        product_name:serialsRecieved[j].pro_name,
+                        product_quantity:serialsRecieved[j].pro_quantity,
+                        product_price:serialsRecieved[j].product_price,
+                    })
+                }
+            }
+
+            console.log(this.getRandomId);
+
+            console.log('serialList', serialList);
+
+            for (let l = 0; l < serialList.length; l++) {
+                    axios.post('/api/serials', serialList[l])
+                    .then((res) => {
+                        // Notification.success()
+                        // this.$router.push({ name: 'home' })
+                        console.log('res', res);
+                    })
+                }
+
+            
+
         },
         //---End_cart_methods----
 
