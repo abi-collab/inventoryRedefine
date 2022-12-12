@@ -14,7 +14,7 @@
                 <div class="card-header flex">
                     <!-- <i class="fas fa-chart-area"></i> -->
                     <b>Invoice #:  {{getRandomId}}</b>
-                    <!-- <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new"> Add Customer</a> -->
+                    <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new"> Add Customer</a>
                 </div>
 
                 <div class="card-body">
@@ -110,14 +110,31 @@
                        
                         <br>
                         <button type="submit" class="btn btn-success mb-4" >Submit</button>
+                        <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#serialnums" id="add_new"> Submit2</a>
                     </form>
                 </div>
             </div>
 
-            <!-- <ul v-for="i in cards">
-                <li>{{i}}</li>
-            </ul> -->
-
+             <!------------------ serial number modal------------------2-------->
+             <div class="modal fade" id="serialnums" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p class="modal-title" id="exampleModalLabel">Provide the serial numbers for the ordered items</p>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="" enctype="multipart/form-data">
+                                <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx"/>
+                                <button type="submit" class="btn btn-outline-success">Submit serials</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!------------end serial number modal------------------------->
     <!------------------customer add modal------------------2-------->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                 <div class="modal-dialog" role="document">
@@ -213,7 +230,7 @@
                             <div class="row">
                                 <!-- class="col-lg-3 col-md-4 col-sm-6 col-6" -->
                                 <div v-for="product in filtersearch" :key="product.id">
-                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm" @click.prevent="AddToCart(product)" >  <!--------3------->
+                                    <button v-if="product.product_quantity >= 1" class="btn btn-sm productCard" @click.prevent="AddToCart(product)" >  <!--------3------->
                                         <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top mx-auto w-full" style="height: 100px;">
                                             <div class="card-body">
@@ -227,7 +244,7 @@
                                             </div>
                                         </div>
                                     </button>
-                                    <button v-else disabled class="btn btn-sm" @click.prevent="AddToCart(product)">  <!--------3------->
+                                    <button v-else disabled class="btn btn-sm productCard" @click.prevent="AddToCart(product)">  <!--------3------->
                                         <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top" style="height: 100px; width: 100px;">
                                             <div class="card-body">
@@ -360,9 +377,8 @@
                   
             </div>
         </div> -->
-        <h1>ids</h1>
-{{productIds}}
-       <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx"/>
+        <!-- <h1>ids</h1>
+{{productIds}} -->
     </div>
 </template>
 
@@ -516,6 +532,7 @@ import html2canvas from 'html2canvas';
             },
             //--start cart methods--   //------------------3----
             AddToCart(card){       
+                console.log('add card',card)
                 if(this.productIds.includes(card.id)){
                             console.log('meron na!!!!!!!!!!!!!!!!');
                             
@@ -527,8 +544,8 @@ import html2canvas from 'html2canvas';
                                             text: "quantity is greater than the available",
                                             icon: "warning",
                                         });
-                                    } else {
-                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:'22999999'})
+                                    } else{
+                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:''})
                                     }
                                     
                                 } else {
@@ -552,7 +569,7 @@ import html2canvas from 'html2canvas';
                                     product_price: "31000",  
                                     serials: [
                                     {
-                                        serialnum: 500
+                                        serialnum: ''
                                     }
                                     ]
                                     
@@ -601,14 +618,19 @@ import html2canvas from 'html2canvas';
                 console.log('in increment',card)
                 for(let j = 0; j < this.serialNumbersForItemQnty.length; j++) {
                     if(this.serialNumbersForItemQnty[j].pro_id == card.pro_id){
-                        if(this.serialNumbersForItemQnty[j].serials.length >= Number(card.pro_quantity)){
+                        if(this.serialNumbersForItemQnty[j].serials.length >= Number(this.serialNumbersForItemQnty[j].pro_quantity)){
                                         Swal.fire({
                                             title: 'Oops!',
                                             text: "quantity is greater than the available",
                                             icon: "warning",
                                         });
                                     } else {
-                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:'2222222'})
+                                        this.serialNumbersForItemQnty[j].serials.push({serialnum:''})
+                                        axios.get('/api/increment/'+card.id)
+                                            .then(() => {
+                                                Reload.$emit('AfterAdd');
+                                                Notification.success()
+                                            })
                                     }
                         
                     }
@@ -618,21 +640,21 @@ import html2canvas from 'html2canvas';
                     // }
                 }
 
-               this.returnx = this.products.filter((x) => x.id == card.pro_id); 
-               if(card.pro_quantity >= this.returnx[0].product_quantity){
-                Swal.fire({
-                    title: 'Oops!',
-                    text: "quantity is greater than the available",
-                    icon: "warning",
+            //    this.returnx = this.products.filter((x) => x.id == card.pro_id); 
+            //    if(card.pro_quantity >= this.returnx[0].product_quantity){
+            //     Swal.fire({
+            //         title: 'Oops!',
+            //         text: "quantity is greater than the availablesssssssssss",
+            //         icon: "warning",
                     
-                })
-               } else {
-                axios.get('/api/increment/'+card.id)
-                    .then(() => {
-                        Reload.$emit('AfterAdd');
-                        Notification.success()
-                    })
-               }
+            //     })
+            //    } else {
+            //     axios.get('/api/increment/'+card.id)
+            //         .then(() => {
+            //             Reload.$emit('AfterAdd');
+            //             Notification.success()
+            //         })
+            //    }
                 
             },
             decrement(card){
@@ -747,6 +769,14 @@ import html2canvas from 'html2canvas';
 
     .nav-item:active {
         background-color: #eee;
+    }
+
+    .productCard:hover {
+        border:solid green;
+    }
+
+    .productCard:active {
+        background-color: red;
     }
 
     @media print {
