@@ -4665,9 +4665,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _serials_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./serials.vue */ "./resources/js/components/pos/serials.vue");
-/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! html2canvas */ "./node_modules/html2canvas/dist/html2canvas.js");
-/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(html2canvas__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _serials_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./serials.vue */ "./resources/js/components/pos/serials.vue");
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! html2canvas */ "./node_modules/html2canvas/dist/html2canvas.js");
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(html2canvas__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5059,11 +5061,70 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    serials: _serials_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    serials: _serials_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {
     if (!User.loggedIn()) {
@@ -5141,12 +5202,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         for (var j = 0; j < num; j++) {
           arr[i].serials.push({
-            serialnum: '10'
+            serialnum: ''
           });
         }
+      } // console.log('arr here!!!',arr)
+      // this.serialNumbersForItemQnty = arr;
+
+
+      var arr2 = [];
+
+      for (var _i = 0; _i < arr.length; _i++) {
+        arr2.push({
+          created_at: arr[_i].created_at,
+          id: arr[_i].id,
+          pro_id: arr[_i].pro_id,
+          pro_name: arr[_i].pro_name,
+          pro_quantity: arr[_i].pro_quantity,
+          product_price: arr[_i].product_price,
+          serials: arr[_i].serials,
+          updated_at: arr[_i].updated_at
+        });
       }
 
-      this.newArr = arr;
+      this.serialNumbersForItemQnty = arr2;
       return arr;
     },
     selectedCustomer: function selectedCustomer() {
@@ -5240,7 +5318,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     printNa: function printNa() {
       var _this6 = this;
 
-      html2canvas__WEBPACK_IMPORTED_MODULE_2___default()(document.querySelector("#printMe")).then(function (canvas) {
+      html2canvas__WEBPACK_IMPORTED_MODULE_3___default()(document.querySelector("#printMe")).then(function (canvas) {
         _this6.ssImg = canvas.toDataURL("image/png", 0.9);
 
         if (_this6.ssImg) {
@@ -5335,14 +5413,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     increment: function increment(card) {
-      console.log('in increment', card);
-
       for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
         if (this.serialNumbersForItemQnty[j].pro_id == card.pro_id) {
-          if (this.serialNumbersForItemQnty[j].serials.length >= Number(this.serialNumbersForItemQnty[j].pro_quantity)) {
+          this.returnx = this.products.filter(function (x) {
+            return x.id == card.pro_id;
+          });
+
+          if (card.pro_quantity >= this.returnx[0].product_quantity) {
             Swal.fire({
               title: 'Oops!',
-              text: "quantity is greater than the available",
+              text: "quantity is greater than the availablesssssssssss",
               icon: "warning"
             });
           } else {
@@ -5354,25 +5434,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               Notification.success();
             });
           }
-        } //  else {
-        //     console.log('something wrong!!!!!!!!!!!!!')
-        // }
-
-      } //    this.returnx = this.products.filter((x) => x.id == card.pro_id); 
-      //    if(card.pro_quantity >= this.returnx[0].product_quantity){
-      //     Swal.fire({
-      //         title: 'Oops!',
-      //         text: "quantity is greater than the availablesssssssssss",
-      //         icon: "warning",
-      //     })
-      //    } else {
-      //     axios.get('/api/increment/'+card.id)
-      //         .then(() => {
-      //             Reload.$emit('AfterAdd');
-      //             Notification.success()
-      //         })
-      //    }
-
+        }
+      }
     },
     decrement: function decrement(card) {
       for (var j = 0; j < this.serialNumbersForItemQnty.length; j++) {
@@ -5395,8 +5458,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"]();
     },
     orderdone: function orderdone() {
+      jquery__WEBPACK_IMPORTED_MODULE_1___default()('#serialnums').modal('toggle');
+    },
+    orderSave: function orderSave(serialsRecieved) {
       var _this9 = this;
 
+      console.log('serialsRecieved', serialsRecieved);
       var total = this.subtotal * this.vats.vat / 100 + this.subtotal;
       var due = (total - this.pay).toFixed(2); //variable.toFixed(2)=take 2 specified decimal number
 
@@ -5481,7 +5548,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     customerInsert: function customerInsert() {
       //-------------2---
       axios.post('/api/Customer/', this.form).then(function () {
-        $('#closeModal').click();
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()('#closeModal').click();
         Reload.$emit('customerReload'); //first global declar in app.js, then goto created() on above
 
         Notification.success(); // this.customers = this.customers.filter(customer =>{   //--Or-/use Reload--
@@ -5556,17 +5623,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     serials: Array
   },
-  // created() {
-  //   this.sers = serials;
-  // },
-  data: function data() {
-    return {
-      sers: []
-    };
-  },
   methods: {
     save: function save(serials) {
-      console.log('serials', serials);
+      // console.log('serials',serials);
+      this.$emit('my-event', serials);
     }
   }
 });
@@ -12242,7 +12302,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#add_new[data-v-e7fc9010]{\n    float: right;\n}\n#em_photo[data-v-e7fc9010]{\n    height: 100px;\n    width: 90px;\n}\nth[data-v-e7fc9010],td[data-v-e7fc9010] {\n    text-align: center;\n}\n.nav-link[data-v-e7fc9010] {\n    color: black;\n}\n.nav-item[data-v-e7fc9010]:active {\n    background-color: #eee;\n}\n.productCard[data-v-e7fc9010]:hover {\n    border:solid green;\n}\n.productCard[data-v-e7fc9010]:active {\n    background-color: red;\n}\n@media print {\n.noPrint[data-v-e7fc9010] {\n        display: none;\n}\n#printMe[data-v-e7fc9010] {\n        display: block;\n}\n}\n", ""]);
+exports.push([module.i, "\n#add_new[data-v-e7fc9010] {\r\n    float: right;\n}\n#em_photo[data-v-e7fc9010] {\r\n    height: 100px;\r\n    width: 90px;\n}\nth[data-v-e7fc9010],\r\ntd[data-v-e7fc9010] {\r\n    text-align: center;\n}\n.nav-link[data-v-e7fc9010] {\r\n    color: black;\n}\n.nav-item[data-v-e7fc9010]:active {\r\n    background-color: #eee;\n}\n.productCard[data-v-e7fc9010]:hover {\r\n    border: solid green 1px;\n}\n.productCard[data-v-e7fc9010]:active {\r\n    background-color: red;\n}\n@media print {\n.noPrint[data-v-e7fc9010] {\r\n        display: none;\n}\n#printMe[data-v-e7fc9010] {\r\n        display: block;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -64850,20 +64910,7 @@ var render = function() {
     _c("div", { staticClass: "row mb-4 noPrint" }, [
       _c("div", { staticClass: "card col-lg-6 shadow" }, [
         _c("div", { staticClass: "card-header flex" }, [
-          _c("b", [_vm._v("Invoice #:  " + _vm._s(_vm.getRandomId))]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-sm btn-primary text-white",
-              attrs: {
-                "data-toggle": "modal",
-                "data-target": "#exampleModal",
-                id: "add_new"
-              }
-            },
-            [_vm._v(" Add Customer")]
-          )
+          _c("b", [_vm._v("Invoice #: " + _vm._s(_vm.getRandomId))])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -64968,7 +65015,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._v("\n                                    ₱ "),
+                        _vm._v("\n                                        ₱ "),
                         _c("p", [
                           _vm._v(
                             _vm._s(Number(card.sub_total).toLocaleString() || 0)
@@ -65057,43 +65104,48 @@ var render = function() {
                 _c("div", { staticClass: "col-lg-6" }, [
                   _c("label", [_vm._v("Customer Name")]),
                   _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.customer_id,
-                          expression: "customer_id"
+                  _c("div", { staticClass: "input-group " }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.customer_id,
+                            expression: "customer_id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { required: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.customer_id = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
                         }
-                      ],
-                      staticClass: "form-control mb-2",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.customer_id = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(_vm.customers, function(customer) {
-                      return _c(
-                        "option",
-                        { domProps: { value: customer.id } },
-                        [_vm._v(_vm._s(customer.name))]
-                      )
-                    }),
-                    0
-                  )
+                      },
+                      _vm._l(_vm.customers, function(customer) {
+                        return _c(
+                          "option",
+                          { domProps: { value: customer.id } },
+                          [_vm._v(_vm._s(customer.name))]
+                        )
+                      }),
+                      0
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-6" }, [
@@ -65143,20 +65195,7 @@ var render = function() {
                   staticClass: "btn btn-success mb-4",
                   attrs: { type: "submit" }
                 },
-                [_vm._v("Submit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-primary text-white",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#serialnums",
-                    id: "add_new"
-                  }
-                },
-                [_vm._v(" Submit2")]
+                [_vm._v("Place Order")]
               )
             ]
           )
@@ -65184,39 +65223,22 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
+                _vm._m(3),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c(
-                    "form",
-                    {
-                      attrs: { enctype: "multipart/form-data" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                        }
-                      }
-                    },
-                    [
-                      _c("serials", {
-                        attrs: {
-                          serials: _vm.serialNumbersForItemQnty,
-                          computedSerials: _vm.cardsx
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-success",
-                          attrs: { type: "submit" }
-                        },
-                        [_vm._v("Submit serials")]
-                      )
-                    ],
-                    1
-                  )
-                ])
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  [
+                    _c("serials", {
+                      attrs: {
+                        serials: _vm.serialNumbersForItemQnty,
+                        computedSerials: _vm.cardsx
+                      },
+                      on: { "my-event": _vm.orderSave }
+                    })
+                  ],
+                  1
+                )
               ])
             ]
           )
@@ -65241,7 +65263,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c(
@@ -65469,7 +65491,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "card col-lg-6 border-secondary" }, [
-        _vm._m(4),
+        _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -65479,7 +65501,7 @@ var render = function() {
               attrs: { id: "pills-tab", role: "tablist" }
             },
             [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _vm._l(_vm.categories, function(category) {
                 return _c("li", { key: category.id, staticClass: "nav-item" }, [
@@ -65885,7 +65907,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              " ₱ " +
+                                              "\n                                                    ₱ " +
                                                 _vm._s(getproduct.selling_price)
                                             )
                                           ]
@@ -66039,11 +66061,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary text-white",
+          attrs: {
+            "data-toggle": "modal",
+            "data-target": "#exampleModal",
+            id: "add_new",
+            type: "button"
+          }
+        },
+        [_vm._v(" + ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
-        "p",
+        "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Provide the serial numbers for the ordered items")]
+        [
+          _vm._v(
+            "Provide the serial numbers for the ordered\n                                items"
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -66153,82 +66199,82 @@ var render = function() {
         }
       },
       [
-        _c("table", { staticClass: "table" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.serials, function(x, sIndex) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(x.pro_code))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(x.pro_name))]),
-                _vm._v(" "),
-                _c("td", { staticStyle: { "text-align": "center" } }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(x.serials.length) +
-                      "\n            "
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  _vm._l(x.serials, function(z, iIndex) {
-                    return _c("span", { staticStyle: { display: "block" } }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value:
-                              _vm.serials[sIndex].serials[iIndex].serialnum,
-                            expression:
-                              "serials[sIndex].serials[iIndex].serialnum"
-                          }
-                        ],
-                        attrs: { type: "text" },
-                        domProps: {
-                          value: _vm.serials[sIndex].serials[iIndex].serialnum
-                        },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.serials[sIndex].serials[iIndex],
-                              "serialnum",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  }),
-                  0
-                )
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
         _c(
-          "button",
+          "table",
           {
-            staticClass: "btn btn-sm btn-primary text-white",
-            attrs: {
-              "data-toggle": "modal",
-              "data-target": "#serialnums",
-              type: "submit"
-            }
+            staticClass: "table",
+            staticStyle: { border: "solid grey 2px", "border-radius": "5px" }
           },
-          [_vm._v(" Save")]
-        )
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.serials, function(x, sIndex) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(x.pro_name))]),
+                  _vm._v(" "),
+                  _c("td", { staticStyle: { "text-align": "center" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(x.serials.length) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    _vm._l(x.serials, function(z, iIndex) {
+                      return _c("span", { staticStyle: { display: "block" } }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value:
+                                _vm.serials[sIndex].serials[iIndex].serialnum,
+                              expression:
+                                "serials[sIndex].serials[iIndex].serialnum"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          staticStyle: { margin: "2px 0px" },
+                          attrs: {
+                            type: "text",
+                            "aria-label": "Default",
+                            "aria-describedby": "inputGroup-sizing-default",
+                            required: ""
+                          },
+                          domProps: {
+                            value: _vm.serials[sIndex].serials[iIndex].serialnum
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.serials[sIndex].serials[iIndex],
+                                "serialnum",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              }),
+              0
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(1)
       ]
-    ),
-    _vm._v("\n \n    \n" + _vm._s(_vm.serials) + "\n  ")
+    )
   ])
 }
 var staticRenderFns = [
@@ -66237,8 +66283,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("th", [_vm._v("Product Code")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Item")]),
       _vm._v(" "),
       _c("th", { staticStyle: { "text-align": "center" } }, [
@@ -66247,6 +66291,26 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Serial Numbers")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "flex", "justify-content": "flex-end" } },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-md btn-primary text-white",
+            staticStyle: { width: "20%" },
+            attrs: { type: "submit" }
+          },
+          [_vm._v(" Submit")]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
