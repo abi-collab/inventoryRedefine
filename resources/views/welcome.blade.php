@@ -77,6 +77,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/order">Today Order</router-link>
                                     <router-link class="nav-link" to="/searchorder">Search</router-link>
+                                    <router-link class="nav-link" to="/sold-items">Sold Item</router-link>
                                 </nav>
                             </div>
 

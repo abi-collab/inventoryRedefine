@@ -19,10 +19,12 @@ class CreateSerialsTable extends Migration
             $table->string('invoiceNumber');
             $table->string('serialNo');
             $table->integer('customerId');
+            $table->string('customerName');
             $table->integer('product_id');
             $table->string('product_name');
-            $table->string('product_quantity');   
+            $table->string('order_quantity');   
             $table->string('product_price'); 
+            $table->string('created_by'); 
         });
     }
 

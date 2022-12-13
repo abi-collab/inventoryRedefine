@@ -47,16 +47,25 @@ class SerialsController extends Controller
     //     $serial->save();
     // }
 
+    public function getSerials(Request $request)
+    {
+        $serials=DB::table('serials')->orderBy('id','DESC')->get();
+        return response()->json($serials);
+        
+    }
+
     public function saveSerials(Request $request)
     { 
         $serial = new Serials;
         $serial->invoiceNumber = $request->invoiceNumber;
         $serial->serialNo = $request->serialNo;
         $serial->customerId = $request->customerId;
+        $serial->customerName = $request->customerName;
         $serial->product_id = $request->product_id;
         $serial->product_name = $request->product_name;
-        $serial->product_quantity = $request->product_quantity;
+        $serial->order_quantity = $request->order_quantity;
         $serial->product_price = $request->product_price;
+        $serial->created_by = $request->created_by;
         $serial->save();
     }
 

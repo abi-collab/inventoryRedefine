@@ -442,6 +442,7 @@
 
 
 <script>
+import Cookies from 'js-cookie';
 import $ from 'jquery'; 
 import serials from './serials.vue'
 import html2canvas from 'html2canvas';
@@ -744,9 +745,12 @@ export default {
             axios.post('/api/orderdone/', data)
                 .then((res) => {
                     Notification.success()
-                    this.$router.push({ name: 'home' })
+                    // this.$router.push({ name: 'home' })
                     console.log('res', res);
                 })
+
+            let customer = this.customers.filter((h) => h.id == this.customer_id);
+            console.log(customer[0].name);
 
             console.log('serialsRecieved', serialsRecieved);
             let serialList = [];
@@ -755,18 +759,18 @@ export default {
                     serialList.push({
                         invoiceNumber: this.getRandomId,
                         customerId: this.customer_id,
+                        customerName: customer[0].name,
                         serialNo:serialsRecieved[j].serials[x].serialnum,
                         id:serialsRecieved[j].id,
                         product_id:serialsRecieved[j].pro_id,
                         product_name:serialsRecieved[j].pro_name,
-                        product_quantity:serialsRecieved[j].pro_quantity,
+                        order_quantity:serialsRecieved[j].pro_quantity,
                         product_price:serialsRecieved[j].product_price,
+                        created_by:Cookies.get('userNow'),
                     })
                 }
             }
-
             console.log(this.getRandomId);
-
             console.log('serialList', serialList);
 
             for (let l = 0; l < serialList.length; l++) {

@@ -48,6 +48,7 @@ let vieworder = require('./components/order/viewOrder.vue').default;
 let searchorder = require('./components/order/search.vue').default;
 //------Log_Components-----------------------
 let log = require('./components/log/Activity_log.vue').default;
+let solditems = require('./components/order/soldItems.vue').default;
 
 
 export const routes = [
@@ -99,5 +100,6 @@ export const routes = [
     { path: '/searchorder', component: searchorder, name:'searchorder' },
     //-------Order-----------
     { path: '/log', component: log, name:'log' },
+    { path: '/sold-items', component: solditems, name:'solditems' },
 
 ]
