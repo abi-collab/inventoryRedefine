@@ -91,6 +91,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; 
     export default {
         created(){
             if (!User.loggedIn()) {
@@ -99,6 +100,9 @@
             // window.location.reload();
         },
         mounted(){
+            if(!Cookies.get('usersname')) {
+                this.$router.push({name : '/logout'})
+            }
             if (localStorage.getItem('reloaded')) {
                 // The page was just reloaded. Clear the value from local storage
                 // so that it will reload the next time this page is visited.

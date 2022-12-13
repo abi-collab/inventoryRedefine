@@ -482,6 +482,10 @@ export default {
                 photo: '',
                 phone: '',
             },
+            form3:{ //2
+					activity :'',
+					createdby : Cookies.get('usersname')
+				},
             customer_id: '',
             pay: '',
             due: '',
@@ -665,12 +669,10 @@ export default {
                     icon: "warning",
                 })
             } else {
-
                 axios.get('/api/addTocart/' + card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.cart_success()
-
                     })
             }
         },
@@ -792,7 +794,12 @@ export default {
                     })
                 }
 
-            
+                this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;//4
+                axios.post('/api/activitylog',this.form3)  //5
+                .then((r) => {
+                    console.log('logssss',r)
+                })
+                .catch(error => this.errors = error.response.data.errors)
 
         },
         //---End_cart_methods----

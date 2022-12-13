@@ -17,13 +17,30 @@
                 <form @submit.prevent="stockUpdate" >
                     <div class="card-body">
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="row">
+                                 <div class="col-md-4">
                                 <div class="form-label-group">
-                                    <label for="phone">Quantity  </label>
-                                    <input type="text" v-model="form.product_quantity" class="form-control" required>
+                                    <label for="phone">Current Stock Available </label>
+                                    <input type="text" v-model="form.product_quantity" class="form-control" disabled>
                                     <small class="text-danger" v-if="errors.product_quantity">{{ errors.product_quantity[0] }}</small>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-label-group">
+                                    <label for="phone">Additional Stock-in</label>
+                                    <input type="text" v-model="toAdd_quantity" class="form-control" required>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-label-group">
+                                    <label for="phone">New Stock Quantity</label>
+                                    <input type="text" :value="newStock" class="form-control" disabled>
+                               
+                                </div>
+                            </div>
+                            </div>
+                           
                         </div>
                     </div><br>
                     <button type="submit" class="btn btn-success">Stock Update</button>
@@ -45,14 +62,16 @@ import Cookies from 'js-cookie'; //1
         data(){
             return{
                 form:{
-                    product_quantity:''
+                    product_quantity:''  
                 },
                 form2:{ //2
 					activity :'',
 					createdby : Cookies.get('usersname')
 				},
                 errors:{},
-                allProducts:[]
+                allProducts:[],
+                toAdd_quantity:'',
+                newStock_quantity:''
             }
         },
         created(){
@@ -70,13 +89,17 @@ import Cookies from 'js-cookie'; //1
                         let id = this.$route.params.id
                       let pro = this.allProducts.filter(item => item.id == id)
 						return pro[0]?.product_name;
-					}
+					},
+                    newStock() {
+                        this.newStock_quantity = Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+                        return Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+                    }
 				},
         methods:{
             stockUpdate(){
                 this.form2.activity = `update product quantity of ${this.nameIs}`;//4
                 let id = this.$route.params.id
-                axios.post('/api/stock/update/'+id,this.form)
+                axios.post('/api/stock/update/'+id,{product_quantity:this.newStock})
                     .then(() => {
                         this.$router.push({ name: 'stock' })
                         Notification.success()

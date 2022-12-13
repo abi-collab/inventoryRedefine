@@ -3905,6 +3905,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3997,6 +3999,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
@@ -4007,6 +4010,12 @@ __webpack_require__.r(__webpack_exports__);
 
   },
   mounted: function mounted() {
+    if (!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')) {
+      this.$router.push({
+        name: '/logout'
+      });
+    }
+
     if (localStorage.getItem('reloaded')) {
       // The page was just reloaded. Clear the value from local storage
       // so that it will reload the next time this page is visited.
@@ -5319,6 +5328,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         photo: '',
         phone: ''
       },
+      form3: {
+        //2
+        activity: '',
+        createdby: js_cookie__WEBPACK_IMPORTED_MODULE_1___default.a.get('usersname')
+      },
       customer_id: '',
       pay: '',
       due: '',
@@ -5669,6 +5683,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.log('res', res);
         });
       }
+
+      this.form3.activity = "Successful purchase transaction, invoice number ".concat(this.getRandomId); //4
+
+      axios.post('/api/activitylog', this.form3) //5
+      .then(function (r) {
+        console.log('logssss', r);
+      })["catch"](function (error) {
+        return _this9.errors = error.response.data.errors;
+      });
     },
     //---End_cart_methods----
     allProduct: function allProduct() {
@@ -6102,6 +6125,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
  //1
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6123,7 +6163,9 @@ __webpack_require__.r(__webpack_exports__);
         createdby: js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')
       },
       errors: {},
-      allProducts: []
+      allProducts: [],
+      toAdd_quantity: '',
+      newStock_quantity: ''
     };
   },
   created: function created() {
@@ -6149,6 +6191,10 @@ __webpack_require__.r(__webpack_exports__);
         return item.id == id;
       });
       return (_pro$ = pro[0]) === null || _pro$ === void 0 ? void 0 : _pro$.product_name;
+    },
+    newStock: function newStock() {
+      this.newStock_quantity = Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+      return Number(this.form.product_quantity) + Number(this.toAdd_quantity);
     }
   },
   methods: {
@@ -6158,7 +6204,9 @@ __webpack_require__.r(__webpack_exports__);
       this.form2.activity = "update product quantity of ".concat(this.nameIs); //4
 
       var id = this.$route.params.id;
-      axios.post('/api/stock/update/' + id, this.form).then(function () {
+      axios.post('/api/stock/update/' + id, {
+        product_quantity: this.newStock
+      }).then(function () {
         _this2.$router.push({
           name: 'stock'
         });
@@ -86826,13 +86874,26 @@ var render = function() {
         "div",
         { staticClass: "card col-lg-12 border-secondary shadow mb-3" },
         [
-          _vm._m(1),
+          _c(
+            "div",
+            {
+              staticClass: "card-header text-dark",
+              staticStyle: { "font-size": "20px", "font-weight": "600" }
+            },
+            [
+              _c("i", { staticClass: "fas fa-chart-area" }),
+              _vm._v("\n                Order invoice No. : "),
+              _c("span", { staticStyle: { "letter-spacing": "2px" } }, [
+                _vm._v(_vm._s(_vm.orders.invoiceNum))
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-6 col-md-6 col-6" }, [
                 _c("ul", { staticClass: "list-group" }, [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("li", { staticClass: "list-group-item" }, [
                     _c("b", [_vm._v("Name:")]),
@@ -86881,7 +86942,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("li", { staticClass: "list-group-item" }, [
                     _c("b", [_vm._v("Pay Through:")]),
@@ -86906,7 +86967,7 @@ var render = function() {
         "div",
         { staticClass: "card col-lg-12 border-secondary shadow mb-3" },
         [
-          _vm._m(4),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
@@ -86918,7 +86979,7 @@ var render = function() {
                   attrs: { id: "", width: "100%", cellspacing: "0" }
                 },
                 [
-                  _vm._m(5),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -86985,22 +87046,6 @@ var staticRenderFns = [
         _vm._v("Order / Order Details")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-header text-dark",
-        staticStyle: { "font-size": "20px", "font-weight": "700" }
-      },
-      [
-        _c("i", { staticClass: "fas fa-chart-area" }),
-        _vm._v("\n                Order\n            ")
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -89072,43 +89117,89 @@ var render = function() {
           [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-label-group" }, [
-                    _c("label", { attrs: { for: "phone" } }, [
-                      _vm._v("Quantity  ")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.product_quantity,
-                          expression: "form.product_quantity"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", required: "" },
-                      domProps: { value: _vm.form.product_quantity },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-label-group" }, [
+                      _c("label", { attrs: { for: "phone" } }, [
+                        _vm._v("Current Stock Available ")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.product_quantity,
+                            expression: "form.product_quantity"
                           }
-                          _vm.$set(
-                            _vm.form,
-                            "product_quantity",
-                            $event.target.value
-                          )
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.form.product_quantity },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "product_quantity",
+                              $event.target.value
+                            )
+                          }
                         }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.product_quantity
-                      ? _c("small", { staticClass: "text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors.product_quantity[0]))
-                        ])
-                      : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.product_quantity
+                        ? _c("small", { staticClass: "text-danger" }, [
+                            _vm._v(_vm._s(_vm.errors.product_quantity[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-label-group" }, [
+                      _c("label", { attrs: { for: "phone" } }, [
+                        _vm._v("Additional Stock-in")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.toAdd_quantity,
+                            expression: "toAdd_quantity"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", required: "" },
+                        domProps: { value: _vm.toAdd_quantity },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.toAdd_quantity = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-label-group" }, [
+                      _c("label", { attrs: { for: "phone" } }, [
+                        _vm._v("New Stock Quantity")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.newStock }
+                      })
+                    ])
                   ])
                 ])
               ])

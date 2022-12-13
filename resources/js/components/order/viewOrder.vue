@@ -11,9 +11,9 @@
         <!-----Order------->
         <div class="row container-fluid">
             <div class="card col-lg-12 border-secondary shadow mb-3">
-                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
+                <div class="card-header text-dark" style="font-size: 20px; font-weight: 600;">
                     <i class="fas fa-chart-area"></i>
-                    Order
+                    Order invoice No.&nbsp;:&nbsp;<span style="letter-spacing: 2px;">{{orders.invoiceNum}}</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
