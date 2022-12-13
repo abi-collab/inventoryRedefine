@@ -33,6 +33,7 @@ class PosController extends Controller
         $data['payby']=$request->payby;
         $data['pay']=$request->pay;
         $data['due']=$request->due;
+        $data['invoiceNum']=$request->invoiceNum;
         $data['order_date']=date('d/m/Y');
         $data['order_month']=date('F');
         $data['order_year']=date('Y');

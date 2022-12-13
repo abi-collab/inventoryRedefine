@@ -21,9 +21,9 @@
               <table class="table table-bordered table-striped table-hover table-warning border-secondarys" id="" width="100%" cellspacing="0">
                 <thead>
                   <tr class="bg-info text-white">
+                    <th>Invoice&nbsp;#</th>
                     <th>Serial&nbsp;Number</th>
                     <th>Item&nbsp;Name</th>
-                    <th>Invoice&nbsp;#</th>
                     <th>Customer&nbsp;Name</th>
                     <th>Created&nbsp;By</th>
                   </tr>
@@ -31,9 +31,9 @@
 
                 <tbody>
                   <tr v-for="item in filtersearch2" :key="item.id">
+                    <td>{{item.invoiceNumber}}</td>
                     <td>{{item.serialNo}}</td>
                     <td>{{ item.product_name }}</td>
-                    <td>{{item.invoiceNumber}}</td>
                     <td>{{item.customerName}}</td>
                     <td>{{returnName(item.created_by).name}}</td>
                     

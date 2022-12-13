@@ -19,24 +19,25 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-6">
                             <ul class="list-group">
-                                <li class="list-group-item bg-info text-white">Customer Details</li>
-                                <li class="list-group-item">Name: {{ orders.name }}</li>
-                                <li class="list-group-item">Phone: {{ orders.phone }}</li>
-                                <li class="list-group-item">Address: {{ orders.address }}</li>
-                                <li class="list-group-item">Date: {{ orders.order_date }}</li>
-                                <li class="list-group-item">Quantity: {{ orders.qty }}</li>
+                                <li class="list-group-item bg-info text-white"><b>Customer Details</b></li>
+                                <li class="list-group-item"> <b>Name:</b> {{ orders.name }}</li>
+                                <li class="list-group-item"> <b>Phone:</b>{{ orders.phone }}</li>
+                                 <li class="list-group-item"> <b>Address:</b>{{ orders.address }}</li>
+                                  <li class="list-group-item"> <b>Date:</b>{{orders.order_date }}</li>
+                                
                             </ul>
                         </div>
                         <div class="col-lg-6 col-md-6 col-6">
                             <ul class="list-group">
-                                <li class="list-group-item">Sub Total: {{orders.sub_total}}</li>
-                                <li class="list-group-item">Vat: {{ orders.vat }}</li>
-                                <li class="list-group-item">Total: {{ orders.total }}</li>
-                                <li class="list-group-item">Pay: {{ orders.pay }}</li>
-                                <li class="list-group-item">Due: {{ orders.due }}</li>
-                                <li class="list-group-item">Pay Through: {{ orders.payby }}</li>
+                                <li class="list-group-item"> <b>Quantity:</b>{{ orders.qty }}</li>
+                                <li class="list-group-item"> <b>Total Due:</b>  &#8369;&nbsp; {{(Number(orders.sub_total).toLocaleString() || 0)}}</li>
+                                <li class="list-group-item"> <b>Cash Tendered:</b> &#8369;&nbsp; {{(Number(orders.pay).toLocaleString() || 0)}}</li>
+                                <li class="list-group-item"> <b>Change:</b> value here!</li>
+                                <li class="list-group-item"> <b>Pay Through:</b> {{ orders.payby }}</li>
+                               
                             </ul>
                         </div>
+                       
                     </div>
                 </div>
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -53,8 +54,8 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <label class="d-inline">Search : </label>
-                        <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
+                        <!-- <label class="d-inline">Search : </label>
+                        <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br> -->
                         <table class="table table-bordered table-striped table-hover table-warning border-dark" id="" width="100%" cellspacing="0">
 
                             <thead>
@@ -74,8 +75,8 @@
                                     <td>{{ detail.product_code}}</td>
                                     <td><img :src="'/'+detail.image" id="em_photo"></td>
                                     <td>{{ detail.pro_quantity }}</td>
-                                    <td>{{ detail.product_price }}</td>
-                                    <td>{{ detail.sub_total }}</td>
+                                    <td>&#8369;&nbsp; {{(Number(detail.product_price).toLocaleString() || 0)}}</td>
+                                    <td>&#8369;&nbsp; {{(Number(detail.sub_total).toLocaleString() || 0)}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -85,11 +86,13 @@
             </div>
         </div>
 
+
     </div>
 </template>
 
 
 <script>
+
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -101,6 +104,7 @@
                 //errors:{},
                 orders:{},
                 details:{},
+                searchTerm:''
             }
         },
         created(){
@@ -113,9 +117,17 @@
         	.then(({data}) => (this.details = data))
             .catch()
         },
-        methods:{
+        computed: {
+            // filtersearch(){
+            //     let a = this.details.filter((item) => {
+            //         return item.product_name.toLowerCase().match(this.searchTerm.toLowerCase()) || item.product_code.toLowerCase().match(this.searchTerm.toLowerCase())
+            //     })
 
+            //     return a;
+            // }
+          
         }
+       
     }
 </script>
 
@@ -124,5 +136,10 @@
     #em_photo{
         height: 40px;
         width: 40px;
+    }
+
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
     }
 </style>

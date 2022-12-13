@@ -6,6 +6,8 @@ import Vue from 'vue'      //--these nxt 3_lines are newly added as we installed
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+Vue.use(require('vue-moment'));
+
 
 //----route imported-------
 import {routes} from './routes';

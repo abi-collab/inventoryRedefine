@@ -81,36 +81,42 @@
 
                         <thead>
                             <tr class="bg-info text-white">
+                                <th>Invoice&nbsp;#</th>
                                 <th>Name</th>
                                 <th>Quantity</th>
-                                <th>Subtotal</th>
-                                <th>Vat</th>
-                                <th>Total</th>
-                                <th>Pay</th>
-                                <th>Due</th>
+                                <!-- <th>Subtotal</th>
+                                <th>Vat</th> -->
+                                <th>Total Due</th>
+                                <!-- <th>Pay</th> -->
+                                <!-- <th>Due</th> -->
+                                <td>Action</td>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr v-for="order in orders" :key="order.id">
+                                <td>{{ order.invoiceNum }}</td>
                                 <td>{{ order.name }}</td>
-                                <td>{{ order.qty }}</td>
-                                <td>{{ order.sub_total }}</td>
-                                <td>{{ order.vat }}</td>
-                                <td>{{ order.total }}</td>
-                                <td>{{ order.pay }}</td>
-                                <td>{{ order.due }}</td>
+                                <td style="text-align: right;">{{ order.qty }}</td>
+                                <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
+                                <!-- <td>{{ order.vat }}</td>
+                                <td>{{ order.total }}</td> -->
+                                <!-- <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.pay).toLocaleString() || 0)}}</td> -->
+                                <!-- <td>{{ order.due }}</td> -->
+                                <td style="text-align: center;">
+                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info">View</router-link>
+                                </td>
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td></td>
-                                <td>{{ quantity }} piece</td>
-                                <td>{{ subtotal }} Tk</td>
-                                <td></td>
-                                <td>{{ total }} Tk</td>
-                                <td>{{ pay }} Tk</td>
-                                <td>{{ due }} Tk</td>
+                            <tr style="border: solid grey 2px">
+                                <td colspan="2" style="text-align: center;"> <b>Totals</b></td>
+                                <td style="text-align: right;">{{ quantity }} </td>
+                                <td style="text-align: right;">&#8369;&nbsp; {{(Number(subtotal).toLocaleString() || 0)}}</td>
+                                <!-- <td></td> -->
+                                <td style="text-align: right;"> </td>
+                                <!-- <td>{{ pay }} </td> -->
+                                <!-- <td>{{ due }} </td> -->
                             </tr>
                         </tfoot>
                     </table>
@@ -129,7 +135,17 @@
 
 
 <script>
+import moment from 'moment'
     export default {
+        created() {
+            let dateNow = new Date();
+            let month = dateNow.getMonth() + 1;
+            let monthName = moment(month, "DD-MM-YYYY")
+                        .format('MMMM')
+    
+            this.month = monthName;
+            this.searchMonth();
+        },
         mounted(){
             if (!User.loggedIn()) {
                 this.$router.push({ name:'/' })

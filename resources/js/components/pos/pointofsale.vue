@@ -126,7 +126,7 @@
                         </div>
 
                         <br>
-                        <button type="submit" class="btn btn-success mb-4">Place Order</button>
+                        <button type="submit" class="btn btn-success mb-4" v-if="cards.length > 0 && pay >= subtotal ">Place Order</button>
                         <!-- <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#serialnums"
                             id="add_new"> Submit2</a> -->
                     </form>
@@ -740,7 +740,17 @@ export default {
         orderSave(serialsRecieved) {
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
-            var data = { qty: this.qty, subtotal: this.subtotal, customer_id: this.customer_id, payby: this.payby, pay: this.pay, due: due, vat: this.vats.vat, total: total }       //due:this.due //due_dynamic
+            var data = { 
+                        invoiceNum: this.getRandomId,
+                        qty: this.qty, 
+                        subtotal: this.subtotal, 
+                        customer_id: this.customer_id, 
+                        payby: this.payby, 
+                        pay: this.pay, 
+                        due: due, 
+                        vat: this.vats.vat, 
+                        total: total 
+                        }       //due:this.due //due_dynamic
 
             axios.post('/api/orderdone/', data)
                 .then((res) => {

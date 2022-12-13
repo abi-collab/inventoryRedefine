@@ -23,9 +23,11 @@
                   <thead>
                     <tr class="bg-info text-white">
                       <th>Name</th>
-                      <th>Total Amount</th>
-                      <th>Pay</th>
-                      <th>Due</th>
+                      <th>Invoice&nbsp;Number</th>
+                      <th>Purchase&nbsp;Date</th>
+                      <th>Total Due</th>
+                      <!-- <th>Pay</th> -->
+                      <!-- <th>Due</th> -->
                       <th>Payby</th>
                       <th>Action</th>
                     </tr>
@@ -34,9 +36,11 @@
                   <tbody>
                     <tr v-for="order in filtersearch" :key="order.id">
                       <td>{{ order.name }}</td>
-                      <td>{{ order.total }}</td>
-                      <td>{{ order.pay }}</td>
-                      <td>{{ order.due }}</td>
+                      <td>{{ order.invoiceNum }}</td>
+                      <td>{{ order.order_date }}</td>
+                      <td>&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
+                      <!-- <td>{{ order.pay }}</td> -->
+                      <!-- <td>{{ order.due }}</td> -->
                       <td>{{ order.payby }}</td>
                       <td>
                         <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info">View</router-link>
