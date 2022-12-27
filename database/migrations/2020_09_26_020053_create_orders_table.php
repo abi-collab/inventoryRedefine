@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_month')->nullable();
             $table->string('order_year')->nullable();
             $table->string('invoiceNum')->nullable();
+            $table->integer('change')->nullable();
             $table->timestamps();
         });
     }

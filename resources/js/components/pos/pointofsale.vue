@@ -116,7 +116,7 @@
 
                                 <div v-if="(pay > subtotal)">
                                     <label>Change</label>
-                                    <input type="text" class="form-control mb-2" required :value="(pay - subtotal)"
+                                    <input type="text" class="form-control mb-2" required :value="sukli(pay,subtotal)"
                                         disabled>
                                 </div>
 
@@ -505,7 +505,8 @@ export default {
             ssImg: '',
             productIds: [],
             serialNumbersForItemQnty: [],
-            invoiceRandomNumber:''
+            invoiceRandomNumber:'',
+            change:0
         }
     },
     computed: {
@@ -598,6 +599,11 @@ export default {
         }
     },
     methods: {
+        sukli(pay,subtotal) {
+            let a = pay - subtotal;
+            this.change = a;
+            return a;
+        },
         async print() {
             await this.$htmlToPaper("printMe");
         },
@@ -703,7 +709,7 @@ export default {
                     if (card.pro_quantity >= this.returnx[0].product_quantity) {
                         Swal.fire({
                             title: 'Oops!',
-                            text: "quantity is greater than the availablesssssssssss",
+                            text: "quantity is greater than the available",
                             icon: "warning",
                         })
                     } else {
@@ -751,7 +757,9 @@ export default {
                         pay: this.pay, 
                         due: due, 
                         vat: this.vats.vat, 
-                        total: total 
+                        total: total,
+                        change: this.change,
+                        // cashTendered: this.
                         }       //due:this.due //due_dynamic
 
             axios.post('/api/orderdone/', data)

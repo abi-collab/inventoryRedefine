@@ -76,9 +76,11 @@
                 Searched Order Details
             </div>
             <div class="card-body">
+                
                 <div class="table-responsive">
+                    <label class="d-inline">Search : </label>   <!-----f----->
+                        <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by Invoice"><br> <br>
                     <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">
-
                         <thead>
                             <tr class="bg-info text-white">
                                 <th>Invoice&nbsp;#</th>
@@ -94,7 +96,7 @@
                         </thead>
 
                         <tbody>
-                            <tr v-for="order in orders" :key="order.id">
+                            <tr v-for="order in filtersearch" :key="order.id">
                                 <td>{{ order.invoiceNum }}</td>
                                 <td>{{ order.name }}</td>
                                 <td style="text-align: right;">{{ order.qty }}</td>
@@ -108,17 +110,16 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tfoot>
+                        <!-- <tfoot>
                             <tr style="border: solid grey 2px">
                                 <td colspan="2" style="text-align: center;"> <b>Totals</b></td>
                                 <td style="text-align: right;">{{ quantity }} </td>
                                 <td style="text-align: right;">&#8369;&nbsp; {{(Number(subtotal).toLocaleString() || 0)}}</td>
-                                <!-- <td></td> -->
+                              
                                 <td style="text-align: right;"> </td>
-                                <!-- <td>{{ pay }} </td> -->
-                                <!-- <td>{{ due }} </td> -->
+                               
                             </tr>
-                        </tfoot>
+                        </tfoot> -->
                     </table>
                 </div>
             </div>
@@ -154,8 +155,9 @@ import moment from 'moment'
         data(){
             return{
                 date :'',
-                orders:'',
+                orders:[],
                 month:'',
+                searchTerm:''
             }
         },
         computed:{
@@ -194,6 +196,14 @@ import moment from 'moment'
                 }
                 return sum;
             },
+            filtersearch(){
+                return this.orders.filter(order => {
+                    //return employee.phone.match(this.searchTerm)
+                    return order.invoiceNum.toLowerCase().match(this.searchTerm.toLowerCase())
+                    // let searchLowerCase = employee.name.toLowerCase()
+                    // return searchLowerCase.match(this.searchTerm.toLowerCase())
+                })
+            }
         },
         methods:{
             searchDate(){

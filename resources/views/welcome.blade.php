@@ -62,7 +62,7 @@
                             </router-link>
                           
                             <router-link class="nav-link" to="/pos">
-                                <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
+                                <!-- <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div> -->
                                 <b> POS </b>
                             </router-link>
                          
@@ -82,9 +82,13 @@
                             </div>
 
                     <!--------------Employee----------->
-                            {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
+                            <router-link class="nav-link" to="/employee">
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> -->
+                                Employees 
+                            </router-link>
+                            <!-- {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" >
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Employee
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -93,10 +97,13 @@
                                     <router-link class="nav-link" to="/store-employee">Add Employee</router-link>
                                     <router-link class="nav-link" to="/employee">All Employee</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
                     <!--------------Supplier----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/supplier">
+                                Suppliers
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Suppliers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -105,11 +112,14 @@
                                     <router-link class="nav-link" to="/store-supplier">Add Supplier</router-link>
                                     <router-link class="nav-link" to="/supplier">All Supplier</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Categories----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/category">
+                                Categories
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Categories
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -118,11 +128,14 @@
                                     <router-link class="nav-link" to="/store-category">Add Category</router-link>
                                     <router-link class="nav-link" to="/category">All Category</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Product----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" >
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/product">
+                                Products
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Products
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -131,11 +144,14 @@
                                     <router-link class="nav-link" to="/store-product">Add Product</router-link>
                                     <router-link class="nav-link" to="/product">All Product</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Customer----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#LayoutsC" aria-expanded="false" aria-controls="collapseLayouts">
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/Customer">
+                                Customers
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#LayoutsC" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Customers
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -144,11 +160,14 @@
                                     <router-link class="nav-link" to="/store-Customer">Add Customer</router-link>
                                     <router-link class="nav-link" to="/Customer">All Customer</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Expense----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" >
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/expense">
+                                Expenses
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Expense
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -157,11 +176,14 @@
                                     <router-link class="nav-link" to="/store-expense">Add Expense</router-link>
                                     <router-link class="nav-link" to="/expense">All Expense</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Salary----------->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                            <router-link class="nav-link" to="/salary">
+                                Salary
+                            </router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -170,7 +192,7 @@
                                     <router-link class="nav-link" to="/given-salary">Pay Salary</router-link>
                                     <router-link class="nav-link" to="/salary">All Salary</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
 
                     <!--------------Stock----------->
                             <router-link class="nav-link collapsed" to="/stock">
@@ -214,7 +236,22 @@
                 $("#leftbar").css("display","");
             }
 
-         
+            ////////cookie
+             let cook = document.cookie;
+             let cook2 = cook.split(';');
+             let role;
+                for( let i = 0 ; i < cook2.length; i ++) {
+                    if(cook2[i].includes('userNow')) {
+                        role = cook2[i];
+                    }
+                }
+                // let roleId = role.split("=");
+                // axios.get('api/auth/login').then(response => {
+                // console.log(response);
+                // })
+
+              ////////cookie
+
         </script>
 
         {{-- <script src="{{ asset('backend/assets/demo/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script> --}}

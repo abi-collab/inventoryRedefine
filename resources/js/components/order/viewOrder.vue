@@ -32,7 +32,7 @@
                                 <li class="list-group-item"> <b>Quantity:</b>{{ orders.qty }}</li>
                                 <li class="list-group-item"> <b>Total Due:</b>  &#8369;&nbsp; {{(Number(orders.sub_total).toLocaleString() || 0)}}</li>
                                 <li class="list-group-item"> <b>Cash Tendered:</b> &#8369;&nbsp; {{(Number(orders.pay).toLocaleString() || 0)}}</li>
-                                <li class="list-group-item"> <b>Change:</b> value here!</li>
+                                <li class="list-group-item"> <b>Change:</b> &#8369;&nbsp; {{(Number(orders.change).toLocaleString() || 0)}}</li>
                                 <li class="list-group-item"> <b>Pay Through:</b> {{ orders.payby }}</li>
                                
                             </ul>

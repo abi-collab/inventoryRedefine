@@ -4002,12 +4002,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
+    var _this = this;
+
     if (!User.loggedIn()) {
       this.$router.push({
         name: '/'
       });
     } // window.location.reload();
 
+
+    axios.get('/api/serials').then(function (_ref) {
+      var data = _ref.data;
+      return _this.soldItems = data;
+    })["catch"]();
   },
   mounted: function mounted() {
     if (!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')) {
@@ -4031,6 +4038,8 @@ __webpack_require__.r(__webpack_exports__);
     this.TodayDue();
     this.TodayExpense();
     this.Stockout();
+    this.allCategory();
+    this.allExpense();
   },
   data: function data() {
     return {
@@ -4038,49 +4047,81 @@ __webpack_require__.r(__webpack_exports__);
       income: '',
       expense: '',
       due: '',
-      products: ''
+      products: '',
+      categories: '',
+      soldItems: '',
+      expenses: []
     };
+  },
+  computed: {
+    expensez: function expensez() {
+      var allCost = [];
+
+      for (var i = 0; i < this.expenses.length; i++) {
+        allCost.push(Number(this.expenses[i].amount));
+      }
+
+      return allCost.reduce(function (acc, val) {
+        return acc + val;
+      }, 0);
+    }
   },
   methods: {
     TodaySell: function TodaySell() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.get('/api/today/sell').then(function (_ref) {
-        var data = _ref.data;
-        return _this.todaysell = data;
+      axios.get('/api/today/sell').then(function (_ref2) {
+        var data = _ref2.data;
+        return _this2.todaysell = data;
       })["catch"]();
     },
     TodayIncome: function TodayIncome() {
-      var _this2 = this;
+      var _this3 = this;
 
-      axios.get('/api/today/income').then(function (_ref2) {
-        var data = _ref2.data;
-        return _this2.income = data;
+      axios.get('/api/today/income').then(function (_ref3) {
+        var data = _ref3.data;
+        return _this3.income = data;
       })["catch"]();
     },
     TodayDue: function TodayDue() {
-      var _this3 = this;
+      var _this4 = this;
 
-      axios.get('/api/today/due').then(function (_ref3) {
-        var data = _ref3.data;
-        return _this3.due = data;
+      axios.get('/api/today/due').then(function (_ref4) {
+        var data = _ref4.data;
+        return _this4.due = data;
       });
     },
     TodayExpense: function TodayExpense() {
-      var _this4 = this;
+      var _this5 = this;
 
-      axios.get('/api/today/expense').then(function (_ref4) {
-        var data = _ref4.data;
-        return _this4.expense = data;
+      axios.get('/api/today/expense').then(function (_ref5) {
+        var data = _ref5.data;
+        return _this5.expense = data;
       });
     },
     Stockout: function Stockout() {
-      var _this5 = this;
+      var _this6 = this;
 
-      axios.get('/api/stockout').then(function (_ref5) {
-        var data = _ref5.data;
-        return _this5.products = data;
+      axios.get('/api/stockout').then(function (_ref6) {
+        var data = _ref6.data;
+        return _this6.products = data;
       });
+    },
+    allCategory: function allCategory() {
+      var _this7 = this;
+
+      axios.get('/api/category/').then(function (_ref7) {
+        var data = _ref7.data;
+        return _this7.categories = data;
+      })["catch"]();
+    },
+    allExpense: function allExpense() {
+      var _this8 = this;
+
+      axios.get('/api/expense/').then(function (_ref8) {
+        var data = _ref8.data;
+        return _this8.expenses = data;
+      })["catch"]();
     }
   }
 });
@@ -4452,6 +4493,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -4471,8 +4513,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       date: '',
-      orders: '',
-      month: ''
+      orders: [],
+      month: '',
+      searchTerm: ''
     };
   },
   computed: {
@@ -4520,29 +4563,38 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return sum;
+    },
+    filtersearch: function filtersearch() {
+      var _this = this;
+
+      return this.orders.filter(function (order) {
+        //return employee.phone.match(this.searchTerm)
+        return order.invoiceNum.toLowerCase().match(_this.searchTerm.toLowerCase()); // let searchLowerCase = employee.name.toLowerCase()
+        // return searchLowerCase.match(this.searchTerm.toLowerCase())
+      });
     }
   },
   methods: {
     searchDate: function searchDate() {
-      var _this = this;
+      var _this2 = this;
 
       var data = {
         date: this.date
       };
       axios.post('/api/search/order', data).then(function (_ref) {
         var data = _ref.data;
-        return _this.orders = data;
+        return _this2.orders = data;
       })["catch"]();
     },
     searchMonth: function searchMonth() {
-      var _this2 = this;
+      var _this3 = this;
 
       var data = {
         month: this.month
       };
       axios.post('/api/search/month', data).then(function (_ref2) {
         var data = _ref2.data;
-        return _this2.orders = data;
+        return _this3.orders = data;
       });
     }
   }
@@ -5352,7 +5404,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ssImg: '',
       productIds: [],
       serialNumbersForItemQnty: [],
-      invoiceRandomNumber: ''
+      invoiceRandomNumber: '',
+      change: 0
     };
   },
   computed: {
@@ -5462,6 +5515,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    sukli: function sukli(pay, subtotal) {
+      var a = pay - subtotal;
+      this.change = a;
+      return a;
+    },
     print: function print() {
       var _this5 = this;
 
@@ -5588,7 +5646,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           if (card.pro_quantity >= this.returnx[0].product_quantity) {
             Swal.fire({
               title: 'Oops!',
-              text: "quantity is greater than the availablesssssssssss",
+              text: "quantity is greater than the available",
               icon: "warning"
             });
           } else {
@@ -5641,7 +5699,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         pay: this.pay,
         due: due,
         vat: this.vats.vat,
-        total: total
+        total: total,
+        change: this.change // cashTendered: this.
+
       }; //due:this.due //due_dynamic
 
       axios.post('/api/orderdone/', data).then(function (res) {
@@ -12439,7 +12499,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#em_photo[data-v-fa6affac]{\n    height: 40px;\n    width: 40px;\n}\n", ""]);
+exports.push([module.i, "\n#em_photo[data-v-fa6affac]{\n    height: 40px;\n    width: 40px;\n}\na[data-v-fa6affac] {\n    letter-spacing: 1px;\n}\n", ""]);
 
 // exports
 
@@ -85741,56 +85801,152 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", { staticClass: "mt-4" }, [_vm._v("Dashboard")]),
-    _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xl-3 col-md-6" }, [
-        _c("div", { staticClass: "card bg-primary text-white mb-4" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(_vm._s(_vm.todaysell) + " Taka")
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
-        ])
+        _c(
+          "div",
+          { staticClass: "card mb-4" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h4", [
+                _vm._v(
+                  " ₱ " + _vm._s(Number(_vm.income).toLocaleString() || 0) + " "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass:
+                  "card-footer d-flex align-items-center justify-content-between",
+                staticStyle: { color: "black" },
+                attrs: { to: "/searchorder" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "stretched-link", attrs: { href: "#" } },
+                  [_vm._v("Daily Sales")]
+                ),
+                _vm._v(" "),
+                _c("div", [_c("i", { staticClass: "fas fa-angle-right" })])
+              ]
+            )
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-6" }, [
-        _c("div", { staticClass: "card bg-success text-white mb-4" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(_vm._s(_vm.income) + " Taka")
-          ]),
-          _vm._v(" "),
-          _vm._m(2)
-        ])
+        _c(
+          "div",
+          { staticClass: "card mb-4" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h4", [_vm._v(_vm._s(_vm.categories.length) + " ")])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass:
+                  "card-footer d-flex align-items-center justify-content-between",
+                staticStyle: { color: "black" },
+                attrs: { to: "/category" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "stretched-link", attrs: { href: "#" } },
+                  [_vm._v("Stock Category")]
+                ),
+                _vm._v(" "),
+                _c("div", [_c("i", { staticClass: "fas fa-angle-right" })])
+              ]
+            )
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-6" }, [
-        _c("div", { staticClass: "card bg-info text-white mb-4" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(_vm._s(_vm.due) + " Taka")
-          ]),
-          _vm._v(" "),
-          _vm._m(3)
-        ])
+        _c(
+          "div",
+          { staticClass: "card mb-4" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h4", [_vm._v(_vm._s(_vm.soldItems.length) + "  ")])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass:
+                  "card-footer d-flex align-items-center justify-content-between",
+                staticStyle: { color: "black" },
+                attrs: { to: "/sold-items" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "stretched-link", attrs: { href: "#" } },
+                  [_vm._v("Items Sold")]
+                ),
+                _vm._v(" "),
+                _c("div", [_c("i", { staticClass: "fas fa-angle-right" })])
+              ]
+            )
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-6" }, [
-        _c("div", { staticClass: "card bg-danger text-white mb-4" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(_vm._s(_vm.expense) + " Taka")
-          ]),
-          _vm._v(" "),
-          _vm._m(4)
-        ])
+        _c(
+          "div",
+          { staticClass: "card mb-4" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h4", [
+                _vm._v(
+                  "₱ " +
+                    _vm._s(Number(_vm.expensez).toLocaleString() || 0) +
+                    " "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass:
+                  "card-footer d-flex align-items-center justify-content-between",
+                staticStyle: { color: "black" },
+                attrs: { to: "/expense" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "stretched-link", attrs: { href: "#" } },
+                  [_vm._v("Expense")]
+                ),
+                _vm._v(" "),
+                _c("div", [_c("i", { staticClass: "fas fa-angle-right" })])
+              ]
+            )
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row my-3" }, [
       _c("div", { staticClass: "col-xl-12" }, [
         _c("div", { staticClass: "card border-dark" }, [
-          _vm._m(5),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "card-body pt-0" }, [
@@ -85803,7 +85959,7 @@ var render = function() {
                     attrs: { id: "", width: "100%", cellspacing: "0" }
                   },
                   [
-                    _vm._m(6),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -85855,103 +86011,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ol", { staticClass: "breadcrumb mb-4" }, [
-      _c("li", { staticClass: "breadcrumb-item active" }, [
-        _vm._v("Dashboard - Inventory - Laravel - Vue")
-      ])
+    return _c("ol", { staticClass: "breadcrumb mt-4" }, [
+      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Dashboard")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-footer d-flex align-items-center justify-content-between"
-      },
-      [
-        _c(
-          "a",
-          { staticClass: "text-white stretched-link", attrs: { href: "#" } },
-          [_vm._v("Today Sell")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-white" }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-footer d-flex align-items-center justify-content-between"
-      },
-      [
-        _c(
-          "a",
-          { staticClass: " text-white stretched-link", attrs: { href: "#" } },
-          [_vm._v("Today Income")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: " text-white" }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-footer d-flex align-items-center justify-content-between"
-      },
-      [
-        _c(
-          "a",
-          { staticClass: " text-white stretched-link", attrs: { href: "#" } },
-          [_vm._v("Today Due")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: " text-white" }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-footer d-flex align-items-center justify-content-between"
-      },
-      [
-        _c(
-          "a",
-          { staticClass: " text-white stretched-link", attrs: { href: "#" } },
-          [_vm._v("Today Expense")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: " text-white" }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -86528,6 +86590,36 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("div", { staticClass: "table-responsive" }, [
+                  _c("label", { staticClass: "d-inline" }, [
+                    _vm._v("Search : ")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchTerm,
+                        expression: "searchTerm"
+                      }
+                    ],
+                    staticClass: "form-control d-inline",
+                    staticStyle: { width: "200px" },
+                    attrs: { type: "text", placeholder: "Search by Invoice" },
+                    domProps: { value: _vm.searchTerm },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchTerm = $event.target.value
+                      }
+                    }
+                  }),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
                   _c(
                     "table",
                     {
@@ -86540,7 +86632,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.orders, function(order) {
+                        _vm._l(_vm.filtersearch, function(order) {
                           return _c("tr", { key: order.id }, [
                             _c("td", [_vm._v(_vm._s(order.invoiceNum))]),
                             _vm._v(" "),
@@ -86590,38 +86682,7 @@ var render = function() {
                           ])
                         }),
                         0
-                      ),
-                      _vm._v(" "),
-                      _c("tfoot", [
-                        _c(
-                          "tr",
-                          { staticStyle: { border: "solid grey 2px" } },
-                          [
-                            _vm._m(3),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "right" } },
-                              [_vm._v(_vm._s(_vm.quantity) + " ")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "right" } },
-                              [
-                                _vm._v(
-                                  "₱  " +
-                                    _vm._s(
-                                      Number(_vm.subtotal).toLocaleString() || 0
-                                    )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { "text-align": "right" } })
-                          ]
-                        )
-                      ])
+                      )
                     ]
                   )
                 ])
@@ -86685,16 +86746,6 @@ var staticRenderFns = [
         _c("td", [_vm._v("Action")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      { staticStyle: { "text-align": "center" }, attrs: { colspan: "2" } },
-      [_c("b", [_vm._v("Totals")])]
-    )
   }
 ]
 render._withStripped = true
@@ -86942,7 +86993,13 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(2),
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _c("b", [_vm._v("Change:")]),
+                    _vm._v(
+                      " ₱  " +
+                        _vm._s(Number(_vm.orders.change).toLocaleString() || 0)
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("li", { staticClass: "list-group-item" }, [
                     _c("b", [_vm._v("Pay Through:")]),
@@ -86967,7 +87024,7 @@ var render = function() {
         "div",
         { staticClass: "card col-lg-12 border-secondary shadow mb-3" },
         [
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
@@ -86979,7 +87036,7 @@ var render = function() {
                   attrs: { id: "", width: "100%", cellspacing: "0" }
                 },
                 [
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -87053,15 +87110,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "list-group-item bg-info text-white" }, [
       _c("b", [_vm._v("Customer Details")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "list-group-item" }, [
-      _c("b", [_vm._v("Change:")]),
-      _vm._v(" value here!")
     ])
   },
   function() {
@@ -87398,7 +87446,7 @@ var render = function() {
                         _c("input", {
                           staticClass: "form-control mb-2",
                           attrs: { type: "text", required: "", disabled: "" },
-                          domProps: { value: _vm.pay - _vm.subtotal }
+                          domProps: { value: _vm.sukli(_vm.pay, _vm.subtotal) }
                         })
                       ])
                     : _vm._e()

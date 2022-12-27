@@ -2,45 +2,45 @@
 <template>
     <div>   <!-----total_<div>----->
 <!--------------------Dashboard------------------------>
-<h1 class="mt-4">Dashboard</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Dashboard - Inventory - Laravel - Vue</li>
+<!-- <h1 class="mt-4">Dashboard</h1> -->
+<ol class="breadcrumb mt-4">
+    <li class="breadcrumb-item active">Dashboard</li>
 </ol>
 <div class="row">
     <div class="col-xl-3 col-md-6">
-        <div class="card bg-primary text-white mb-4">
-            <div class="card-body">{{ todaysell }} Taka</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="text-white stretched-link" href="#">Today Sell</a>
-                <div class="text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
+        <div class="card mb-4">
+            <div class="card-body"><h4> &#8369; {{ (Number(income).toLocaleString() || 0)}} </h4></div>
+            <router-link to="/searchorder" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+                <a class="stretched-link" href="#">Daily Sales</a>
+                <div><i class="fas fa-angle-right"></i></div>
+            </router-link>
+        </div>
+    </div >
+    <div class="col-xl-3 col-md-6">
+        <div class="card mb-4">
+            <div class="card-body"><h4>{{ categories.length }} </h4></div>
+            <router-link to="/category" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+                <a class="stretched-link" href="#">Stock Category</a>
+                <div><i class="fas fa-angle-right"></i></div>
+            </router-link>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card bg-success text-white mb-4">
-            <div class="card-body">{{ income }} Taka</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class=" text-white stretched-link" href="#">Today Income</a>
-                <div class=" text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
+        <div class="card mb-4">
+            <div class="card-body"><h4>{{ soldItems.length }}  </h4></div>
+            <router-link to="/sold-items" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+                <a class="stretched-link" href="#">Items Sold</a>
+                <div><i class="fas fa-angle-right"></i></div>
+            </router-link>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card bg-info text-white mb-4">
-            <div class="card-body">{{ due }} Taka</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class=" text-white stretched-link" href="#">Today Due</a>
-                <div class=" text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card bg-danger text-white mb-4">
-            <div class="card-body">{{ expense }} Taka</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class=" text-white stretched-link" href="#">Today Expense</a>
-                <div class=" text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
+        <div class="card mb-4">
+            <div class="card-body"><h4>&#8369; {{ (Number(expensez).toLocaleString() || 0)}} </h4></div>
+            <router-link to="/expense" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+                <a class="stretched-link" href="#">Expense</a>
+                <div><i class="fas fa-angle-right"></i></div>
+            </router-link>
         </div>
     </div>
 </div>      <!------End_Dashboard------>
@@ -98,6 +98,9 @@ import Cookies from 'js-cookie';
                 this.$router.push({name : '/'})
             }
             // window.location.reload();
+            axios.get('/api/serials')
+                .then(({data}) => (this.soldItems = data))
+                .catch()
         },
         mounted(){
             if(!Cookies.get('usersname')) {
@@ -118,6 +121,9 @@ import Cookies from 'js-cookie';
             this.TodayDue();
             this.TodayExpense();
             this.Stockout();
+
+            this.allCategory();
+            this.allExpense();
             
         },
         data(){
@@ -127,6 +133,18 @@ import Cookies from 'js-cookie';
                 expense:'',
                 due:'',
                 products:'',
+                categories:'',
+                soldItems:'',
+                expenses:[]
+            }
+        },
+        computed: {
+            expensez() {
+                let allCost = [];
+                for(let i=0; i < this.expenses.length; i++) {
+                    allCost.push(Number(this.expenses[i].amount));
+                }
+                return allCost.reduce(function(acc, val) { return acc + val; }, 0);
             }
         },
         methods:{
@@ -151,6 +169,17 @@ import Cookies from 'js-cookie';
             Stockout(){
                 axios.get('/api/stockout')
                     .then(({data}) => (this.products = data))
+            }, 
+
+            allCategory(){
+                axios.get('/api/category/')
+                    .then(({data}) => (this.categories = data))
+                    .catch()
+            },
+            allExpense(){
+                axios.get('/api/expense/')
+                .then(({data}) => (this.expenses = data))
+                .catch()
             },
         }
     }
@@ -162,5 +191,8 @@ import Cookies from 'js-cookie';
     #em_photo{
         height: 40px;
         width: 40px;
+    }
+    a {
+        letter-spacing: 1px;
     }
 </style>
