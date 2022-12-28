@@ -3,13 +3,13 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">Orders / Search Order</li>
         </ol>
         <!-- Icon Cards-->
         <div class="row container-fluid">
-            <div class="card col-lg-12 border-secondary shadow">
+            <div class="card col-lg-12 border-light shadow">
                 <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Search Orders
@@ -17,7 +17,7 @@
                 </div>
 
 <!------------Search By Date---------------->
-<div class="card-body">
+<div class="card-body p-0 m-0">
     <div class="row">
         <div class="col-lg-6">
             <form @submit.prevent="searchDate">
@@ -70,17 +70,17 @@
 
 <!-----------Search_Result------------------>
     <div class="row container-fluid pt-4">
-        <div class="card col-lg-12 border-secondary shadow mb-3">
+        <div class="card col-lg-12 border-light shadow mb-3">
             <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                 <i class="fas fa-chart-area"></i>
                 Searched Order Details
             </div>
-            <div class="card-body">
+            <div class="card-body p-0 m-0">
                 
                 <div class="table-responsive">
                     <label class="d-inline">Search : </label>   <!-----f----->
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by Invoice"><br> <br>
-                    <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
                         <thead>
                             <tr class="bg-info text-white">
                                 <th>Invoice&nbsp;#</th>
@@ -123,7 +123,7 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            <div class="card-footer small text-muted"></div>
         </div>
     </div>
     <!--------End_Search_Result------------>

@@ -4371,7 +4371,7 @@ input[type=button].btn-block {
   border-bottom-left-radius: calc(0.25rem - 1px);
 }
 
-.card-body {
+.card-body p-0 m-0 {
   flex: 1 1 auto;
   min-height: 1px;
   padding: 1.25rem;
@@ -6222,11 +6222,11 @@ button.bg-dark:focus {
   border-left: 0 !important;
 }
 
-.border-secondary {
+.border-light {
   border-color: #007bff !important;
 }
 
-.border-secondary {
+.border-light {
   border-color: #6c757d !important;
 }
 
@@ -6250,7 +6250,7 @@ button.bg-dark:focus {
   border-color: #f8f9fa !important;
 }
 
-.border-dark {
+.border-light {
   border-color: #343a40 !important;
 }
 

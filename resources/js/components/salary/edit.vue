@@ -3,19 +3,19 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">
           <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            <router-link to="/home">Dashboard</router-link>
           </li>
           <li class="breadcrumb-item active">All Salary / Salary-pay / Edit</li>
         </ol>
         <!-- Icon Cards-->
        <div class="row container">
-         <div class="card col-lg-12 border-secondary shadow">
+         <div class="card col-lg-12 border-light shadow">
           <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
             <i class="fas fa-chart-area"></i>
             Salary Update
           </div>
 
-          <div class="card-body">
+          <div class="card-body p-0 m-0">
           	  <form @submit.prevent="SalaryUpdate" >
                 <div class="form-group">
 	              <div class="form-row">
@@ -70,7 +70,7 @@
                <button type="submit" class="btn btn-success">Update</button>
               </form>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          <div class="card-footer small text-muted"></div>
          </div>
        </div>
    </div>

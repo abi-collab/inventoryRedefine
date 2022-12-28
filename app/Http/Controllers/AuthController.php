@@ -30,14 +30,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validateData = $request->validate([
-            'email' => ['required', 'string', 'email'],
+            'username' => ['required', 'string', 'max:255'],
             'password' => ['required', 'min:4'],
         ]);
 
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password is Invalid'], 401);
+            return response()->json(['error' => 'Username or Password is Invalid'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -80,12 +80,14 @@ class AuthController extends Controller
     {
         $validateData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:4', 'confirmed'],
         ]);
 
         $data = array();
-        $data['name'] = $request->name;
+        $data['name'] = $request->username;
+        $data['username'] = $request->username;
         $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
 

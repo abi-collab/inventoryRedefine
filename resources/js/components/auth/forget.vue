@@ -3,7 +3,7 @@
         <div class="container">
 <div class="row justify-content-left">
     <div class="col-lg-5 offset-2 pt-5 mt-2">
-        <div class="card shadow-lg border-secondary rounded-lg mt-5">
+        <div class="card shadow-lg border-light rounded-lg mt-5">
             <div class="card-header"><h3 class="text-center text-dark font-weight-bold my-3">Forget Password</h3></div>
             <div class="card-body">
                 <form>

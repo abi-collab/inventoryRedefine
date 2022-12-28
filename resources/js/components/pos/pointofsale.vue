@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3 noPrint">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">Point Of Sale</li>
         </ol>
@@ -16,7 +16,7 @@
                     <b>Invoice #: {{ getRandomId }}</b>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0 m-0">
                     <table class="table table-sm table-striped">
                         <thead>
                             <tr>
@@ -229,13 +229,13 @@
 
 
             <!--------------Right_Side_"Product"----------1st_task----------1----->
-            <div class="card col-lg-6 border-secondary">
+            <div class="card col-lg-6 border-light">
                 <div class="card-header text-dark">
                     <i class="fas fa-chart-area"></i>
                     <b>Products</b>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0 m-0">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
@@ -263,7 +263,7 @@
                                         <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top mx-auto w-full"
                                                 style="height: 100px;">
-                                            <div class="card-body">
+                                            <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
                                                 <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp; {{
                                                         (Number(product.selling_price).toLocaleString() || 0)
@@ -284,7 +284,7 @@
                                         <div class="card" style="width: 9rem; height: 210px;">
                                             <img :src="product.image" class="card-img-top"
                                                 style="height: 100px; width: 100px;">
-                                            <div class="card-body">
+                                            <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
 
                                                 <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp;{{
@@ -317,7 +317,7 @@
                                         <div class="card" style="width: 9rem; height: 180px;">
                                             <img :src="getproduct.image" class="card-img-top"
                                                 style="height: 100px; width: 100px;">
-                                            <div class="card-body">
+                                            <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
                                                     v-if="getproduct.product_quantity >= 1"> Availble ({{
@@ -334,7 +334,7 @@
                                         <div class="card" style="width: 9rem; height: 180px;">
                                             <img :src="getproduct.image" class="card-img-top"
                                                 style="height: 100px; width: 100px;">
-                                            <div class="card-body">
+                                            <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
                                                     v-if="getproduct.product_quantity >= 1"> Availble ({{

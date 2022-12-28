@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">All Product</li>
         </ol>
@@ -14,12 +14,12 @@
                 All Product
                 <router-link to="/store-product" class="btn btn-dark" id="add_new"> Add New</router-link>
             </div>
-            <div class="card-body pt-0">
-                <div class="card-body">
+            <div class="card-body p-0 m-0 pt-0">
+                <div class="card-body p-0 m-0">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
-                        <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">
+                        <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
 
                             <thead>
                             <tr class="bg-info text-white">
@@ -54,7 +54,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
     </div>

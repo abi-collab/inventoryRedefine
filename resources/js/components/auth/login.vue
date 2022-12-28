@@ -3,16 +3,16 @@
         <div class="container">
 <div class="row justify-content-left">
     <div class="col-lg-5 offset-2">
-        <div class="card shadow-lg border-secondary rounded-lg mt-5">
+        <div class="card shadow-lg border-light rounded-lg mt-5">
             <div class="card-header"><h3 class="text-center text-dark font-weight-bold my-3">Login</h3></div>
             <div class="card-body">
 
                 <form @submit.prevent="login">      <!--------------------------------------------->
                     <div class="form-group">
-                        <label class="mb-1" for="inputEmailAddress">Email</label>
-                        <input class="form-control py-4" id="inputEmailAddress" type="text" placeholder="Enter Email Address" v-model="form.email"/>     <!------------------------------------>
+                        <label class="mb-1" for="inputEmailAddress">Username</label>
+                        <input class="form-control py-4" id="inputEmailAddress" type="text" placeholder="Enter Username" v-model="form.username"/>     <!------------------------------------>
 
-                        <small class="text-danger" v-if="errors.email" style="color:red">{{ errors.email[0] }}</small>  <!---------->
+                        <!-- <small class="text-danger" v-if="errors.email" style="color:red">{{ errors.email[0] }}</small>   -->
                     </div>
 
                     <div class="form-group">
@@ -47,7 +47,6 @@
     </div>
 </template>
 
-
 <script> 
 import Cookies from 'js-cookie';           //-------------------------------------------
     export default {
@@ -60,7 +59,7 @@ import Cookies from 'js-cookie';           //-----------------------------------
         data(){
             return{
                 form:{
-                    email: null,        //--OR-- ''(blank)---
+                    username: null,        //--OR-- ''(blank)---
                     password: null
                 },
                 errors:{}
@@ -82,13 +81,13 @@ import Cookies from 'js-cookie';           //-----------------------------------
                     this.$router.push({name:'home'})    // or, //this.$router.push('/home')
                 })
                 //.catch(error => console.log(error.response.data))
-                .catch(error => this.errors = error.response.data.errors)
-                .catch(
+                .catch(error => {
+                    this.errors = error.response.data.errors
                     Toast.fire({
                         icon: 'warning',
                         title: 'Email or Password Invalid'
                     })
-                )
+                })
             }
         }
     }

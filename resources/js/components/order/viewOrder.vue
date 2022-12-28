@@ -3,19 +3,19 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">Order / Order Details</li>
         </ol>
 
         <!-----Order------->
         <div class="row container-fluid">
-            <div class="card col-lg-12 border-secondary shadow mb-3">
+            <div class="card col-lg-12 border-light shadow mb-3">
                 <div class="card-header text-dark" style="font-size: 20px; font-weight: 600;">
                     <i class="fas fa-chart-area"></i>
                     Order invoice No.&nbsp;:&nbsp;<span style="letter-spacing: 2px;">{{orders.invoiceNum}}</span>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0 m-0">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-6">
                             <ul class="list-group">
@@ -40,23 +40,23 @@
                        
                     </div>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div> <br>
 
 
         <!--------Order Details--------->
         <div class="row container-fluid">
-            <div class="card col-lg-12 border-secondary shadow mb-3">
+            <div class="card col-lg-12 border-light shadow mb-3">
                 <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Order Details
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0 m-0">
                     <div class="table-responsive">
                         <!-- <label class="d-inline">Search : </label>
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br> -->
-                        <table class="table table-bordered table-striped table-hover table-warning border-dark" id="" width="100%" cellspacing="0">
+                        <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
 
                             <thead>
                                 <tr class="bg-info text-white">
@@ -82,7 +82,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
 

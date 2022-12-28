@@ -3,21 +3,21 @@
 		<!-- Breadcrumbs-->
 		<ol class="breadcrumb mt-3">		<!--------f-------->
 			<li class="breadcrumb-item">
-				<a href="#">Dashboard</a>
+				<router-link to="/home">Dashboard</router-link>
 			</li>
 			<li class="breadcrumb-item active">Employee / Add</li>
 		</ol>
 
 		<!-- Icon Cards-->
 		<div class="row container">
-			<div class="card col-lg-12 border-secondary shadow">	    <!--------f------->
+			<div class="card col-lg-12 border-light shadow">	    <!--------f------->
 				<div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">  <!------f----->
 					<i class="fas fa-chart-area"></i>
 					Employee Insert
 					<router-link to="/employee" class="btn btn-dark" id="add_new"> All Employee</router-link>  <!----------->
 				</div>
 
-				<div class="card-body">
+				<div class="card-body p-0 m-0">
 					<form @submit.prevent="employeeInsert" enctype="multipart/form-data">	<!------------------------>
 						<div class="form-group">
 							<div class="form-row">
@@ -96,7 +96,7 @@
 						<button type="submit" class="btn btn-success">Submit</button>
 					</form>
 				</div>
-				<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>{{nameIs}} - {{form2.activity}}
 	</div>

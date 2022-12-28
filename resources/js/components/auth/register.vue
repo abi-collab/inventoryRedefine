@@ -3,7 +3,7 @@
         <div class="container">
 <div class="row justify-content-left">
     <div class="col-lg-7 offset-1">
-        <div class="card shadow-lg border-secondary rounded-lg mt-5">
+        <div class="card shadow-lg border-light rounded-lg mt-5">
             <div class="card-header"><h3 class="text-center text-dark font-weight-bold my-4">Register New Account</h3></div>
             <div class="card-body">
 
@@ -17,6 +17,11 @@
                                 <small class="text-danger" v-if="errors.name" style="color:red">{{ errors.name[0] }}</small>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-1" for="inputUsername">Email</label>
+                        <input class="form-control py-4" id="inputUsername" type="text" placeholder="Enter Username" v-model="form.username"/>
                     </div>
 
                     <div class="form-group">
@@ -75,6 +80,7 @@
             return {
                 form:{
                     name:null,
+                    username:null,
                     email:null,
                     password:null,
                     password_confirmation:null

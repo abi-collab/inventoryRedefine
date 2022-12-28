@@ -1,9 +1,9 @@
 <template>
-    <div class="border-dark">
+    <div class="border-light">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb mt-3">    <!-----f----->
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">All Employee</li>
         </ol>
@@ -14,12 +14,12 @@
                 All Employee
                 <router-link to="/store-employee" class="btn btn-dark" id="add_new"> Add Employee</router-link>  <!-----f----->
             </div>
-            <div class="card-body pt-0">       <!-----f----->
-                <div class="card-body">
+            <div class="card-body p-0 m-0 pt-0">       <!-----f----->
+                <div class="card-body p-0 m-0">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>   <!-----f----->
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by name"><br> <br>    <!-----f----->
-                        <table class="table table-bordered table-striped table-hover table-warning border-secondary" id="" width="100%" cellspacing="0">  <!-----f----->
+                        <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">  <!-----f----->
 
                             <thead>
                             <tr class="bg-info text-white"> <!-----f----->
@@ -50,7 +50,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
     </div>

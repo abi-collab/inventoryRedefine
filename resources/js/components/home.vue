@@ -10,7 +10,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div class="card-body"><h4> &#8369; {{ (Number(income).toLocaleString() || 0)}} </h4></div>
-            <router-link to="/searchorder" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+            <router-link to="/order" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
                 <a class="stretched-link" href="#">Daily Sales</a>
                 <div><i class="fas fa-angle-right"></i></div>
             </router-link>
@@ -48,13 +48,13 @@
 <!------Stock_Out_Products------>
 <div class="row my-3">
     <div class="col-xl-12">
-        <div class="card border-dark">
+        <div class="card border-light">
             <div class="card-header text-dark font-weight-bold">
                 <i class="fas fa-chart-area mr-1"></i>
                 Stock Out Products
             </div>
-            <div class="card-body">
-                <div class="card-body pt-0">
+            <div class="card-body p-0 m-0 ">
+                <div class="card-body p-0 m-0 ">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover table-warning" id="" width="100%" cellspacing="0">
                             <thead>
