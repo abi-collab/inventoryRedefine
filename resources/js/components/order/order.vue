@@ -13,7 +13,7 @@
             <i class="fas fa-chart-area"></i>
             Today's Order-Table
           </div>
-          <div class="card-body p-0 m-0 pt-0">
+          <div class="card-body p-0 m-0">
             <div class="card-body p-0 m-0">
               <div class="table-responsive">
                 <label class="d-inline">Search : </label>

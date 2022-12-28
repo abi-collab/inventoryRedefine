@@ -11,7 +11,7 @@
 		<!-- Icon Cards-->
 		<div class="row container">
 			<div class="card col-lg-12 border-light shadow">	    <!--------f------->
-				<div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">  <!------f----->
+				<div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">  <!------f----->
 					<i class="fas fa-chart-area"></i>
 					Employee Insert
 					<router-link to="/employee" class="btn btn-dark" id="add_new"> All Employee</router-link>  <!----------->
@@ -98,7 +98,8 @@
 				</div>
 				<div class="card-footer small text-muted"></div>
 			</div>
-		</div>{{nameIs}} - {{form2.activity}}
+		</div>
+		<!-- {{nameIs}} - {{form2.activity}} -->
 	</div>
 	
 </template>

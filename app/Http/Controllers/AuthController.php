@@ -51,6 +51,7 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+       
     }
 
     /**
@@ -83,6 +84,7 @@ class AuthController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:4', 'confirmed'],
+            'user_role' => ['required', 'string', 'max:255'],
         ]);
 
         $data = array();
@@ -90,6 +92,7 @@ class AuthController extends Controller
         $data['username'] = $request->username;
         $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
+        $data['user_role'] = $request->user_role;
 
         DB::table('users')->insert($data);
 

@@ -230,7 +230,7 @@
 
             <!--------------Right_Side_"Product"----------1st_task----------1----->
             <div class="card col-lg-6 border-light">
-                <div class="card-header text-dark">
+                <div class="card-header text-dark mb-4">
                     <i class="fas fa-chart-area"></i>
                     <b>Products</b>
                 </div>

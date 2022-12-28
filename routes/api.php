@@ -25,9 +25,10 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     // Route::get('me', 'AuthController@me');
+    // Route::get('me', 'AuthController@respondWithToken');
 });
 
-Route::Get('/me', 'AuthController@me');
+// Route::get('/me', 'AuthController@me');
 //----------------------For_CRUD-----------------------------------
 Route::apiResource('/employee','Api\EmployeeController');      //--Employee
 Route::apiResource('/supplier','Api\SupplierController');      //--Supplier

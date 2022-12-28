@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="mb-1" for="inputUsername">Email</label>
+                        <label class="mb-1" for="inputUsername">Username</label>
                         <input class="form-control py-4" id="inputUsername" type="text" placeholder="Enter Username" v-model="form.username"/>
                     </div>
 
@@ -45,14 +45,26 @@
                             <div class="form-group">
                                 <label class="mb-1" for="inputConfirmPassword">Confirm Password</label>
                                 <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirm Password" v-model="form.password_confirmation"/>
-
-                                <!-- <small class="text-danger" v-if="errors.password_confirmation" style="color:red">{{ errors.password_confirmation[0] }}</small> -->
                             </div>
+                        </div>
+                        <div class="col-md-6" v-if="form.name && form.username && form.email && form.password && form.password_confirmation">
+                            <div class="form-group">
+                                <label class="mb-1" for="inputConfirmPassword">Admin's Permission Code</label>
+                                <input class="form-control py-4" id="inputConfirmPassword" type="password" v-model="adminCode"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6" v-if="adminCode == 'admin321'">
+                            <label class="mb-1" for="userRole">Role</label>
+                                <select class="form-select py-3" style="width: 100%;" id="userRole" v-model="form.user_role">
+                                    <option value="2">standard user</option>
+                                    <option value="1">admin</option>
+                                </select>
+                         
                         </div>
                     </div>
 
                     <div class="form-group mt-4 mb-0">
-                        <button type="submit" class="btn btn-dark btn-block"> Sign up </button>
+                        <button type="submit" class="btn btn-dark btn-block" v-if="adminCode == 'admin321'"> Sign up </button>
                     </div>
                 </form>
             </div>
@@ -83,9 +95,11 @@
                     username:null,
                     email:null,
                     password:null,
-                    password_confirmation:null
+                    password_confirmation:null,
+                    user_role:null
                 },
                 errors:{},
+                adminCode:''
             }
         },
         methods:{

@@ -14,7 +14,7 @@
                 All Employee
                 <router-link to="/store-employee" class="btn btn-dark" id="add_new"> Add Employee</router-link>  <!-----f----->
             </div>
-            <div class="card-body p-0 m-0 pt-0">       <!-----f----->
+            <div class="card-body p-0 m-0">       <!-----f----->
                 <div class="card-body p-0 m-0">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>   <!-----f----->

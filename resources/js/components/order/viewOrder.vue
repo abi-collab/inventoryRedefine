@@ -11,7 +11,7 @@
         <!-----Order------->
         <div class="row container-fluid">
             <div class="card col-lg-12 border-light shadow mb-3">
-                <div class="card-header text-dark" style="font-size: 20px; font-weight: 600;">
+                <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 600;">
                     <i class="fas fa-chart-area"></i>
                     Order invoice No.&nbsp;:&nbsp;<span style="letter-spacing: 2px;">{{orders.invoiceNum}}</span>
                 </div>
@@ -48,7 +48,7 @@
         <!--------Order Details--------->
         <div class="row container-fluid">
             <div class="card col-lg-12 border-light shadow mb-3">
-                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
+                <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Order Details
                 </div>

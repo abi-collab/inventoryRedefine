@@ -9,7 +9,7 @@
         </ol>
         <!-- Icon Cards-->
        <div class="row card container ml-3 border-light shadow mb-3">
-          <div class="card-header text-dark" style="font-size: 20px; font-weight:700;">
+          <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
             <i class="fas fa-chart-area"></i>
             Employee Salary Deatils
           </div>

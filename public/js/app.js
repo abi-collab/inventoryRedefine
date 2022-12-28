@@ -2193,6 +2193,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (User.loggedIn()) {
@@ -2208,9 +2220,11 @@ __webpack_require__.r(__webpack_exports__);
         username: null,
         email: null,
         password: null,
-        password_confirmation: null
+        password_confirmation: null,
+        user_role: null
       },
-      errors: {}
+      errors: {},
+      adminCode: ''
     };
   },
   methods: {
@@ -3030,6 +3044,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -82904,7 +82919,7 @@ var render = function() {
                           staticClass: "mb-1",
                           attrs: { for: "inputUsername" }
                         },
-                        [_vm._v("Email")]
+                        [_vm._v("Username")]
                       ),
                       _vm._v(" "),
                       _c("input", {
@@ -83079,10 +83094,124 @@ var render = function() {
                             }
                           })
                         ])
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.form.name &&
+                      _vm.form.username &&
+                      _vm.form.email &&
+                      _vm.form.password &&
+                      _vm.form.password_confirmation
+                        ? _c("div", { staticClass: "col-md-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "mb-1",
+                                  attrs: { for: "inputConfirmPassword" }
+                                },
+                                [_vm._v("Admin's Permission Code")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.adminCode,
+                                    expression: "adminCode"
+                                  }
+                                ],
+                                staticClass: "form-control py-4",
+                                attrs: {
+                                  id: "inputConfirmPassword",
+                                  type: "password"
+                                },
+                                domProps: { value: _vm.adminCode },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.adminCode = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.adminCode == "admin321"
+                        ? _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "mb-1",
+                                attrs: { for: "userRole" }
+                              },
+                              [_vm._v("Role")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.user_role,
+                                    expression: "form.user_role"
+                                  }
+                                ],
+                                staticClass: "form-select py-3",
+                                staticStyle: { width: "100%" },
+                                attrs: { id: "userRole" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "user_role",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("standard user")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("admin")
+                                ])
+                              ]
+                            )
+                          ])
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c("div", { staticClass: "form-group mt-4 mb-0" }, [
+                      _vm.adminCode == "admin321"
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-dark btn-block",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v(" Sign up ")]
+                          )
+                        : _vm._e()
+                    ])
                   ]
                 )
               ]),
@@ -83115,18 +83244,6 @@ var staticRenderFns = [
       _c("h3", { staticClass: "text-center text-dark font-weight-bold my-4" }, [
         _vm._v("Register New Account")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mt-4 mb-0" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-dark btn-block", attrs: { type: "submit" } },
-        [_vm._v(" Sign up ")]
-      )
     ])
   }
 ]
@@ -83170,7 +83287,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -83299,7 +83416,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -83426,7 +83543,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -83444,7 +83561,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+        _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "card-body p-0 m-0" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -83589,7 +83706,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -83856,7 +83973,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -84117,7 +84234,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -84298,7 +84415,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -84668,8 +84785,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-footer small text-muted" })
       ])
-    ]),
-    _vm._v(_vm._s(_vm.nameIs) + " - " + _vm._s(_vm.form2.activity) + "\n\t")
+    ])
   ])
 }
 var staticRenderFns = []
@@ -84713,7 +84829,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -85115,7 +85231,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+      _c("div", { staticClass: "card-body p-0 m-0" }, [
         _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -85282,7 +85398,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -85451,7 +85567,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -85614,7 +85730,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -85632,7 +85748,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+        _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "card-body p-0 m-0" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -85989,7 +86105,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "card-header text-dark font-weight-bold" },
+      { staticClass: "card-header text-dark mb-4 font-weight-bold" },
       [
         _c("i", { staticClass: "fas fa-chart-area mr-1" }),
         _vm._v("\n                Stock Out Products\n            ")
@@ -86124,7 +86240,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -86186,7 +86302,7 @@ var render = function() {
     _c("div", { staticClass: "row card container-fluid shadow mb-3" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+      _c("div", { staticClass: "card-body p-0 m-0" }, [
         _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -86358,7 +86474,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -86673,7 +86789,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -86816,7 +86932,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -86884,7 +87000,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "600" }
           },
           [
@@ -87049,7 +87165,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -88352,7 +88468,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header text-dark" }, [
+    return _c("div", { staticClass: "card-header text-dark mb-4" }, [
       _c("i", { staticClass: "fas fa-chart-area" }),
       _vm._v(" "),
       _c("b", [_vm._v("Products")])
@@ -88568,7 +88684,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -89224,7 +89340,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -89274,7 +89390,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -89813,7 +89929,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+      _c("div", { staticClass: "card-body p-0 m-0" }, [
         _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -89984,7 +90100,7 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body p-0 m-0" }, [
-        _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+        _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
             _vm._v(" "),
@@ -90093,7 +90209,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -90166,7 +90282,7 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+        _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "card-body p-0 m-0" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -90264,7 +90380,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -90332,7 +90448,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -90892,7 +91008,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -90943,7 +91059,7 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+        _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "card-body p-0 m-0" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),
@@ -91032,7 +91148,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -91190,7 +91306,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark",
+        staticClass: "card-header text-dark mb-4",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -91256,7 +91372,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -91575,7 +91691,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-header text-dark",
+            staticClass: "card-header text-dark mb-4",
             staticStyle: { "font-size": "20px", "font-weight": "700" }
           },
           [
@@ -91885,7 +92001,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body p-0 m-0 pt-0" }, [
+      _c("div", { staticClass: "card-body p-0 m-0" }, [
         _c("div", { staticClass: "card-body p-0 m-0" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("label", { staticClass: "d-inline" }, [_vm._v("Search : ")]),

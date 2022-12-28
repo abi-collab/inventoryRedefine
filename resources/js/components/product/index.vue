@@ -14,7 +14,7 @@
                 All Product
                 <router-link to="/store-product" class="btn btn-dark" id="add_new"> Add New</router-link>
             </div>
-            <div class="card-body p-0 m-0 pt-0">
+            <div class="card-body p-0 m-0">
                 <div class="card-body p-0 m-0">
                     <div class="table-responsive">
                         <label class="d-inline">Search : </label>

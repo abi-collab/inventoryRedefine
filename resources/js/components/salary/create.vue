@@ -10,7 +10,7 @@
         <!-- Icon Cards-->
        <div class="row container">
          <div class="card col-lg-12 border-light shadow">
-          <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
+          <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
             <i class="fas fa-chart-area"></i>
             Pay Salary
             <router-link to="/given-salary" class="btn btn-dark" id="add_new"> All Employee Salary</router-link>

@@ -49,7 +49,7 @@
 <div class="row my-3">
     <div class="col-xl-12">
         <div class="card border-light">
-            <div class="card-header text-dark font-weight-bold">
+            <div class="card-header text-dark mb-4 font-weight-bold">
                 <i class="fas fa-chart-area mr-1"></i>
                 Stock Out Products
             </div>

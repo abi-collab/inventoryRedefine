@@ -207,7 +207,6 @@
         </div>
     </div>  <!---End_Left_Navbar-->
 
-
 <!--------------------Dashboard/Body------------------------>
         <div id="layoutSidenav" style="background-color: #f4f4f8">
             <div id="layoutSidenav_content">
@@ -246,9 +245,7 @@
                     }
                 }
                 // let roleId = role.split("=");
-                // axios.get('api/auth/login').then(response => {
-                // console.log(response);
-                // })
+               
 
               ////////cookie
 

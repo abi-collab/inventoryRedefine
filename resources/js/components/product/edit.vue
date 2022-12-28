@@ -10,7 +10,7 @@
         <!-- Icon Cards-->
         <div class="row container">
             <div class="card col-lg-12 border-light shadow mb-3">
-                <div class="card-header text-dark" style="font-size: 20px; font-weight: 700;">
+                <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
                     Product Update
                     <router-link to="/product" class="btn btn-dark" id="add_new"> All Product</router-link>
