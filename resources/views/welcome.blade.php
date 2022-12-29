@@ -82,7 +82,7 @@
                             </div>
 
                     <!--------------Employee----------->
-                            <router-link class="nav-link" to="/employee">
+                            <router-link class="nav-link" to="/employee" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> -->
                                 Employees 
                             </router-link>
@@ -99,7 +99,7 @@
                                 </nav>
                             </div> -->
                     <!--------------Supplier----------->
-                            <router-link class="nav-link" to="/supplier">
+                            <router-link class="nav-link" to="/supplier" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Suppliers
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
@@ -115,7 +115,7 @@
                             </div> -->
 
                     <!--------------Categories----------->
-                            <router-link class="nav-link" to="/category">
+                            <router-link class="nav-link" to="/category" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Categories
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
@@ -131,7 +131,7 @@
                             </div> -->
 
                     <!--------------Product----------->
-                            <router-link class="nav-link" to="/product">
+                            <router-link class="nav-link" to="/product" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Products
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -179,7 +179,7 @@
                             </div> -->
 
                     <!--------------Salary----------->
-                            <router-link class="nav-link" to="/salary">
+                            <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Salary
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -195,7 +195,7 @@
                             </div> -->
 
                     <!--------------Stock----------->
-                            <router-link class="nav-link collapsed" to="/stock">
+                            <router-link class="nav-link collapsed" to="/stock" v-if="{{$_COOKIE['userNow']}} == 1">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>

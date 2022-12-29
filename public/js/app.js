@@ -4101,7 +4101,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/today/income').then(function (_ref3) {
         var data = _ref3.data;
-        return _this3.income = data;
+        _this3.income = data;
+        console.log('income here', data);
       })["catch"]();
     },
     TodayDue: function TodayDue() {

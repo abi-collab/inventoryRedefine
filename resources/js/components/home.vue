@@ -155,7 +155,10 @@ import Cookies from 'js-cookie';
             },
             TodayIncome(){
                 axios.get('/api/today/income')
-                    .then(({data}) => (this.income = data))
+                    .then(({data}) => {
+                        this.income = data;
+                        console.log('income here',data)
+                    })
                     .catch()
             },
             TodayDue(){
