@@ -765,8 +765,8 @@ export default {
             axios.post('/api/orderdone/', data)
                 .then((res) => {
                     Notification.success()
-                    // this.$router.push({ name: 'home' })
-                    console.log('res', res);
+                    this.$router.push({ name: 'home' })
+                    // console.log('res', res);
                 })
 
             let customer = this.customers.filter((h) => h.id == this.customer_id);

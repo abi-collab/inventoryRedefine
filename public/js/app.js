@@ -5727,9 +5727,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }; //due:this.due //due_dynamic
 
       axios.post('/api/orderdone/', data).then(function (res) {
-        Notification.success(); // this.$router.push({ name: 'home' })
+        Notification.success();
 
-        console.log('res', res);
+        _this9.$router.push({
+          name: 'home'
+        }); // console.log('res', res);
+
       });
       var customer = this.customers.filter(function (h) {
         return h.id == _this9.customer_id;
@@ -6277,6 +6280,9 @@ __webpack_require__.r(__webpack_exports__);
     newStock: function newStock() {
       this.newStock_quantity = Number(this.form.product_quantity) + Number(this.toAdd_quantity);
       return Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+    },
+    getTimestampInSeconds: function getTimestampInSeconds() {
+      return Math.floor(Date.now() / 1000);
     }
   },
   methods: {
@@ -6286,6 +6292,12 @@ __webpack_require__.r(__webpack_exports__);
       this.form2.activity = "update product quantity of ".concat(this.nameIs); //4
 
       var id = this.$route.params.id;
+      var dateNow = new Date(); // let day = dateNow.getDate();
+      // let month = dateNow.getMonth() + 1;
+      // let year = dateNow.getFullYear(); 
+      // let formatedDate = year + '/' + month + '/' + day;
+      // console.log(formatedDate);
+
       axios.post('/api/stock/update/' + id, {
         product_quantity: this.newStock
       }).then(function () {

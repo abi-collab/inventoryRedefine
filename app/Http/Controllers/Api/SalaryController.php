@@ -77,10 +77,12 @@ class SalaryController extends Controller
     {
         $validatedData = $request->validate([
             'product_quantity' => 'required',
+            // 'updated_at' => 'required',
         ]);
 
         $data = array();
         $data['product_quantity']=$request->product_quantity;
+        // $data['updated_at']=$request->updated_at;
         DB::table('products')->where('id',$id)->update($data);
     }
 

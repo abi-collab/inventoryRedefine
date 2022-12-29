@@ -93,12 +93,21 @@ import Cookies from 'js-cookie'; //1
                     newStock() {
                         this.newStock_quantity = Number(this.form.product_quantity) + Number(this.toAdd_quantity);
                         return Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+                    },
+                    getTimestampInSeconds () {
+                    return Math.floor(Date.now() / 1000)
                     }
 				},
         methods:{
             stockUpdate(){
                 this.form2.activity = `update product quantity of ${this.nameIs}`;//4
                 let id = this.$route.params.id
+                let dateNow = new Date();
+                // let day = dateNow.getDate();
+                // let month = dateNow.getMonth() + 1;
+                // let year = dateNow.getFullYear(); 
+                // let formatedDate = year + '/' + month + '/' + day;
+                // console.log(formatedDate);
                 axios.post('/api/stock/update/'+id,{product_quantity:this.newStock})
                     .then(() => {
                         this.$router.push({ name: 'stock' })
