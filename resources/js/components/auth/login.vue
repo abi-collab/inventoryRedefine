@@ -70,7 +70,7 @@ import Cookies from 'js-cookie';           //-----------------------------------
                 axios.post('/api/auth/login',this.form)
                 //.then(response => console.log(response.data))   //--here,(token+other's_info) situated in 'data' property
                 .then(response => {
-                    Cookies.set('userNow', response.data.user_role);
+                    Cookies.set('userNow', response.data.user_role, { expires: 7 });
                     Cookies.set('userId', response.data.user_id);
                     Cookies.set('usersname', response.data.name);
                     User.responseAfterLogin(response)

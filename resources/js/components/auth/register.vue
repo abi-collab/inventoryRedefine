@@ -82,6 +82,7 @@
 
 
 <script>
+import Cookies from 'js-cookie';  
     export default {
         created(){
             if (User.loggedIn()) {
@@ -103,11 +104,13 @@
             }
         },
         methods:{
-            signup(){
+            signup(){ 
                 // alert('done');   //--testing submit
                 axios.post('/api/auth/signup',this.form)
                 // .then(response => console.log(response.data))
                 .then(response => {
+                    Cookies.set('userNow', response.data.user_role, { expires: 7 });
+                    console.log('resssss', response);
                     User.responseAfterLogin(response)
                     Toast.fire({
                         icon: 'success',

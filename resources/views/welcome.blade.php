@@ -163,7 +163,7 @@
                             </div> -->
 
                     <!--------------Expense----------->
-                            <router-link class="nav-link" to="/expense">
+                            <router-link class="nav-link" to="/expense" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Expenses
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -179,7 +179,7 @@
                             </div> -->
 
                     <!--------------Salary----------->
-                            <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1" >
                                 Salary
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -221,14 +221,13 @@
 </div>  <!---End___VUE_JS er jonno j id='app' div ta niyechilam pora body tar jonno--->
 
 
-
-
-
     <!---------JavaScript_external_files-------->
         <script src="{{ asset('js/app.js') }}"></script>   <!--must be linked at the Top of All other JS_files-->
         <script src="{{ asset('backend/assets/demo/jquery-3.5.1.min.js') }}" crossorigin="anonymous"></script>
 
         <script>    //<!--Topbar & Navbar Show korano[after login//'token' takle]-->
+        
+            
             let token = localStorage.getItem('token');
             if(token) {
                 $("#topbar").css("display","");
@@ -236,18 +235,56 @@
             }
 
             ////////cookie
-             let cook = document.cookie;
-             let cook2 = cook.split(';');
-             let role;
-                for( let i = 0 ; i < cook2.length; i ++) {
-                    if(cook2[i].includes('userNow')) {
-                        role = cook2[i];
-                    }
-                }
+            //  let cook = document.cookie;
+            //  let cook2 = cook.split(';');
+            //  let role;
+            //     for( let i = 0 ; i < cook2.length; i ++) {
+            //         if(cook2[i].includes('userNow')) {
+            //             role = cook2[i];
+            //         }
+            //     }
                 // let roleId = role.split("=");
                
 
               ////////cookie
+
+              function getCookie(name) {
+                var dc = document.cookie;
+                var prefix = name + "=";
+                var begin = dc.indexOf("; " + prefix);
+                if (begin == -1) {
+                    begin = dc.indexOf(prefix);
+                    if (begin != 0) return null;
+                }
+                else
+                {
+                    begin += 2;
+                    var end = document.cookie.indexOf(";", begin);
+                    if (end == -1) {
+                    end = dc.length;
+                    }
+                }
+                // because unescape has been deprecated, replaced with decodeURI
+                //return unescape(dc.substring(begin + prefix.length, end));
+                return decodeURI(dc.substring(begin + prefix.length, end));
+            }
+
+              function doSomething() {
+                    var myCookie = getCookie("userNow");
+
+                    if (myCookie == null) {
+                        // do cookie doesn't exist stuff;
+                        console.log('null');
+                        document.cookie = "userNow=0";
+                    }
+                    else {
+                        // do cookie exists stuff
+                        console.log('meron')
+                        // document.cookie = "userNow=1";
+                    }
+                }
+
+                doSomething();
 
         </script>
 

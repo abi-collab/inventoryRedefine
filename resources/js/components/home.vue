@@ -117,13 +117,13 @@ import Cookies from 'js-cookie';
             }
 
             this.TodaySell();
-            this.TodayIncome();
-            this.TodayDue();
-            this.TodayExpense();
-            this.Stockout();
+            // this.TodayIncome();
+            // this.TodayDue();
+            // this.TodayExpense();
+            // this.Stockout();
 
-            this.allCategory();
-            this.allExpense();
+            // this.allCategory();
+            // this.allExpense();
             
         },
         data(){
@@ -150,40 +150,66 @@ import Cookies from 'js-cookie';
         methods:{
             TodaySell(){
                 axios.get('/api/today/sell')
-                    .then(({data}) => (this.todaysell = data))
-                    .catch()
-            },
-            TodayIncome(){
-                axios.get('/api/today/income')
                     .then(({data}) => {
-                        this.income = data;
-                        console.log('income here',data)
-                    })
+                        this.todaysell = data;
+                        axios.get('/api/today/income')
+                            .then(({data}) => {
+                                this.income = data;
+                                    axios.get('/api/today/due')
+                                        .then(({data}) => {
+                                            this.due = data;
+                                            axios.get('/api/today/expense')
+                                                .then(({data}) => {
+                                                    this.expense = data;
+                                                    axios.get('/api/stockout')
+                                                        .then(({data}) => {
+                                                            this.products = data;
+                                                            axios.get('/api/category/')
+                                                                .then(({data}) => {
+                                                                    this.categories = data;
+                                                                    axios.get('/api/expense/')
+                                                                        .then(({data}) => (this.expenses = data))
+                                                                })
+                                                        })
+                                                })
+                                        })
+                            })
+                    .catch()
+                    }  
+                        )
                     .catch()
             },
-            TodayDue(){
-                axios.get('/api/today/due')
-                    .then(({data}) => (this.due = data))
-            },
-            TodayExpense(){
-                axios.get('/api/today/expense')
-                    .then(({data}) => (this.expense = data))
-            },
-            Stockout(){
-                axios.get('/api/stockout')
-                    .then(({data}) => (this.products = data))
-            }, 
+            // TodayIncome(){
+            //     axios.get('/api/today/income')
+            //         .then(({data}) => {
+            //             this.income = data;
+            //             console.log('income here',data)
+            //         })
+            //         .catch()
+            // },
+            // TodayDue(){
+            //     axios.get('/api/today/due')
+            //         .then(({data}) => (this.due = data))
+            // },
+            // TodayExpense(){
+            //     axios.get('/api/today/expense')
+            //         .then(({data}) => (this.expense = data))
+            // },
+            // Stockout(){
+            //     axios.get('/api/stockout')
+            //         .then(({data}) => (this.products = data))
+            // }, 
 
-            allCategory(){
-                axios.get('/api/category/')
-                    .then(({data}) => (this.categories = data))
-                    .catch()
-            },
-            allExpense(){
-                axios.get('/api/expense/')
-                .then(({data}) => (this.expenses = data))
-                .catch()
-            },
+            // allCategory(){
+            //     axios.get('/api/category/')
+            //         .then(({data}) => (this.categories = data))
+            //         .catch()
+            // },
+            // allExpense(){
+            //     axios.get('/api/expense/')
+            //     .then(({data}) => (this.expenses = data))
+            //     .catch()
+            // },
         }
     }
 

@@ -2057,7 +2057,9 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/api/auth/login', this.form) //.then(response => console.log(response.data))   //--here,(token+other's_info) situated in 'data' property
       .then(function (response) {
-        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userNow', response.data.user_role);
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userNow', response.data.user_role, {
+          expires: 7
+        });
         js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userId', response.data.user_id);
         js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('usersname', response.data.name);
         User.responseAfterLogin(response);
@@ -2122,6 +2124,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2205,6 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (User.loggedIn()) {
@@ -2234,6 +2239,10 @@ __webpack_require__.r(__webpack_exports__);
       // alert('done');   //--testing submit
       axios.post('/api/auth/signup', this.form) // .then(response => console.log(response.data))
       .then(function (response) {
+        js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set('userNow', response.data.user_role, {
+          expires: 7
+        });
+        console.log('resssss', response);
         User.responseAfterLogin(response);
         Toast.fire({
           icon: 'success',
@@ -4054,13 +4063,12 @@ __webpack_require__.r(__webpack_exports__);
       window.location.reload();
     }
 
-    this.TodaySell();
-    this.TodayIncome();
-    this.TodayDue();
-    this.TodayExpense();
-    this.Stockout();
-    this.allCategory();
-    this.allExpense();
+    this.TodaySell(); // this.TodayIncome();
+    // this.TodayDue();
+    // this.TodayExpense();
+    // this.Stockout();
+    // this.allCategory();
+    // this.allExpense();
   },
   data: function data() {
     return {
@@ -4093,58 +4101,63 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/today/sell').then(function (_ref2) {
         var data = _ref2.data;
-        return _this2.todaysell = data;
+        _this2.todaysell = data;
+        axios.get('/api/today/income').then(function (_ref3) {
+          var data = _ref3.data;
+          _this2.income = data;
+          axios.get('/api/today/due').then(function (_ref4) {
+            var data = _ref4.data;
+            _this2.due = data;
+            axios.get('/api/today/expense').then(function (_ref5) {
+              var data = _ref5.data;
+              _this2.expense = data;
+              axios.get('/api/stockout').then(function (_ref6) {
+                var data = _ref6.data;
+                _this2.products = data;
+                axios.get('/api/category/').then(function (_ref7) {
+                  var data = _ref7.data;
+                  _this2.categories = data;
+                  axios.get('/api/expense/').then(function (_ref8) {
+                    var data = _ref8.data;
+                    return _this2.expenses = data;
+                  });
+                });
+              });
+            });
+          });
+        })["catch"]();
       })["catch"]();
-    },
-    TodayIncome: function TodayIncome() {
-      var _this3 = this;
+    } // TodayIncome(){
+    //     axios.get('/api/today/income')
+    //         .then(({data}) => {
+    //             this.income = data;
+    //             console.log('income here',data)
+    //         })
+    //         .catch()
+    // },
+    // TodayDue(){
+    //     axios.get('/api/today/due')
+    //         .then(({data}) => (this.due = data))
+    // },
+    // TodayExpense(){
+    //     axios.get('/api/today/expense')
+    //         .then(({data}) => (this.expense = data))
+    // },
+    // Stockout(){
+    //     axios.get('/api/stockout')
+    //         .then(({data}) => (this.products = data))
+    // }, 
+    // allCategory(){
+    //     axios.get('/api/category/')
+    //         .then(({data}) => (this.categories = data))
+    //         .catch()
+    // },
+    // allExpense(){
+    //     axios.get('/api/expense/')
+    //     .then(({data}) => (this.expenses = data))
+    //     .catch()
+    // },
 
-      axios.get('/api/today/income').then(function (_ref3) {
-        var data = _ref3.data;
-        _this3.income = data;
-        console.log('income here', data);
-      })["catch"]();
-    },
-    TodayDue: function TodayDue() {
-      var _this4 = this;
-
-      axios.get('/api/today/due').then(function (_ref4) {
-        var data = _ref4.data;
-        return _this4.due = data;
-      });
-    },
-    TodayExpense: function TodayExpense() {
-      var _this5 = this;
-
-      axios.get('/api/today/expense').then(function (_ref5) {
-        var data = _ref5.data;
-        return _this5.expense = data;
-      });
-    },
-    Stockout: function Stockout() {
-      var _this6 = this;
-
-      axios.get('/api/stockout').then(function (_ref6) {
-        var data = _ref6.data;
-        return _this6.products = data;
-      });
-    },
-    allCategory: function allCategory() {
-      var _this7 = this;
-
-      axios.get('/api/category/').then(function (_ref7) {
-        var data = _ref7.data;
-        return _this7.categories = data;
-      })["catch"]();
-    },
-    allExpense: function allExpense() {
-      var _this8 = this;
-
-      axios.get('/api/expense/').then(function (_ref8) {
-        var data = _ref8.data;
-        return _this8.expenses = data;
-      })["catch"]();
-    }
   }
 });
 
