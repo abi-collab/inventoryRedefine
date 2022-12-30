@@ -4469,6 +4469,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4477,6 +4516,9 @@ __webpack_require__.r(__webpack_exports__);
       searchTerm: '',
       returnItems: [],
       remarkText: '',
+      statusText: '',
+      item_name: '',
+      item_serNo: '',
       returnId: null
     };
   },
@@ -4494,13 +4536,28 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getStat: function getStat(i) {
+      this.statusText = i.status;
+      this.returnId = i.id;
+      this.item_name = i.product_name;
+      this.item_serNo = i.serialNo;
+    },
     remark: function remark(i) {
       this.remarkText = i.remarks;
       this.returnId = i.id;
+      this.item_name = i.product_name;
+      this.item_serNo = i.serialNo;
     },
     saveRemarks: function saveRemarks() {
       axios.put('api/returns/' + this.returnId, {
         remarks: this.remarkText
+      }).then(function (res) {
+        location.reload();
+      });
+    },
+    updateStatus: function updateStatus() {
+      axios.put('api/returns/' + this.returnId, {
+        status: this.statusText
       }).then(function (res) {
         location.reload();
       });
@@ -86700,46 +86757,65 @@ var render = function() {
     }),
     _vm._v(" "),
     _vm.searchTerm
-      ? _c(
-          "table",
-          {
-            staticClass:
-              "table table-bordered table-striped table-hover table-warning border-light",
-            attrs: { id: "", width: "100%", cellspacing: "0" }
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.filtersearch, function(item) {
-                return _c("tr", { key: item.id }, [
-                  _c("td", [_vm._v(_vm._s(item.invoiceNumber))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.serialNo))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.product_name))]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { "text-align": "center" } }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        on: {
-                          click: function($event) {
-                            return _vm.saveReturn(item)
-                          }
-                        }
-                      },
-                      [_vm._v("Add to Return")]
+      ? _c("div", [
+          _vm.filtersearch.length < 1
+            ? _c(
+                "div",
+                {
+                  staticStyle: {
+                    "text-align": "center",
+                    padding: "10px 0px 20px 0px"
+                  }
+                },
+                [
+                  _c("b", [
+                    _vm._v(
+                      " This item is not yet sold -- or -- This item is already registered as returned item."
                     )
                   ])
-                ])
-              }),
-              0
-            )
-          ]
-        )
+                ]
+              )
+            : _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-bordered table-striped table-hover table-warning border-light",
+                  attrs: { id: "", width: "100%", cellspacing: "0" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.filtersearch, function(item) {
+                      return _c("tr", { key: item.id }, [
+                        _c("td", [_vm._v(_vm._s(item.invoiceNumber))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.serialNo))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.product_name))]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { "text-align": "center" } }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-secondary",
+                              on: {
+                                click: function($event) {
+                                  return _vm.saveReturn(item)
+                                }
+                              }
+                            },
+                            [_vm._v("Add to Return")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+        ])
       : _vm._e(),
     _vm._v(" "),
     _c(
@@ -86766,10 +86842,15 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _c(
-                  "button",
+                  "svg",
                   {
-                    staticClass: "btn btn-secondary text-white",
+                    staticClass: "bi bi-pencil-square",
                     attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "16",
+                      height: "16",
+                      fill: "currentColor",
+                      viewBox: "0 0 16 16",
                       "data-toggle": "modal",
                       "data-target": "#editRemarks",
                       type: "button"
@@ -86780,35 +86861,242 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("edit remarks")]
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        "fill-rule": "evenodd",
+                        d:
+                          "M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                      }
+                    })
+                  ]
                 )
               ]),
               _vm._v(" "),
-              _c("td", [
-                item.status === "pending"
-                  ? _c("span", { staticClass: "badge badge-primary" }, [
-                      _vm._v(_vm._s(item.status))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                item.status === "Repair"
-                  ? _c("span", { staticClass: "badge badge-warning" }, [
-                      _vm._v(_vm._s(item.status))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                item.status === "Fixed"
-                  ? _c("span", { staticClass: "badge badge-info" }, [
-                      _vm._v(_vm._s(item.status))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                item.status === "Release"
-                  ? _c("span", { staticClass: "badge badge-success" }, [
-                      _vm._v(_vm._s(item.status))
-                    ])
-                  : _vm._e()
-              ]),
+              _c(
+                "td",
+                {
+                  staticStyle: {
+                    display: "flex",
+                    "justify-content": "space-between",
+                    margin: "0"
+                  }
+                },
+                [
+                  item.status === "pending"
+                    ? _c(
+                        "span",
+                        { staticClass: "badge badge-primary badge-pill" },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticStyle: {
+                                padding: "4px",
+                                margin: "auto 0",
+                                "font-size": "14px"
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(item.status) + " ")]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  item.status === "Under Repair"
+                    ? _c(
+                        "span",
+                        { staticClass: "badge badge-warning badge-pill" },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticStyle: {
+                                padding: "4px",
+                                margin: "auto 0",
+                                "font-size": "14px"
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(item.status) + " ")]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  item.status === "Fixed"
+                    ? _c(
+                        "span",
+                        { staticClass: "badge badge-info badge-pill" },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticStyle: {
+                                padding: "4px",
+                                margin: "auto 0",
+                                "font-size": "14px"
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(item.status) + " ")]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  item.status === "For Release"
+                    ? _c(
+                        "span",
+                        { staticClass: "badge badge-success badge-pill" },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticStyle: {
+                                padding: "4px",
+                                margin: "auto 0",
+                                "font-size": "14px"
+                              }
+                            },
+                            [_vm._v(" " + _vm._s(item.status) + " ")]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary text-white btn-sm",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#updateStatus",
+                        type: "button"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.getStat(item)
+                        }
+                      }
+                    },
+                    [_vm._v("update")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "modal fade center",
+                  attrs: {
+                    id: "updateStatus",
+                    tabindex: "-1",
+                    role: "dialog",
+                    "aria-hidden": "true"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-dialog modal-dialog-centered",
+                      attrs: { role: "document" }
+                    },
+                    [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _c("div", { staticClass: "modal-header" }, [
+                          _c("h5", { staticClass: "modal-title" }, [
+                            _vm._v(
+                              _vm._s(_vm.item_name) +
+                                " : " +
+                                _vm._s(_vm.item_serNo)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(2, true)
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-body" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.statusText,
+                                  expression: "statusText"
+                                }
+                              ],
+                              staticClass: "form-select",
+                              staticStyle: {
+                                width: "100%",
+                                margin: "30px 0px 70px 0px"
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.statusText = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "pending" } }, [
+                                _vm._v("pending")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "Under Repair" } },
+                                [_vm._v("Under Repair")]
+                              ),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Fixed" } }, [
+                                _vm._v("Fixed")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "For Release" } },
+                                [_vm._v("For Release")]
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success text-white btn-lg",
+                            on: {
+                              click: function($event) {
+                                return _vm.updateStatus()
+                              }
+                            }
+                          },
+                          [_vm._v("Update Status")]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -86825,12 +87113,22 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "modal-dialog",
+                      staticClass: "modal-dialog modal-dialog-centered",
                       attrs: { role: "document" }
                     },
                     [
                       _c("div", { staticClass: "modal-content" }, [
-                        _vm._m(2, true),
+                        _c("div", { staticClass: "modal-header" }, [
+                          _c("h5", { staticClass: "modal-title" }, [
+                            _vm._v(
+                              _vm._s(_vm.item_name) +
+                                " : " +
+                                _vm._s(_vm.item_serNo)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(3, true)
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-body" }, [
                           _c("textarea", {
@@ -86842,6 +87140,7 @@ var render = function() {
                                 expression: "remarkText"
                               }
                             ],
+                            staticStyle: { width: "100%" },
                             attrs: { name: "", id: "", cols: "30", rows: "10" },
                             domProps: { value: _vm.remarkText },
                             on: {
@@ -86858,13 +87157,14 @@ var render = function() {
                         _c(
                           "button",
                           {
+                            staticClass: "btn btn-success text-white btn-lg",
                             on: {
                               click: function($event) {
                                 return _vm.saveRemarks()
                               }
                             }
                           },
-                          [_vm._v("save")]
+                          [_vm._v("Save Remarks")]
                         )
                       ])
                     ]
@@ -86920,21 +87220,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close",
-            id: "closeModal"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close",
+          id: "closeModal"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close",
+          id: "closeModal"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
