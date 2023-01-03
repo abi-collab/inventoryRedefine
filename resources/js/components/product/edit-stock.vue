@@ -100,7 +100,7 @@ import Cookies from 'js-cookie'; //1
 				},
         methods:{
             stockUpdate(){
-                this.form2.activity = `update product quantity of ${this.nameIs}`;//4
+                this.form2.activity = `update product quantity of ${this.nameIs}, added ${this.toAdd_quantity} new stock to ${this.form.product_quantity} existing in-stock.`;//4
                 let id = this.$route.params.id
                 let dateNow = new Date();
                 // let day = dateNow.getDate();

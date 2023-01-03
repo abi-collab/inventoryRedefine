@@ -4029,6 +4029,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -4038,6 +4062,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: '/'
       });
+      this.$router.push('/dashboard');
     } // window.location.reload();
 
 
@@ -4047,10 +4072,9 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"]();
   },
   mounted: function mounted() {
-    if (!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('usersname')) {
-      this.$router.push({
-        name: '/logout'
-      });
+    if (!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.get('userId')) {
+      // this.$router.push({name : '/logout'})
+      this.$router.push('/logout');
     }
 
     if (localStorage.getItem('reloaded')) {
@@ -6539,7 +6563,7 @@ __webpack_require__.r(__webpack_exports__);
     stockUpdate: function stockUpdate() {
       var _this2 = this;
 
-      this.form2.activity = "update product quantity of ".concat(this.nameIs); //4
+      this.form2.activity = "update product quantity of ".concat(this.nameIs, ", added ").concat(this.toAdd_quantity, " new stock to ").concat(this.form.product_quantity, " existing in-stock."); //4
 
       var id = this.$route.params.id;
       var dateNow = new Date(); // let day = dateNow.getDate();
@@ -86156,13 +86180,17 @@ var render = function() {
           "div",
           { staticClass: "card mb-4" },
           [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h4", [
-                _vm._v(
-                  " ₱ " + _vm._s(Number(_vm.income).toLocaleString() || 0) + " "
-                )
-              ])
-            ]),
+            !_vm.income
+              ? _c("div", { staticClass: "card-body" }, [_vm._m(1)])
+              : _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [
+                    _vm._v(
+                      " ₱ " +
+                        _vm._s(Number(_vm.income).toLocaleString() || 0) +
+                        " "
+                    )
+                  ])
+                ]),
             _vm._v(" "),
             _c(
               "router-link",
@@ -86192,9 +86220,11 @@ var render = function() {
           "div",
           { staticClass: "card mb-4" },
           [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h4", [_vm._v(_vm._s(_vm.categories.length) + " ")])
-            ]),
+            !_vm.categories
+              ? _c("div", { staticClass: "card-body" }, [_vm._m(2)])
+              : _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.categories.length) + " ")])
+                ]),
             _vm._v(" "),
             _c(
               "router-link",
@@ -86224,9 +86254,11 @@ var render = function() {
           "div",
           { staticClass: "card mb-4" },
           [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h4", [_vm._v(_vm._s(_vm.soldItems.length) + "  ")])
-            ]),
+            !_vm.soldItems
+              ? _c("div", { staticClass: "card-body" }, [_vm._m(3)])
+              : _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.soldItems.length) + "  ")])
+                ]),
             _vm._v(" "),
             _c(
               "router-link",
@@ -86256,15 +86288,17 @@ var render = function() {
           "div",
           { staticClass: "card mb-4" },
           [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h4", [
-                _vm._v(
-                  "₱ " +
-                    _vm._s(Number(_vm.expensez).toLocaleString() || 0) +
-                    " "
-                )
-              ])
-            ]),
+            !_vm.products
+              ? _c("div", { staticClass: "card-body" }, [_vm._m(4)])
+              : _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [
+                    _vm._v(
+                      "₱ " +
+                        _vm._s(Number(_vm.expensez).toLocaleString() || 0) +
+                        " "
+                    )
+                  ])
+                ]),
             _vm._v(" "),
             _c(
               "router-link",
@@ -86290,64 +86324,98 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row my-3" }, [
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xl-12" }, [
         _c("div", { staticClass: "card border-light" }, [
-          _vm._m(1),
+          _vm._m(5),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body p-0 m-0 " }, [
-            _c("div", { staticClass: "card-body p-0 m-0 " }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c(
-                  "table",
-                  {
-                    staticClass:
-                      "table table-bordered table-striped table-hover table-warning",
-                    attrs: { id: "", width: "100%", cellspacing: "0" }
-                  },
-                  [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.products, function(product) {
-                        return _c("tr", { key: product.id }, [
-                          _c("td", [_vm._v(_vm._s(product.product_name))]),
+          _c(
+            "div",
+            {
+              staticClass: "card-body p-0 m-0",
+              staticStyle: { "background-color": "#eee" }
+            },
+            [
+              !_vm.products
+                ? _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "center",
+                        margin: "50px 0"
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "spinner-border",
+                        staticStyle: { margin: "0 auto" },
+                        attrs: { role: "status" }
+                      })
+                    ]
+                  )
+                : _c("div", { staticClass: "card-body p-0 m-0 " }, [
+                    _c("div", { staticClass: "table-responsive" }, [
+                      _c(
+                        "table",
+                        {
+                          staticClass:
+                            "table table-bordered table-striped table-hover table-warning",
+                          attrs: { id: "", width: "100%", cellspacing: "0" }
+                        },
+                        [
+                          _vm._m(6),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(product.product_code))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("img", {
-                              attrs: { src: product.image, id: "em_photo" }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          product.product_quantity >= 1
-                            ? _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "badge badge-success" },
-                                  [_vm._v("Availble")]
-                                )
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.products, function(product) {
+                              return _c("tr", { key: product.id }, [
+                                _c("td", [
+                                  _vm._v(_vm._s(product.product_name))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(product.product_code))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("img", {
+                                    attrs: {
+                                      src: product.image,
+                                      id: "em_photo"
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                product.product_quantity >= 1
+                                  ? _c("td", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-success" },
+                                        [_vm._v("Availble")]
+                                      )
+                                    ])
+                                  : _c("td", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-danger" },
+                                        [_vm._v("Stock Out")]
+                                      )
+                                    ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(product.product_quantity))
+                                ])
                               ])
-                            : _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "badge badge-danger" },
-                                  [_vm._v("Stock Out")]
-                                )
-                              ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(product.product_quantity))])
-                        ])
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+            ]
+          )
         ])
       ])
     ])
@@ -86368,7 +86436,47 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "card-header text-dark mb-4 font-weight-bold" },
+      { staticClass: "spinner-grow text-info", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-grow text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-grow text-success", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-grow text-warning", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header text-dark font-weight-bold" },
       [
         _c("i", { staticClass: "fas fa-chart-area mr-1" }),
         _vm._v("\n                Stock Out Products\n            ")

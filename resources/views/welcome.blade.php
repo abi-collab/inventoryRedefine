@@ -180,10 +180,10 @@
                             </div> -->
 
                     <!--------------Salary----------->
-                            <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1" >
+                            <!-- <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1" >
                                 Salary
-                            </router-link>
-                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts" >
+                            </router-link> -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts"  v-if="{{$_COOKIE['userNow']}} == 1" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -193,7 +193,7 @@
                                     <router-link class="nav-link" to="/given-salary">Pay Salary</router-link>
                                     <router-link class="nav-link" to="/salary">All Salary</router-link>
                                 </nav>
-                            </div> -->
+                            </div>
 
                     <!--------------Stock----------->
                             <router-link class="nav-link collapsed" to="/stock" v-if="{{$_COOKIE['userNow']}} == 1">

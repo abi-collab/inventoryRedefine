@@ -9,7 +9,12 @@
 <div class="row">
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
-            <div class="card-body"><h4> &#8369; {{ (Number(income).toLocaleString() || 0)}} </h4></div>
+            <div v-if="!income" class="card-body">
+                <div class="spinner-grow text-info" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="card-body" v-else><h4> &#8369; {{ (Number(income).toLocaleString() || 0)}} </h4></div>
             <router-link to="/order" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
                 <a class="stretched-link" href="#">Daily Sales</a>
                 <div><i class="fas fa-angle-right"></i></div>
@@ -18,7 +23,12 @@
     </div >
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
-            <div class="card-body"><h4>{{ categories.length }} </h4></div>
+            <div v-if="!categories" class="card-body">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="card-body" v-else><h4>{{ categories.length }} </h4></div>
             <router-link to="/category" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
                 <a class="stretched-link" href="#">Stock Category</a>
                 <div><i class="fas fa-angle-right"></i></div>
@@ -27,7 +37,12 @@
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
-            <div class="card-body"><h4>{{ soldItems.length }}  </h4></div>
+            <div v-if="!soldItems" class="card-body">
+                <div class="spinner-grow text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="card-body" v-else><h4>{{ soldItems.length }}  </h4></div>
             <router-link to="/sold-items" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
                 <a class="stretched-link" href="#">Items Sold</a>
                 <div><i class="fas fa-angle-right"></i></div>
@@ -36,7 +51,12 @@
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
-            <div class="card-body"><h4>&#8369; {{ (Number(expensez).toLocaleString() || 0)}} </h4></div>
+            <div v-if="!products" class="card-body">
+                <div class="spinner-grow text-warning" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="card-body" v-else><h4>&#8369; {{ (Number(expensez).toLocaleString() || 0)}} </h4></div>
             <router-link to="/expense" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
                 <a class="stretched-link" href="#">Expense</a>
                 <div><i class="fas fa-angle-right"></i></div>
@@ -46,15 +66,19 @@
 </div>      <!------End_Dashboard------>
 
 <!------Stock_Out_Products------>
-<div class="row my-3">
+<div class="row">
     <div class="col-xl-12">
         <div class="card border-light">
-            <div class="card-header text-dark mb-4 font-weight-bold">
+            <div class="card-header text-dark font-weight-bold">
                 <i class="fas fa-chart-area mr-1"></i>
                 Stock Out Products
             </div>
-            <div class="card-body p-0 m-0 ">
-                <div class="card-body p-0 m-0 ">
+            <div class="card-body p-0 m-0" style="background-color: #eee;" >
+                <div v-if="!products" style="display:flex; justify-content: center; margin: 50px 0;">
+                     <div class="spinner-border" role="status" style="margin: 0 auto"></div>
+                </div>
+               
+                <div class="card-body p-0 m-0 " v-else>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover table-warning" id="" width="100%" cellspacing="0">
                             <thead>
@@ -96,6 +120,7 @@ import Cookies from 'js-cookie';
         created(){
             if (!User.loggedIn()) {
                 this.$router.push({name : '/'})
+                  this.$router.push('/dashboard')
             }
             // window.location.reload();
             axios.get('/api/serials')
@@ -103,8 +128,10 @@ import Cookies from 'js-cookie';
                 .catch()
         },
         mounted(){
-            if(!Cookies.get('usersname')) {
-                this.$router.push({name : '/logout'})
+            if(!Cookies.get('userId')) {
+                // this.$router.push({name : '/logout'})
+                this.$router.push('/logout');
+    
             }
             if (localStorage.getItem('reloaded')) {
                 // The page was just reloaded. Clear the value from local storage
