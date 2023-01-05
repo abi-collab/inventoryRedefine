@@ -37,20 +37,20 @@
                         </div>
                         <div class="form-group">
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-label-group">
                                         <label for="firstName">Address</label>
                                         <input type="text" v-model="form.address" class="form-control"  required="">
                                         <small class="text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-label-group">
                                         <label for="lastName">Salary</label>
                                         <input type="text" v-model="form.salary" class="form-control"  required="">
                                         <small class="text-danger" v-if="errors.salary">{{ errors.salary[0] }}</small>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="form-group">

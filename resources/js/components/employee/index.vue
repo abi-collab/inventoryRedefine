@@ -26,7 +26,7 @@
                                 <th>Name</th>
                                 <th>Photo</th>
                                 <th>Phone</th>
-                                <th>Salary</th>
+                                <!-- <th>Salary</th> -->
                                 <th>Joining Date</th>
                                 <th>Action</th>
                             </tr>
@@ -37,7 +37,7 @@
                                 <td>{{ employee.name }}</td>
                                 <td><img :src="employee.photo" id="em_photo"></td>   <!--bind(:) korle R {{}} lage na-->
                                 <td>{{ employee.phone }}</td>
-                                <td>{{ employee.salary }}</td>
+                                <!-- <td>{{ employee.salary }}</td> -->
                                 <td>{{ employee.joining_date }}</td>
                                 <td>
                                     <router-link :to="{name: 'edit-employee', params:{id: employee.id} }" class="btn btn-sm btn-info">Edit</router-link>    <!----it will dynamic thats why applied bind(:to)---->

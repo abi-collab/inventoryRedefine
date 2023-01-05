@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-md-6" v-if="form.name && form.username && form.email && form.password && form.password_confirmation">
                             <div class="form-group">
-                                <label class="mb-1" for="inputConfirmPassword">Admin's Permission Code</label>
+                                <label class="mb-1" for="inputConfirmPassword">Permission Code</label>
                                 <input class="form-control py-4" id="inputConfirmPassword" type="password" v-model="adminCode"/>
                             </div>
                         </div>

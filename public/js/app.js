@@ -83396,7 +83396,7 @@ var render = function() {
                                   staticClass: "mb-1",
                                   attrs: { for: "inputConfirmPassword" }
                                 },
-                                [_vm._v("Admin's Permission Code")]
+                                [_vm._v("Permission Code")]
                               ),
                               _vm._v(" "),
                               _c("input", {
@@ -85225,7 +85225,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("div", { staticClass: "form-row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "form-label-group" }, [
                       _c("label", { attrs: { for: "firstName" } }, [
                         _vm._v("Address")
@@ -85256,42 +85256,6 @@ var render = function() {
                       _vm.errors.address
                         ? _c("small", { staticClass: "text-danger" }, [
                             _vm._v(_vm._s(_vm.errors.address[0]))
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-label-group" }, [
-                      _c("label", { attrs: { for: "lastName" } }, [
-                        _vm._v("Salary")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.salary,
-                            expression: "form.salary"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", required: "" },
-                        domProps: { value: _vm.form.salary },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "salary", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.salary
-                        ? _c("small", { staticClass: "text-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.salary[0]))
                           ])
                         : _vm._e()
                     ])
@@ -85573,8 +85537,6 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.phone))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(employee.salary))]),
-                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.joining_date))]),
                       _vm._v(" "),
                       _c(
@@ -85635,8 +85597,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Photo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Phone")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Salary")]),
         _vm._v(" "),
         _c("th", [_vm._v("Joining Date")]),
         _vm._v(" "),
@@ -86281,53 +86241,13 @@ var render = function() {
           ],
           1
         )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-3 col-md-6" }, [
-        _c(
-          "div",
-          { staticClass: "card mb-4" },
-          [
-            !_vm.products
-              ? _c("div", { staticClass: "card-body" }, [_vm._m(4)])
-              : _c("div", { staticClass: "card-body" }, [
-                  _c("h4", [
-                    _vm._v(
-                      "₱ " +
-                        _vm._s(Number(_vm.expensez).toLocaleString() || 0) +
-                        " "
-                    )
-                  ])
-                ]),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass:
-                  "card-footer d-flex align-items-center justify-content-between",
-                staticStyle: { color: "black" },
-                attrs: { to: "/expense" }
-              },
-              [
-                _c(
-                  "a",
-                  { staticClass: "stretched-link", attrs: { href: "#" } },
-                  [_vm._v("Expense")]
-                ),
-                _vm._v(" "),
-                _c("div", [_c("i", { staticClass: "fas fa-angle-right" })])
-              ]
-            )
-          ],
-          1
-        )
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xl-12" }, [
         _c("div", { staticClass: "card border-light" }, [
-          _vm._m(5),
+          _vm._m(4),
           _vm._v(" "),
           _c(
             "div",
@@ -86364,7 +86284,7 @@ var render = function() {
                           attrs: { id: "", width: "100%", cellspacing: "0" }
                         },
                         [
-                          _vm._m(6),
+                          _vm._m(5),
                           _vm._v(" "),
                           _c(
                             "tbody",
@@ -86457,16 +86377,6 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "spinner-grow text-success", attrs: { role: "status" } },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "spinner-grow text-warning", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
@@ -86835,7 +86745,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Returns")])
+      _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Warranty")])
     ]),
     _vm._v(" "),
     _c("input", {

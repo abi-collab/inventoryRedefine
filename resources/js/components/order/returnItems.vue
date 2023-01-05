@@ -5,7 +5,7 @@
           <li class="breadcrumb-item">
             <router-link to="/home">Dashboard</router-link>
           </li>
-          <li class="breadcrumb-item active">Returns</li>
+          <li class="breadcrumb-item active">Warranty</li>
         </ol>
     <input type="text" v-model="searchTerm" class="form-control d-inline my-4" placeholder="Enter Invoice number or serial number" style="width:100%;">
     <div v-if="searchTerm">
