@@ -4790,6 +4790,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -4811,7 +4818,8 @@ __webpack_require__.r(__webpack_exports__);
       date: '',
       orders: [],
       month: '',
-      searchTerm: ''
+      searchTerm: '',
+      modalImg: ''
     };
   },
   computed: {
@@ -4892,6 +4900,9 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref2.data;
         return _this3.orders = data;
       });
+    },
+    ImgToModal: function ImgToModal(base64) {
+      this.modalImg = base64;
     }
   }
 });
@@ -5625,6 +5636,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -5843,6 +5856,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         if (_this6.ssImg) {
           print();
+
+          _this6.orderSave();
         }
       });
     },
@@ -5996,7 +6011,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         due: due,
         vat: this.vats.vat,
         total: total,
-        change: this.change // cashTendered: this.
+        change: this.change,
+        invoiceImg: this.ssImg // cashTendered: this.
 
       }; //due:this.due //due_dynamic
 
@@ -6051,6 +6067,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (error) {
         return _this9.errors = error.response.data.errors;
       });
+      this.ssImg = '';
     },
     //---End_cart_methods----
     allProduct: function allProduct() {
@@ -87596,7 +87613,56 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("View")]
+                                  [_vm._v("Details")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "modal",
+                                      "data-target": ".bd-example-modal-lg"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.ImgToModal(order.invoiceImg)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Invoice")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "modal fade bd-example-modal-lg",
+                                    attrs: {
+                                      tabindex: "-1",
+                                      role: "dialog",
+                                      "aria-labelledby": "myLargeModalLabel",
+                                      "aria-hidden": "true"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "modal-dialog modal-lg" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "modal-content" },
+                                          [
+                                            _c("img", {
+                                              attrs: { src: _vm.modalImg }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
                                 )
                               ],
                               1
@@ -87649,7 +87715,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Total Due")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Action")])
+        _c("td", [_vm._v("View")])
       ])
     ])
   }
@@ -88396,7 +88462,7 @@ var render = function() {
                         serials: _vm.serialNumbersForItemQnty,
                         computedSerials: _vm.cardsx
                       },
-                      on: { "my-event": _vm.orderSave }
+                      on: { "my-event": _vm.printNa }
                     })
                   ],
                   1
@@ -89199,7 +89265,262 @@ var render = function() {
           )
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("h1", [_vm._v("Invoice")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "container",
+        staticStyle: { padding: "100px" },
+        attrs: { id: "printMe" }
+      },
+      [
+        _c("h4", [_vm._v("Invoice #:  " + _vm._s(_vm.getRandomId))]),
+        _vm._v(" "),
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("h5", [_vm._v("Bill To")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.customer_id,
+                    expression: "customer_id"
+                  }
+                ],
+                staticClass: "form-control mb-2",
+                staticStyle: { appearance: "none" },
+                attrs: { disabled: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.customer_id = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.customers, function(customer) {
+                return _c("option", { domProps: { value: customer.id } }, [
+                  _vm._v(_vm._s(customer.name))
+                ])
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("table", { staticClass: "table table-sm table-striped" }, [
+            _vm._m(7),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.cards, function(card) {
+                  return _c("tr", { key: card.id }, [
+                    _c("th", { staticStyle: { "text-align": "left" } }, [
+                      _vm._v(_vm._s(card.pro_name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(card.pro_quantity))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            display: "flex",
+                            "justify-content": "flex-end"
+                          }
+                        },
+                        [
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(
+                                Number(card.product_price).toLocaleString() || 0
+                              )
+                            )
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            display: "flex",
+                            "justify-content": "flex-end"
+                          }
+                        },
+                        [
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(
+                                Number(card.sub_total).toLocaleString() || 0
+                              )
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                }),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th"),
+                  _vm._v(" "),
+                  _c("td", [_c("b", [_vm._v(_vm._s(_vm.qty))])]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "flex-end"
+                      }
+                    },
+                    [
+                      _c("b", [_vm._v("₱ ")]),
+                      _c("b", [
+                        _vm._v(
+                          _vm._s(Number(_vm.subtotal).toLocaleString() || 0)
+                        )
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _c("br"),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "flex-end"
+                      }
+                    },
+                    [_vm._v("Cash")]
+                  ),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "flex-end"
+                      }
+                    },
+                    [
+                      _c("b", [_vm._v("₱ ")]),
+                      _c("b", [
+                        _vm._v(_vm._s(Number(_vm.pay).toLocaleString() || 0))
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "flex-end"
+                      }
+                    },
+                    [_vm._v("Change")]
+                  ),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "flex-end"
+                      }
+                    },
+                    [
+                      _vm.pay > _vm.subtotal
+                        ? _c("span", [
+                            _c("b", [_vm._v("₱ ")]),
+                            _c("b", [
+                              _vm._v(
+                                _vm._s(
+                                  Number(
+                                    _vm.pay - _vm.subtotal
+                                  ).toLocaleString() || 0
+                                )
+                              )
+                            ])
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.printNa()
+                }
+              }
+            },
+            [_vm._v("print na")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.print()
+                }
+              }
+            },
+            [_vm._v("print")]
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -89331,6 +89652,54 @@ var staticRenderFns = [
         },
         [_vm._v("All Product")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        {
+          staticClass: "col",
+          staticStyle: { display: "flex", "justify-content": "space-between" }
+        },
+        [
+          _c("div", [
+            _c("h5", [_vm._v("KUYA ALLAN COMPUTER CENTER")]),
+            _vm._v(" "),
+            _c("p", [_vm._v("PARADAHAN II, Tanza , 4100 Cavite")]),
+            _vm._v(" "),
+            _c("p", [_vm._v("09158974437 / 09338219106")])
+          ]),
+          _vm._v(" "),
+          _c("img", {
+            staticStyle: { height: "215px" },
+            attrs: { src: "/images/kuyaAllanLogo.png", alt: "logo" }
+          })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          { staticStyle: { "text-align": "left" }, attrs: { scope: "col" } },
+          [_vm._v("Item")]
+        ),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Sub-Total")])
+      ])
     ])
   }
 ]

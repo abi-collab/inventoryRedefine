@@ -146,7 +146,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx" @my-event="orderSave" />
+                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx" @my-event="printNa" />
                         </div>
                     </div>
                 </div>
@@ -353,9 +353,11 @@
                 </div>
             </div>
         </div>
+
+        <h1>Invoice</h1>
         <!-- Icon Cards-->
 
-        <!-- <div id="printMe" class="container" style=" padding: 100px;">
+        <div id="printMe" class="container" style=" padding: 100px;">
             <h4>Invoice #:  {{getRandomId}}</h4>
             <div class="row">
                 <div class="col" style="display:flex; justify-content: space-between">
@@ -434,7 +436,7 @@
                     
                   
             </div>
-        </div> -->
+        </div>
         <!-- <h1>ids</h1>
 {{productIds}} -->
     </div>
@@ -612,6 +614,7 @@ export default {
                 this.ssImg = canvas.toDataURL("image/png", 0.9);
                 if (this.ssImg) {
                     print();
+                    this.orderSave();
                 }
             })
         },
@@ -759,6 +762,7 @@ export default {
                         vat: this.vats.vat, 
                         total: total,
                         change: this.change,
+                        invoiceImg: this.ssImg
                         // cashTendered: this.
                         }       //due:this.due //due_dynamic
 
@@ -808,6 +812,8 @@ export default {
                     console.log('logssss',r)
                 })
                 .catch(error => this.errors = error.response.data.errors)
+
+                this.ssImg = '';
 
         },
         //---End_cart_methods----

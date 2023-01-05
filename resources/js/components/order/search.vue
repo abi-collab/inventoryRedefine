@@ -91,10 +91,9 @@
                                 <th>Total Due</th>
                                 <!-- <th>Pay</th> -->
                                 <!-- <th>Due</th> -->
-                                <td>Action</td>
+                                <td>View</td>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr v-for="order in filtersearch" :key="order.id">
                                 <td>{{ order.invoiceNum }}</td>
@@ -106,7 +105,15 @@
                                 <!-- <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.pay).toLocaleString() || 0)}}</td> -->
                                 <!-- <td>{{ order.due }}</td> -->
                                 <td style="text-align: center;">
-                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info">View</router-link>
+                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info">Details</router-link>
+                                    <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Invoice</button>
+                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <img :src="modalImg">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -157,7 +164,8 @@ import moment from 'moment'
                 date :'',
                 orders:[],
                 month:'',
-                searchTerm:''
+                searchTerm:'',
+                modalImg:''
             }
         },
         computed:{
@@ -216,6 +224,9 @@ import moment from 'moment'
                 var data = {month: this.month}
                 axios.post('/api/search/month',data)
                     .then(({data}) => (this.orders = data))
+            }, 
+            ImgToModal(base64) {
+                this.modalImg = base64;
             }
         }
     }

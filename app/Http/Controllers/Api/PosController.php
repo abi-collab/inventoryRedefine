@@ -35,6 +35,7 @@ class PosController extends Controller
         $data['due']=$request->due;
         $data['invoiceNum']=$request->invoiceNum;
         $data['change']=$request->change;
+        $data['invoiceImg']=$request->invoiceImg;
         $data['order_date']=date('d/m/Y');
         $data['order_month']=date('F');
         $data['order_year']=date('Y');
