@@ -354,9 +354,6 @@
             </div>
         </div>
 
-        <h1>Invoice</h1>
-        <!-- Icon Cards-->
-
         <div id="printMe" class="container" style=" padding: 100px;">
             <h4>Invoice #:  {{getRandomId}}</h4>
             <div class="row">
@@ -387,7 +384,6 @@
                             <th scope="col">Qty</th>
                             <th scope="col">Unit</th>
                             <th scope="col">Sub-Total</th>
-             
                         </tr>
                         </thead>
                         <tbody> 
@@ -420,25 +416,15 @@
                             <td></td>
                             <td></td>
                             <td style="display:flex; justify-content: flex-end"> 
-                           
                                 <span v-if="(pay > subtotal)">
                                      <b>&#8369;&nbsp;</b><b>{{ (Number(pay - subtotal).toLocaleString() || 0) }}</b>
                                 </span>
-                               
                             </td>
                         </tr>
                         </tbody>
-                      
                     </table>
-
-                    <button @click="printNa()">print na</button>
-                    <button @click="print()">print</button>
-                    
-                  
             </div>
         </div>
-        <!-- <h1>ids</h1>
-{{productIds}} -->
     </div>
 </template>
 

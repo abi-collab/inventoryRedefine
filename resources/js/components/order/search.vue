@@ -1,14 +1,14 @@
 <template>
     <div>
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb mt-3">
+        <ol class="breadcrumb mt-3 noPrint">
             <li class="breadcrumb-item">
                 <router-link to="/home">Dashboard</router-link>
             </li>
             <li class="breadcrumb-item active">Orders / Search Order</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row container-fluid">
+        <div class="row container-fluid noPrint" style="margin-bottom: 500px;">
             <div class="card col-lg-12 border-light shadow">
                 <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
@@ -17,7 +17,7 @@
                 </div>
 
 <!------------Search By Date---------------->
-<div class="card-body p-0 m-0">
+<div class="card-body p-0 m-0 noPrint">
     <div class="row">
         <div class="col-lg-6">
             <form @submit.prevent="searchDate">
@@ -71,7 +71,7 @@
 <!-----------Search_Result------------------>
     <div class="row container-fluid pt-4">
         <div class="card col-lg-12 border-light shadow mb-3">
-            <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
+            <div class="card-header text-dark mb-4 noPrint" style="font-size: 20px; font-weight: 700;">
                 <i class="fas fa-chart-area"></i>
                 Searched Order Details
             </div>
@@ -81,7 +81,7 @@
                     <label class="d-inline">Search : </label>   <!-----f----->
                         <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by Invoice"><br> <br>
                     <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
-                        <thead>
+                        <thead class="noPrint">
                             <tr class="bg-info text-white">
                                 <th>Invoice&nbsp;#</th>
                                 <th>Name</th>
@@ -96,24 +96,26 @@
                         </thead>
                         <tbody>
                             <tr v-for="order in filtersearch" :key="order.id">
-                                <td>{{ order.invoiceNum }}</td>
-                                <td>{{ order.name }}</td>
-                                <td style="text-align: right;">{{ order.qty }}</td>
-                                <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
+                                <td class="noPrint">{{ order.invoiceNum }}</td>
+                                <td class="noPrint">{{ order.name }}</td>
+                                <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
+                                <td class="noPrint" style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
                                 <!-- <td>{{ order.vat }}</td>
                                 <td>{{ order.total }}</td> -->
                                 <!-- <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.pay).toLocaleString() || 0)}}</td> -->
                                 <!-- <td>{{ order.due }}</td> -->
                                 <td style="text-align: center;">
-                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info">Details</router-link>
-                                    <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Invoice</button>
-                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
+                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info noPrint">Details</router-link>
+                                    <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-outline-secondary noPrint btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">Reprint Invoice</button>
+                                    <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg bg-light">
                                             <div class="modal-content">
                                                 <img :src="modalImg">
                                             </div>
                                         </div>
-                                    </div>
+                                        <button @click.prevent="printNa()" class="btn btn-primary">Print Invoice</button>
+                                    </div> -->
+
                                 </td>
                             </tr>
                         </tbody>
@@ -134,15 +136,16 @@
         </div>
     </div>
     <!--------End_Search_Result------------>
-
-
             </div>
         </div>
+        <img :src="modalImg" id="printMe" v-show="showNow">
     </div>
 </template>
 
 
 <script>
+import $ from 'jquery'; 
+import html2canvas from 'html2canvas';
 import moment from 'moment'
     export default {
         created() {
@@ -165,7 +168,8 @@ import moment from 'moment'
                 orders:[],
                 month:'',
                 searchTerm:'',
-                modalImg:''
+                modalImg:'',
+                showNow:true
             }
         },
         computed:{
@@ -227,14 +231,34 @@ import moment from 'moment'
             }, 
             ImgToModal(base64) {
                 this.modalImg = base64;
-            }
+                this.printNa();
+            },
+            async print() {
+                await this.$htmlToPaper("printMe");
+            },
+            printNa() {
+                this.showNow = true;
+                html2canvas(document.querySelector("#printMe")).then((canvas) => {
+                print();
+                this.showNow = false;  
+                })
+            },
         }
     }
 </script>
 
 
 <style>
-    #add_new{
+    #add_new {
         float: right;
     }
+    @media print {
+    .noPrint {
+        display: none;
+    }
+
+    #printMe {
+        display: block;
+    }
+}
 </style>

@@ -4651,8 +4651,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! html2canvas */ "./node_modules/html2canvas/dist/html2canvas.js");
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(html2canvas__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -4798,11 +4811,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var dateNow = new Date();
     var month = dateNow.getMonth() + 1;
-    var monthName = moment__WEBPACK_IMPORTED_MODULE_0___default()(month, "DD-MM-YYYY").format('MMMM');
+    var monthName = moment__WEBPACK_IMPORTED_MODULE_3___default()(month, "DD-MM-YYYY").format('MMMM');
     this.month = monthName;
     this.searchMonth();
   },
@@ -4819,7 +4834,8 @@ __webpack_require__.r(__webpack_exports__);
       orders: [],
       month: '',
       searchTerm: '',
-      modalImg: ''
+      modalImg: '',
+      showNow: true
     };
   },
   computed: {
@@ -4903,6 +4919,35 @@ __webpack_require__.r(__webpack_exports__);
     },
     ImgToModal: function ImgToModal(base64) {
       this.modalImg = base64;
+      this.printNa();
+    },
+    print: function print() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this4.$htmlToPaper("printMe");
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    printNa: function printNa() {
+      var _this5 = this;
+
+      this.showNow = true;
+      html2canvas__WEBPACK_IMPORTED_MODULE_2___default()(document.querySelector("#printMe")).then(function (canvas) {
+        print();
+        _this5.showNow = false;
+      });
     }
   }
 });
@@ -5193,20 +5238,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -12881,7 +12912,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#add_new{\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\n#add_new {\n        float: right;\n}\n@media print {\n.noPrint {\n        display: none;\n}\n#printMe {\n        display: block;\n}\n}\n", ""]);
 
 // exports
 
@@ -87310,7 +87341,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("ol", { staticClass: "breadcrumb mt-3" }, [
+    _c("ol", { staticClass: "breadcrumb mt-3 noPrint" }, [
       _c(
         "li",
         { staticClass: "breadcrumb-item" },
@@ -87323,365 +87354,371 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row container-fluid" }, [
-      _c("div", { staticClass: "card col-lg-12 border-light shadow" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card-header text-dark mb-4",
-            staticStyle: { "font-size": "20px", "font-weight": "700" }
-          },
-          [
-            _c("i", { staticClass: "fas fa-chart-area" }),
-            _vm._v("\n                    Search Orders\n                    "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-dark",
-                attrs: { to: "/order", id: "add_new" }
-              },
-              [_vm._v(" Today Order")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0 m-0" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-6" }, [
+    _c(
+      "div",
+      {
+        staticClass: "row container-fluid noPrint",
+        staticStyle: { "margin-bottom": "500px" }
+      },
+      [
+        _c("div", { staticClass: "card col-lg-12 border-light shadow" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-header text-dark mb-4",
+              staticStyle: { "font-size": "20px", "font-weight": "700" }
+            },
+            [
+              _c("i", { staticClass: "fas fa-chart-area" }),
+              _vm._v(
+                "\n                    Search Orders\n                    "
+              ),
               _c(
-                "form",
+                "router-link",
                 {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.searchDate($event)
-                    }
-                  }
+                  staticClass: "btn btn-dark",
+                  attrs: { to: "/order", id: "add_new" }
                 },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("div", { staticClass: "form-row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("div", { staticClass: "form-label-group" }, [
-                          _c("label", [_vm._v("Search By Date : ")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.date,
-                                expression: "date"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "date", required: "" },
-                            domProps: { value: _vm.date },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.date = $event.target.value
-                              }
-                            }
-                          })
-                        ])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Submit")]
-                  )
-                ]
+                [_vm._v(" Today Order")]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.searchMonth($event)
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body p-0 m-0 noPrint" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.searchDate($event)
+                      }
                     }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("div", { staticClass: "form-row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("div", { staticClass: "form-label-group" }, [
-                          _c("label", [_vm._v("Search By Month : ")]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "form-row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-label-group" }, [
+                            _c("label", [_vm._v("Search By Date : ")]),
+                            _vm._v(" "),
+                            _c("input", {
                               directives: [
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.month,
-                                  expression: "month"
+                                  value: _vm.date,
+                                  expression: "date"
                                 }
                               ],
                               staticClass: "form-control",
+                              attrs: { type: "date", required: "" },
+                              domProps: { value: _vm.date },
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.month = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.date = $event.target.value
                                 }
                               }
-                            },
-                            [
-                              _c("option", { attrs: { value: "January" } }, [
-                                _vm._v("January")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "February" } }, [
-                                _vm._v("February")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "March" } }, [
-                                _vm._v("March")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "April" } }, [
-                                _vm._v("April")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "May" } }, [
-                                _vm._v("May")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "June" } }, [
-                                _vm._v("June")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "July" } }, [
-                                _vm._v("July")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "August" } }, [
-                                _vm._v("August")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "September" } }, [
-                                _vm._v("September")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "October" } }, [
-                                _vm._v("October")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "November" } }, [
-                                _vm._v("November")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "December" } }, [
-                                _vm._v("December")
-                              ])
-                            ]
-                          )
+                            })
+                          ])
                         ])
                       ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Submit")]
-                  )
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row container-fluid pt-4" }, [
-          _c(
-            "div",
-            { staticClass: "card col-lg-12 border-light shadow mb-3" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body p-0 m-0" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("label", { staticClass: "d-inline" }, [
-                    _vm._v("Search : ")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.searchTerm,
-                        expression: "searchTerm"
-                      }
-                    ],
-                    staticClass: "form-control d-inline",
-                    staticStyle: { width: "200px" },
-                    attrs: { type: "text", placeholder: "Search by Invoice" },
-                    domProps: { value: _vm.searchTerm },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.searchTerm = $event.target.value
-                      }
-                    }
-                  }),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    {
-                      staticClass:
-                        "table table-bordered table-striped table-hover table-warning border-light",
-                      attrs: { id: "", width: "100%", cellspacing: "0" }
-                    },
-                    [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.filtersearch, function(order) {
-                          return _c("tr", { key: order.id }, [
-                            _c("td", [_vm._v(_vm._s(order.invoiceNum))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.name))]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "right" } },
-                              [_vm._v(_vm._s(order.qty))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "right" } },
-                              [
-                                _vm._v(
-                                  "₱  " +
-                                    _vm._s(
-                                      Number(
-                                        order.sub_total
-                                      ).toLocaleString() || 0
-                                    )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "center" } },
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "btn btn-sm btn-info",
-                                    attrs: {
-                                      to: {
-                                        name: "view-order",
-                                        params: { id: order.id }
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Details")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-primary",
-                                    attrs: {
-                                      type: "button",
-                                      "data-toggle": "modal",
-                                      "data-target": ".bd-example-modal-lg"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.ImgToModal(order.invoiceImg)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Invoice")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "modal fade bd-example-modal-lg",
-                                    attrs: {
-                                      tabindex: "-1",
-                                      role: "dialog",
-                                      "aria-labelledby": "myLargeModalLabel",
-                                      "aria-hidden": "true"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "modal-dialog modal-lg" },
-                                      [
-                                        _c(
-                                          "div",
-                                          { staticClass: "modal-content" },
-                                          [
-                                            _c("img", {
-                                              attrs: { src: _vm.modalImg }
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ])
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card-footer small text-muted" })
-            ]
-          )
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.searchMonth($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "form-row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-label-group" }, [
+                            _c("label", [_vm._v("Search By Month : ")]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.month,
+                                    expression: "month"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.month = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "January" } }, [
+                                  _vm._v("January")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "February" } }, [
+                                  _vm._v("February")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "March" } }, [
+                                  _vm._v("March")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "April" } }, [
+                                  _vm._v("April")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "May" } }, [
+                                  _vm._v("May")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "June" } }, [
+                                  _vm._v("June")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "July" } }, [
+                                  _vm._v("July")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "August" } }, [
+                                  _vm._v("August")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "September" } },
+                                  [_vm._v("September")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "October" } }, [
+                                  _vm._v("October")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "November" } }, [
+                                  _vm._v("November")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "December" } }, [
+                                  _vm._v("December")
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row container-fluid pt-4" }, [
+            _c(
+              "div",
+              { staticClass: "card col-lg-12 border-light shadow mb-3" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body p-0 m-0" }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("label", { staticClass: "d-inline" }, [
+                      _vm._v("Search : ")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.searchTerm,
+                          expression: "searchTerm"
+                        }
+                      ],
+                      staticClass: "form-control d-inline",
+                      staticStyle: { width: "200px" },
+                      attrs: { type: "text", placeholder: "Search by Invoice" },
+                      domProps: { value: _vm.searchTerm },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.searchTerm = $event.target.value
+                        }
+                      }
+                    }),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-bordered table-striped table-hover table-warning border-light",
+                        attrs: { id: "", width: "100%", cellspacing: "0" }
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.filtersearch, function(order) {
+                            return _c("tr", { key: order.id }, [
+                              _c("td", { staticClass: "noPrint" }, [
+                                _vm._v(_vm._s(order.invoiceNum))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "noPrint" }, [
+                                _vm._v(_vm._s(order.name))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "noPrint",
+                                  staticStyle: { "text-align": "right" }
+                                },
+                                [_vm._v(_vm._s(order.qty))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "noPrint",
+                                  staticStyle: { "text-align": "right" }
+                                },
+                                [
+                                  _vm._v(
+                                    "₱  " +
+                                      _vm._s(
+                                        Number(
+                                          order.sub_total
+                                        ).toLocaleString() || 0
+                                      )
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticStyle: { "text-align": "center" } },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-info noPrint",
+                                      attrs: {
+                                        to: {
+                                          name: "view-order",
+                                          params: { id: order.id }
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Details")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-outline-secondary noPrint btn-sm",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "modal",
+                                        "data-target": ".bd-example-modal-lg"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.ImgToModal(
+                                            order.invoiceImg
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Reprint Invoice")]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer small text-muted" })
+              ]
+            )
+          ])
         ])
-      ])
-    ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("img", {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.showNow,
+          expression: "showNow"
+        }
+      ],
+      attrs: { src: _vm.modalImg, id: "printMe" }
+    })
   ])
 }
 var staticRenderFns = [
@@ -87692,7 +87729,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "card-header text-dark mb-4",
+        staticClass: "card-header text-dark mb-4 noPrint",
         staticStyle: { "font-size": "20px", "font-weight": "700" }
       },
       [
@@ -87705,7 +87742,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "noPrint" }, [
       _c("tr", { staticClass: "bg-info text-white" }, [
         _c("th", [_vm._v("Invoice #")]),
         _vm._v(" "),
@@ -88241,7 +88278,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._v("\n                                        ₱ "),
+                        _vm._v("\n                                    ₱ "),
                         _c("p", [
                           _vm._v(
                             _vm._s(Number(card.sub_total).toLocaleString() || 0)
@@ -88285,7 +88322,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n                            Total Quantity:\n                            "
+                  "\n                        Total Quantity:\n                        "
                 ),
                 _c("strong", [_vm._v(_vm._s(_vm.qty))])
               ]
@@ -88299,7 +88336,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n                            Total Due:\n                            "
+                  "\n                        Total Due:\n                        "
                 ),
                 _vm._v(" "),
                 _c("strong", [
@@ -89146,7 +89183,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "\n                                                    ₱ " +
+                                                "\n                                                ₱ " +
                                                   _vm._s(
                                                     getproduct.selling_price
                                                   )
@@ -89266,8 +89303,6 @@ var render = function() {
         ])
       ])
     ]),
-    _vm._v(" "),
-    _c("h1", [_vm._v("Invoice")]),
     _vm._v(" "),
     _c(
       "div",
@@ -89493,31 +89528,7 @@ var render = function() {
               ],
               2
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.printNa()
-                }
-              }
-            },
-            [_vm._v("print na")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.print()
-                }
-              }
-            },
-            [_vm._v("print")]
-          )
+          ])
         ])
       ]
     )
@@ -89576,7 +89587,7 @@ var staticRenderFns = [
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [
           _vm._v(
-            "Provide the serial numbers for the ordered\n                                items"
+            "Provide the serial numbers for the ordered\n                            items"
           )
         ]
       ),
