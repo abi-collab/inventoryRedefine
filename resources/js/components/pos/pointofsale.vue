@@ -146,7 +146,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx" @my-event="printNa" />
+                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx" @my-event="orderSave" />
                         </div>
                     </div>
                 </div>
@@ -595,15 +595,15 @@ export default {
         async print() {
             await this.$htmlToPaper("printMe");
         },
-        printNa() {
-            html2canvas(document.querySelector("#printMe")).then((canvas) => {
-                this.ssImg = canvas.toDataURL("image/png", 0.9);
-                if (this.ssImg) {
-                    print();
-                    this.orderSave();
-                }
-            })
-        },
+        // printNa() {
+        //     html2canvas(document.querySelector("#printMe")).then((canvas) => {
+        //         this.ssImg = canvas.toDataURL("image/png", 0.9);
+        //         if (this.ssImg) {
+        //             print();
+        //             // this.orderSave();
+        //         }
+        //     })
+        // },
         returnQty(val) {
             this.passVal = val;
             return val;
@@ -735,6 +735,10 @@ export default {
         },
 
         orderSave(serialsRecieved) {
+            html2canvas(document.querySelector("#printMe")).then((canvas) => {
+                this.ssImg = canvas.toDataURL("image/png", 0.9);
+            })
+
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
             var data = { 
@@ -755,7 +759,7 @@ export default {
             axios.post('/api/orderdone/', data)
                 .then((res) => {
                     Notification.success()
-                    this.$router.push({ name: 'home' })
+                    // this.$router.push({ name: 'home' })
                     // console.log('res', res);
                 })
 
@@ -798,8 +802,11 @@ export default {
                     console.log('logssss',r)
                 })
                 .catch(error => this.errors = error.response.data.errors)
-
-                this.ssImg = '';
+                if (this.ssImg) {
+                    print();
+                }
+              
+                this.$router.push({ name: 'home' });
 
         },
         //---End_cart_methods----

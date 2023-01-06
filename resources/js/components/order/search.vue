@@ -22,8 +22,6 @@
         <div class="col"></div>
             <div class="col">
                 <ejs-daterangepicker :placeholder="waterMark" v-model="datesss"></ejs-daterangepicker>
-               <p v-if="datesss"> {{ datesss.start }} - {{ datesss.end }}</p>
-                {{ datesss }}
             </div>
             <div class="col"></div>
         </div>
@@ -105,7 +103,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="order in filtersearch" :key="order.id">
+                            <tr v-for="order in filterSearchWithDate" :key="order.id">
                                 <td class="noPrint">{{ order.invoiceNum }}</td>
                                 <td class="noPrint">{{ order.name }}</td>
                                 <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
@@ -233,6 +231,24 @@ Vue.use(DateRangePickerPlugin);
                     // let searchLowerCase = employee.name.toLowerCase()
                     // return searchLowerCase.match(this.searchTerm.toLowerCase())
                 })
+            },
+            filterSearchWithDate(){
+                let vm = this;
+                var startDate = this.datesss?.start;
+                var endDate = this.datesss?.end;
+               
+                let filtered = vm.filtersearch.filter((x) => {
+                    if(new Date(x.order_date) >= new Date(startDate) && new Date(x.order_date) <= new Date(endDate)) {
+                        return x;
+                    }
+                });
+
+                if(startDate && endDate) {
+                    return filtered;
+                } else {
+                    return vm.filtersearch;
+                }
+                
             }
         },
         methods:{

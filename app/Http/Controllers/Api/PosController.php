@@ -36,7 +36,7 @@ class PosController extends Controller
         $data['invoiceNum']=$request->invoiceNum;
         $data['change']=$request->change;
         $data['invoiceImg']=$request->invoiceImg;
-        $data['order_date']=date('d/m/Y');
+        $data['order_date']=date('m/d/Y');
         $data['order_month']=date('F');
         $data['order_year']=date('Y');
         $order_id=DB::table('orders')->insertGetId($data);   //--insert + get last Inserted order's id--
