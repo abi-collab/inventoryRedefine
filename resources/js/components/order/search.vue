@@ -19,6 +19,16 @@
 <!------------Search By Date---------------->
 <div class="card-body p-0 m-0 noPrint">
     <div class="row">
+        <div class="col"></div>
+            <div class="col">
+                <ejs-daterangepicker :placeholder="waterMark" v-model="datesss"></ejs-daterangepicker>
+               <p v-if="datesss"> {{ datesss.start }} - {{ datesss.end }}</p>
+                {{ datesss }}
+            </div>
+            <div class="col"></div>
+        </div>
+
+    <!-- <div class="row">
         <div class="col-lg-6">
             <form @submit.prevent="searchDate">
                 <div class="form-group">
@@ -35,7 +45,7 @@
             </form>
         </div>
 
-<!------------Search By Month---------------->
+
         <div class="col-lg-6">
             <form @submit.prevent="searchMonth">
                 <div class="form-group">
@@ -64,7 +74,7 @@
                 <button type="submit" class="btn btn-success">Submit</button>
             </form>
         </div>
-    </div>
+    </div> -->
 </div>  <!-----------End_Search_text_box------------------>
 
 
@@ -144,9 +154,13 @@
 
 
 <script>
-import $ from 'jquery'; 
+// import $ from 'jquery'; 
 import html2canvas from 'html2canvas';
 import moment from 'moment'
+import Vue from 'vue';
+import { DateRangePickerPlugin } from '@syncfusion/ej2-vue-calendars';
+
+Vue.use(DateRangePickerPlugin);
     export default {
         created() {
             let dateNow = new Date();
@@ -169,7 +183,11 @@ import moment from 'moment'
                 month:'',
                 searchTerm:'',
                 modalImg:'',
-                showNow:true
+                showNow:true,
+
+                waterMark : 'Select a Range',
+                datesss:{}
+
             }
         },
         computed:{
@@ -261,4 +279,11 @@ import moment from 'moment'
         display: block;
     }
 }
+
+@import '../../../../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../../../../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../../../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../../../../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../../../../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import "../../../../node_modules/@syncfusion/ej2-vue-calendars/styles/material.css";
 </style>
