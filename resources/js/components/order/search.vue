@@ -8,7 +8,7 @@
             <li class="breadcrumb-item active">Orders / Search Order</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row container-fluid noPrint" style="margin-bottom: 500px;">
+        <div class="row noPrint" style="margin-bottom: 500px;">
             <div class="card col-lg-12 border-light shadow">
                 <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
                     <i class="fas fa-chart-area"></i>
@@ -18,12 +18,51 @@
 
 <!------------Search By Date---------------->
 <div class="card-body p-0 m-0 noPrint">
-    <div class="row">
-        <div class="col"></div>
-            <div class="col">
-                <ejs-daterangepicker :placeholder="waterMark" v-model="datesss"></ejs-daterangepicker>
+        <div class="row">
+            <div class="col" style="display: flex; justify-content:end;">
+                <!-- <label class="d-inline">Search : </label>  -->
+                <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:300px" placeholder="Search by Invoice">
             </div>
-            <div class="col"></div>
+            <div class="col" style="display:flex; justify-content: end">
+                <vue-daterange-picker 
+                    double
+                    start-date="12/01/2022" 
+                    end-date="12/01/2023" 
+                    start-place-holders="12/01/2000"
+                    end-place-holders="04/01/2030"
+                    @get-dates="getDates"
+                />
+            </div>
+            <div class="col" style="display:flex; justify-content: start">
+                <button class="btn btn-outline-success" @click="startDate = '', endDate = ''">reset</button>
+            </div>
+        </div>
+            <br>
+            <br>
+        <div class="table table-responsive">
+            <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
+                <thead class="noPrint">
+                    <tr class="bg-info text-white">
+                        <th>Invoice&nbsp;#</th>
+                        <th>Name</th>
+                        <th>Quantity</th>  
+                        <th>Total Due</th>
+                        <td>View</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="order in filterSearchWithDate" :key="order.id">
+                        <td class="noPrint">{{ order.invoiceNum }}</td>
+                        <td class="noPrint">{{ order.name }}</td>
+                        <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
+                        <td class="noPrint" style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
+                        <td style="text-align: center;">
+                            <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info noPrint">Details</router-link>
+                            <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-outline-secondary noPrint btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">Reprint Invoice</button>   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     <!-- <div class="row">
@@ -74,92 +113,23 @@
         </div>
     </div> -->
 </div>  <!-----------End_Search_text_box------------------>
-
-
-<!-----------Search_Result------------------>
-    <div class="row container-fluid pt-4">
-        <div class="card col-lg-12 border-light shadow mb-3">
-            <div class="card-header text-dark mb-4 noPrint" style="font-size: 20px; font-weight: 700;">
-                <i class="fas fa-chart-area"></i>
-                Searched Order Details
-            </div>
-            <div class="card-body p-0 m-0">
-                
-                <div class="table-responsive">
-                    <label class="d-inline">Search : </label>   <!-----f----->
-                        <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px" placeholder="Search by Invoice"><br> <br>
-                    <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
-                        <thead class="noPrint">
-                            <tr class="bg-info text-white">
-                                <th>Invoice&nbsp;#</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <!-- <th>Subtotal</th>
-                                <th>Vat</th> -->
-                                <th>Total Due</th>
-                                <!-- <th>Pay</th> -->
-                                <!-- <th>Due</th> -->
-                                <td>View</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="order in filterSearchWithDate" :key="order.id">
-                                <td class="noPrint">{{ order.invoiceNum }}</td>
-                                <td class="noPrint">{{ order.name }}</td>
-                                <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
-                                <td class="noPrint" style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
-                                <!-- <td>{{ order.vat }}</td>
-                                <td>{{ order.total }}</td> -->
-                                <!-- <td style="text-align: right;">&#8369;&nbsp; {{(Number(order.pay).toLocaleString() || 0)}}</td> -->
-                                <!-- <td>{{ order.due }}</td> -->
-                                <td style="text-align: center;">
-                                    <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info noPrint">Details</router-link>
-                                    <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-outline-secondary noPrint btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">Reprint Invoice</button>
-                                    <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg bg-light">
-                                            <div class="modal-content">
-                                                <img :src="modalImg">
-                                            </div>
-                                        </div>
-                                        <button @click.prevent="printNa()" class="btn btn-primary">Print Invoice</button>
-                                    </div> -->
-
-                                </td>
-                            </tr>
-                        </tbody>
-                        <!-- <tfoot>
-                            <tr style="border: solid grey 2px">
-                                <td colspan="2" style="text-align: center;"> <b>Totals</b></td>
-                                <td style="text-align: right;">{{ quantity }} </td>
-                                <td style="text-align: right;">&#8369;&nbsp; {{(Number(subtotal).toLocaleString() || 0)}}</td>
-                              
-                                <td style="text-align: right;"> </td>
-                               
-                            </tr>
-                        </tfoot> -->
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer small text-muted"></div>
-        </div>
-    </div>
-    <!--------End_Search_Result------------>
             </div>
         </div>
+       
         <img :src="modalImg" id="printMe" v-show="showNow">
     </div>
 </template>
-
 
 <script>
 // import $ from 'jquery'; 
 import html2canvas from 'html2canvas';
 import moment from 'moment'
-import Vue from 'vue';
-import { DateRangePickerPlugin } from '@syncfusion/ej2-vue-calendars';
+import VueDaterangePicker from 'vue-daterange-picker';
 
-Vue.use(DateRangePickerPlugin);
     export default {
+        components: {
+    VueDaterangePicker
+  },
         created() {
             let dateNow = new Date();
             let month = dateNow.getMonth() + 1;
@@ -168,6 +138,7 @@ Vue.use(DateRangePickerPlugin);
     
             this.month = monthName;
             this.searchMonth();
+            
         },
         mounted(){
             if (!User.loggedIn()) {
@@ -184,7 +155,10 @@ Vue.use(DateRangePickerPlugin);
                 showNow:true,
 
                 waterMark : 'Select a Range',
-                datesss:{}
+                datesss:{},
+                startDate:'',
+                endDate:''
+     
 
             }
         },
@@ -226,32 +200,29 @@ Vue.use(DateRangePickerPlugin);
             },
             filtersearch(){
                 return this.orders.filter(order => {
-                    //return employee.phone.match(this.searchTerm)
                     return order.invoiceNum.toLowerCase().match(this.searchTerm.toLowerCase())
-                    // let searchLowerCase = employee.name.toLowerCase()
-                    // return searchLowerCase.match(this.searchTerm.toLowerCase())
                 })
             },
             filterSearchWithDate(){
-                let vm = this;
-                var startDate = this.datesss?.start;
-                var endDate = this.datesss?.end;
-               
-                let filtered = vm.filtersearch.filter((x) => {
-                    if(new Date(x.order_date) >= new Date(startDate) && new Date(x.order_date) <= new Date(endDate)) {
+                let filtered = this.filtersearch.filter((x) => {
+                    if(new Date(x.order_date) >= new Date(this.startDate) && new Date(x.order_date) <= new Date(this.endDate)) {
                         return x;
                     }
                 });
 
-                if(startDate && endDate) {
+                if(this.startDate && this.endDate) {
                     return filtered;
                 } else {
-                    return vm.filtersearch;
+                    return this.filtersearch;
                 }
-                
             }
         },
         methods:{
+            getDates(i) {
+                this.startDate = i.startDate;
+                this.endDate = i.endDate;
+
+            },
             searchDate(){
                 var data = {date: this.date}
                 axios.post('/api/search/order',data)
@@ -295,11 +266,4 @@ Vue.use(DateRangePickerPlugin);
         display: block;
     }
 }
-
-@import '../../../../node_modules/@syncfusion/ej2-base/styles/material.css';
-@import '../../../../node_modules/@syncfusion/ej2-buttons/styles/material.css';
-@import '../../../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
-@import '../../../../node_modules/@syncfusion/ej2-popups/styles/material.css';
-@import '../../../../node_modules/@syncfusion/ej2-lists/styles/material.css';
-@import "../../../../node_modules/@syncfusion/ej2-vue-calendars/styles/material.css";
 </style>

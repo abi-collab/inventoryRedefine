@@ -44,11 +44,6 @@ const Toast = Swal.mixin({
 window.Toast = Toast;       //--for 'globally' use
 //----End-----Sweetalert2------------//------
 
-import { DateRangePickerPlugin } from '@syncfusion/ej2-vue-calendars';
-
-Vue.use(DateRangePickerPlugin);
-
-
 //------Reload-----
 window.Reload = new Vue();   //--for reload() method /to instantly reload page
 
