@@ -44,7 +44,7 @@
                                 <!-- <td v-for="i in serials" :key="i"><p v-if="(i.pro_code == card.product_code)">{{i}}</p></td> -->
                                 <td>
                                     <div style="display:flex; justify-content: space-between">&#8369;<p>{{
-                                            (Number(card.product_price).toLocaleString() || 0)
+                                    (Number(card.product_price).toLocaleString() || 0)
                                     }}</p>
                                     </div>
                                 </td>
@@ -89,22 +89,20 @@
                                 <label>Customer Name</label>
                                 <div class="input-group ">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-secondary text-white" data-toggle="modal" data-target="#exampleModal" id="add_new" type="button"> + </button>
+                                        <button class="btn btn-secondary text-white" data-toggle="modal"
+                                            data-target="#exampleModal" id="add_new" type="button"> + </button>
                                     </div>
                                     <select class="form-control" v-model="customer_id" required>
-                                        <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
+                                        <option :value="customer.id" v-for="customer in customers">{{ customer.name }}
+                                        </option>
                                     </select>
                                 </div>
-
-                               
-                               
                                 <!-- <label>Pay By</label>
-                        <select class="form-control" v-model="payby">
-                            <option value="HandCash">Hand Cash</option>
-                            <option value="Cheaque">Cheaque</option>
-                            <option value="GiftCard">Gift Card</option>
-                        </select> -->
-
+                                <select class="form-control" v-model="payby">
+                                    <option value="HandCash">Hand Cash</option>
+                                    <option value="Cheaque">Cheaque</option>
+                                    <option value="GiftCard">Gift Card</option>
+                                </select> -->
                             </div>
                             <div class="col-lg-6">
                                 <!-- <label>Due</label>                              -->
@@ -113,20 +111,16 @@
                                 <!-- :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)" -->
                                 <label>Cash Recieved</label>
                                 <input type="text" class="form-control mb-2" required v-model="pay">
-
                                 <div v-if="(pay > subtotal)">
                                     <label>Change</label>
-                                    <input type="text" class="form-control mb-2" required :value="sukli(pay,subtotal)"
+                                    <input type="text" class="form-control mb-2" required :value="sukli(pay, subtotal)"
                                         disabled>
                                 </div>
-
-
                             </div>
-
                         </div>
-
                         <br>
-                        <button type="submit" class="btn btn-success mb-4" v-if="cards.length > 0 && pay >= subtotal ">Place Order</button>
+                        <button type="submit" class="btn btn-success mb-4"
+                            v-if="cards.length > 0 && pay >= subtotal">Place Order</button>
                         <!-- <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#serialnums"
                             id="add_new"> Submit2</a> -->
                     </form>
@@ -146,7 +140,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx" @my-event="orderSave" />
+                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx"
+                                @my-event="printNa" />
                         </div>
                     </div>
                 </div>
@@ -170,7 +165,8 @@
                                         <div class="col-md-6">
                                             <div class="form-label-group">
                                                 <input type="text" v-model="form.name" class="form-control" required>
-                                                <small class="text-danger" v-if="errors.name">{{ errors.name[0]
+                                                <small class="text-danger" v-if="errors.name">{{
+                                                    errors.name[0]
                                                 }}</small>
                                                 <label for="firstName">Full Name</label>
                                             </div>
@@ -178,7 +174,8 @@
                                         <div class="col-md-6">
                                             <div class="form-label-group">
                                                 <input type="email" v-model="form.email" class="form-control">
-                                                <small class="text-danger" v-if="errors.email">{{ errors.email[0]
+                                                <small class="text-danger" v-if="errors.email">{{
+                                                    errors.email[0]
                                                 }}</small>
                                                 <label for="lastName">Email Address</label>
                                             </div>
@@ -190,7 +187,8 @@
                                         <div class="col-md-6">
                                             <div class="form-label-group">
                                                 <input type="text" v-model="form.address" class="form-control" required>
-                                                <small class="text-danger" v-if="errors.address">{{ errors.address[0]
+                                                <small class="text-danger" v-if="errors.address">{{
+                                                    errors.address[0]
                                                 }}</small>
                                                 <label for="firstName">Address</label>
                                             </div>
@@ -199,7 +197,8 @@
                                             <div class="form-label-group">
                                                 <input type="text" v-model="form.phone" class="form-control" required>
                                                 <label for="lastName">Phone</label>
-                                                <small class="text-danger" v-if="errors.phone">{{ errors.phone[0]
+                                                <small class="text-danger" v-if="errors.phone">{{
+                                                    errors.phone[0]
                                                 }}</small>
                                             </div>
                                         </div>
@@ -210,7 +209,8 @@
                                         <div class="col-md-6">
                                             <div class="form-label-group">
                                                 <input type="file" class="btn" @change="onFileselected">
-                                                <small class="text-danger" v-if="errors.photo">{{ errors.photo[0]
+                                                <small class="text-danger" v-if="errors.photo">{{
+                                                    errors.photo[0]
                                                 }}</small>
                                             </div>
                                         </div>
@@ -266,12 +266,12 @@
                                             <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
                                                 <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp; {{
-                                                        (Number(product.selling_price).toLocaleString() || 0)
+                                                (Number(product.selling_price).toLocaleString() || 0)
                                                 }}</span>
                                                 <div style="display: flex;flex-direction: column;">
                                                     <span class="badge badge-success"
                                                         v-if="product.product_quantity >= 1"> Available ({{
-                                                                product.product_quantity
+                                                            product.product_quantity
                                                         }}) </span>
                                                     <span class="badge badge-danger" v-else>Stock Out</span>
                                                 </div>
@@ -288,12 +288,12 @@
                                                 <small class="card-title">{{ product.product_name }}</small><br>
 
                                                 <span class="text-dark d-block m-0 p-0 text-lg">&#8369;&nbsp;{{
-                                                        (Number(product.selling_price).toLocaleString() || 0)
+                                                (Number(product.selling_price).toLocaleString() || 0)
                                                 }}</span>
                                                 <div style="display: flex;flex-direction: column;">
                                                     <span class="badge badge-success" style="margin-top: auto;"
                                                         v-if="product.product_quantity >= 1"> Available ({{
-                                                                product.product_quantity
+                                                            product.product_quantity
                                                         }}) </span>
                                                     <span class="badge badge-danger" style="margin-top: auto;"
                                                         v-else>Stock Out</span>
@@ -321,7 +321,7 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
                                                     v-if="getproduct.product_quantity >= 1"> Availble ({{
-                                                            getproduct.product_quantity
+                                                        getproduct.product_quantity
                                                     }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
                                                 <span class="text-dark d-block m-0 p-0 small">
@@ -338,11 +338,12 @@
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
                                                     v-if="getproduct.product_quantity >= 1"> Availble ({{
-                                                            getproduct.product_quantity
+                                                        getproduct.product_quantity
                                                     }}) </span>
                                                 <span class="badge badge-danger" v-else>Stock Out</span>
-                                                <span
-                                                    class="text-dark d-block m-0 p-0 small">&#8369;&nbsp;{{ getproduct.selling_price }}</span>
+                                                <span class="text-dark d-block m-0 p-0 small">&#8369;&nbsp;{{
+                                                    getproduct.selling_price
+                                                }}</span>
                                             </div>
                                         </div>
                                     </button>
@@ -353,77 +354,87 @@
                 </div>
             </div>
         </div>
-
-        <div id="printMe" class="container" style=" padding: 100px;">
-            <h4>Invoice #:  {{getRandomId}}</h4>
-            <div class="row">
-                <div class="col" style="display:flex; justify-content: space-between">
-                    <div>
-                        <h5>KUYA ALLAN COMPUTER CENTER</h5>
-                        <p>PARADAHAN II, Tanza , 4100 Cavite</p>
-                        <p>09158974437 / 09338219106</p>
+        <div class="row">
+            <div class="col" id="printMe" v-show="showNow">
+                <div class="container">
+                    <h4>Invoice #: {{ getRandomId }}</h4>
+                    <div class="row">
+                        <div class="col" style="display:flex; justify-content: space-between">
+                            <div>
+                                <h5>KUYA ALLAN COMPUTER CENTER</h5>
+                                <p>PARADAHAN II, Tanza , 4100 Cavite</p>
+                                <p>09158974437 / 09338219106</p>
+                            </div>
+                            <img src="/images/kuyaAllanLogo.png" alt="logo" style="height: 215px;">
+                        </div>
                     </div>
-                    <img src="/images/kuyaAllanLogo.png" alt="logo" style="height: 215px;">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Bill To</h5>
+                            <select class="form-control mb-2" v-model="customer_id" style="appearance: none;" disabled>
+                                <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
+                            </select>
+                        </div>
+                        <div class="col"></div>
+
+                    </div>
+                    <div class="row">
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="text-align:left;">Item</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Sub-Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="card in cards" :key="card.id">
+                                    <th style="text-align:left;">{{ card.pro_name }}</th>
+                                    <td>{{ card.pro_quantity }}</td>
+                                    <td>
+                                        <div style="display:flex; justify-content: flex-end">
+                                            <p>{{ (Number(card.product_price).toLocaleString() || 0) }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="display:flex; justify-content: flex-end">
+                                            <p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td><b>{{ qty }}</b></td>
+                                    <td></td>
+                                    <td style="display:flex; justify-content: flex-end"> <b>&#8369;&nbsp;</b><b>{{
+                                    (Number(subtotal).toLocaleString() || 0) }}</b></td>
+                                </tr>
+                                <br><br>
+                                <tr>
+                                    <th style="display: flex; justify-content:flex-end">Cash</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="display:flex; justify-content: flex-end"><b>&#8369;&nbsp;</b><b>{{
+                                    (Number(pay).toLocaleString() || 0) }}</b></td>
+                                </tr>
+                                <tr>
+                                    <th style="display: flex; justify-content:flex-end">Change</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="display:flex; justify-content: flex-end">
+                                        <span v-if="(pay > subtotal)">
+                                            <b>&#8369;&nbsp;</b><b>{{ (Number(pay - subtotal).toLocaleString() || 0)
+                                            }}</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <h5>Bill To</h5>
-                    <select class="form-control mb-2" v-model="customer_id" style="appearance: none;" disabled>
-                        <option :value="customer.id" v-for="customer in customers">{{ customer.name }}</option>
-                    </select>
-                </div>
-                <div class="col"></div>
-                
-            </div>
-            <div class="row">
-                <table class="table table-sm table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col" style="text-align:left;">Item</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Sub-Total</th>
-                        </tr>
-                        </thead>
-                        <tbody> 
-                        <tr v-for="card in cards" :key="card.id">     
-                            <th style="text-align:left;">{{ card.pro_name }}</th>
-                            <td>{{card.pro_quantity}}</td>
-                            <td>
-                                <div style="display:flex; justify-content: flex-end"><p>{{ (Number(card.product_price).toLocaleString() || 0) }}</p></div></td>
-                            <td>
-                                <div style="display:flex; justify-content: flex-end">
-                                    <p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>    
-                            <th></th>
-                            <td><b>{{qty}}</b></td>
-                            <td></td>
-                            <td style="display:flex; justify-content: flex-end"> <b>&#8369;&nbsp;</b><b>{{ (Number(subtotal).toLocaleString() || 0) }}</b></td>
-                        </tr>
-                        <br><br>
-                        <tr>    
-                            <th style="display: flex; justify-content:flex-end">Cash</th>
-                            <td></td>
-                            <td></td>
-                            <td style="display:flex; justify-content: flex-end"><b>&#8369;&nbsp;</b><b>{{ (Number(pay).toLocaleString() || 0) }}</b></td>
-                        </tr>
-                        <tr>    
-                            <th style="display: flex; justify-content:flex-end">Change</th>
-                            <td></td>
-                            <td></td>
-                            <td style="display:flex; justify-content: flex-end"> 
-                                <span v-if="(pay > subtotal)">
-                                     <b>&#8369;&nbsp;</b><b>{{ (Number(pay - subtotal).toLocaleString() || 0) }}</b>
-                                </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 </template>
@@ -431,7 +442,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-import $ from 'jquery'; 
+import $ from 'jquery';
 import serials from './serials.vue'
 import html2canvas from 'html2canvas';
 
@@ -470,10 +481,10 @@ export default {
                 photo: '',
                 phone: '',
             },
-            form3:{ //2
-					activity :'',
-					createdby : Cookies.get('usersname')
-				},
+            form3: { //2
+                activity: '',
+                createdby: Cookies.get('usersname')
+            },
             customer_id: '',
             pay: '',
             due: '',
@@ -493,8 +504,10 @@ export default {
             ssImg: '',
             productIds: [],
             serialNumbersForItemQnty: [],
-            invoiceRandomNumber:'',
-            change:0
+            invoiceRandomNumber: '',
+            change: 0,
+
+            showNow: false
         }
     },
     computed: {
@@ -587,23 +600,28 @@ export default {
         }
     },
     methods: {
-        sukli(pay,subtotal) {
+        sukli(pay, subtotal) {
             let a = pay - subtotal;
             this.change = a;
             return a;
         },
         async print() {
             await this.$htmlToPaper("printMe");
+            setTimeout(this.toNextRoute(), 30000);
         },
-        // printNa() {
-        //     html2canvas(document.querySelector("#printMe")).then((canvas) => {
-        //         this.ssImg = canvas.toDataURL("image/png", 0.9);
-        //         if (this.ssImg) {
-        //             print();
-        //             // this.orderSave();
-        //         }
-        //     })
-        // },
+        toNextRoute() {
+            this.showNow = false;
+            this.$router.push({ name: 'home' });
+        },
+        printNa(serialsRecieved) {
+            html2canvas(document.querySelector("#printMe")).then((canvas) => {
+                this.ssImg = canvas.toDataURL("image/png", 0.9);
+                if (this.ssImg) {
+                    // this.print();
+                    this.orderSave(serialsRecieved);
+                }
+            })
+        },
         returnQty(val) {
             this.passVal = val;
             return val;
@@ -731,30 +749,27 @@ export default {
                 .catch()
         },
         orderdone() {
+            this.showNow = true;
             $('#serialnums').modal('toggle');
         },
 
         orderSave(serialsRecieved) {
-            html2canvas(document.querySelector("#printMe")).then((canvas) => {
-                this.ssImg = canvas.toDataURL("image/png", 0.9);
-            })
-
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
-            var data = { 
-                        invoiceNum: this.getRandomId,
-                        qty: this.qty, 
-                        subtotal: this.subtotal, 
-                        customer_id: this.customer_id, 
-                        payby: this.payby, 
-                        pay: this.pay, 
-                        due: due, 
-                        vat: this.vats.vat, 
-                        total: total,
-                        change: this.change,
-                        invoiceImg: this.ssImg
-                        // cashTendered: this.
-                        }       //due:this.due //due_dynamic
+            var data = {
+                invoiceNum: this.getRandomId,
+                qty: this.qty,
+                subtotal: this.subtotal,
+                customer_id: this.customer_id,
+                payby: this.payby,
+                pay: this.pay,
+                due: due,
+                vat: this.vats.vat,
+                total: total,
+                change: this.change,
+                invoiceImg: this.ssImg
+                // cashTendered: this.
+            }       //due:this.due //due_dynamic
 
             axios.post('/api/orderdone/', data)
                 .then((res) => {
@@ -764,9 +779,9 @@ export default {
                 })
 
             let customer = this.customers.filter((h) => h.id == this.customer_id);
-            console.log(customer[0].name);
+            // console.log(customer[0].name);
+            // console.log('serialsRecieved', serialsRecieved);
 
-            console.log('serialsRecieved', serialsRecieved);
             let serialList = [];
             for (let j = 0; j < serialsRecieved.length; j++) {
                 for (let x = 0; x < serialsRecieved[j].serials.length; x++) {
@@ -774,40 +789,40 @@ export default {
                         invoiceNumber: this.getRandomId,
                         customerId: this.customer_id,
                         customerName: customer[0].name,
-                        serialNo:serialsRecieved[j].serials[x].serialnum,
-                        id:serialsRecieved[j].id,
-                        product_id:serialsRecieved[j].pro_id,
-                        product_name:serialsRecieved[j].pro_name,
-                        order_quantity:serialsRecieved[j].pro_quantity,
-                        product_price:serialsRecieved[j].product_price,
-                        created_by:Cookies.get('userNow'),
+                        serialNo: serialsRecieved[j].serials[x].serialnum,
+                        id: serialsRecieved[j].id,
+                        product_id: serialsRecieved[j].pro_id,
+                        product_name: serialsRecieved[j].pro_name,
+                        order_quantity: serialsRecieved[j].pro_quantity,
+                        product_price: serialsRecieved[j].product_price,
+                        created_by: Cookies.get('userNow'),
                     })
                 }
             }
-            console.log(this.getRandomId);
-            console.log('serialList', serialList);
+            // console.log(this.getRandomId);
+            // console.log('serialList', serialList);
 
             for (let l = 0; l < serialList.length; l++) {
-                    axios.post('/api/serials', serialList[l])
+                axios.post('/api/serials', serialList[l])
                     .then((res) => {
                         // Notification.success()
                         // this.$router.push({ name: 'home' })
                         console.log('res', res);
                     })
-                }
+            }
 
-                this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;//4
-                axios.post('/api/activitylog',this.form3)  //5
+            this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;//4
+            axios.post('/api/activitylog', this.form3)  //5
                 .then((r) => {
-                    console.log('logssss',r)
+                    // console.log('logssss', r)
+                    // this.$router.push({ name: 'home' });
+                    this.print();
+                    this.showNow = false;
                 })
                 .catch(error => this.errors = error.response.data.errors)
-                if (this.ssImg) {
-                    print();
-                }
-              
-                this.$router.push({ name: 'home' });
-
+            // if (this.ssImg) {
+            //     print();
+            // }
         },
         //---End_cart_methods----
 
@@ -846,8 +861,8 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
-        customerInsert() {        
-                       //-------------2---
+        customerInsert() {
+            //-------------2---
             axios.post('/api/Customer/', this.form)
                 .then(() => {
                     $('#closeModal').click();

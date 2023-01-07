@@ -35,7 +35,7 @@
                     <td>{{item.serialNo}}</td>
                     <td>{{ item.product_name }}</td>
                     <td>{{item.customerName}}</td>
-                    <td>{{returnName(item.created_by).name}}</td>
+                    <td>{{returnName(item.created_by)}}</td>
                     
                   </tr>
                 </tbody>
@@ -93,7 +93,7 @@ import Cookies from 'js-cookie';
         // }
         returnName(id) {
           let a = this.users.filter((p) => p.id == id);
-          return a[0];
+          return a[0]?.name;
         }
       }
   }

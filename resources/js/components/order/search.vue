@@ -16,56 +16,56 @@
                     <router-link to="/order" class="btn btn-dark" id="add_new"> Today Order</router-link>
                 </div>
 
-<!------------Search By Date---------------->
-<div class="card-body p-0 m-0 noPrint">
-        <div class="row">
-            <div class="col" style="display: flex; justify-content:end;">
-                <!-- <label class="d-inline">Search : </label>  -->
-                <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:300px" placeholder="Search by Invoice">
-            </div>
-            <div class="col" style="display:flex; justify-content: end">
-                <vue-daterange-picker 
-                    double
-                    start-date="12/01/2022" 
-                    end-date="12/01/2023" 
-                    start-place-holders="12/01/2000"
-                    end-place-holders="04/01/2030"
-                    @get-dates="getDates"
-                />
-            </div>
-            <div class="col" style="display:flex; justify-content: start">
-                <button class="btn btn-outline-success" @click="startDate = '', endDate = ''">reset</button>
-            </div>
-        </div>
-            <br>
-            <br>
-        <div class="table table-responsive">
-            <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
-                <thead class="noPrint">
-                    <tr class="bg-info text-white">
-                        <th>Invoice&nbsp;#</th>
-                        <th>Name</th>
-                        <th>Quantity</th>  
-                        <th>Total Due</th>
-                        <td>View</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="order in filterSearchWithDate" :key="order.id">
-                        <td class="noPrint">{{ order.invoiceNum }}</td>
-                        <td class="noPrint">{{ order.name }}</td>
-                        <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
-                        <td class="noPrint" style="text-align: right;">&#8369;&nbsp; {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
-                        <td style="text-align: center;">
-                            <router-link :to="{name: 'view-order', params:{id: order.id} }" class="btn btn-sm btn-info noPrint">Details</router-link>
-                            <button type="button" @click="ImgToModal(order.invoiceImg)" class="btn btn-outline-secondary noPrint btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">Reprint Invoice</button>   
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <!------------Search By Date---------------->
+                <div class="card-body p-0 m-0 noPrint">
+                    <div class="row">
+                        <div class="col" style="display: flex; justify-content:end;">
+                            <!-- <label class="d-inline">Search : </label>  -->
+                            <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:300px"
+                                placeholder="Search by Invoice">
+                        </div>
+                        <div class="col" style="display:flex; justify-content: end">
+                            <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
+                                start-place-holders="12/01/2000" end-place-holders="04/01/2030" @get-dates="getDates" />
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-success" @click="reload()">reset</button>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="table table-responsive">
+                        <table class="table table-bordered table-striped table-hover table-warning border-light" id=""
+                            width="100%" cellspacing="0">
+                            <thead class="noPrint">
+                                <tr class="bg-info text-white">
+                                    <th>Invoice&nbsp;#</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Total Due</th>
+                                    <td>View</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="order in filterSearchWithDate" :key="order.id">
+                                    <td class="noPrint">{{ order.invoiceNum }}</td>
+                                    <td class="noPrint">{{ order.name }}</td>
+                                    <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
+                                    <td class="noPrint" style="text-align: right;">&#8369;&nbsp;
+                                        {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
+                                    <td style="text-align: center;">
+                                        <router-link :to="{ name: 'view-order', params: { id: order.id } }"
+                                            class="btn btn-sm btn-info noPrint">Details</router-link>
+                                        <button type="button" @click="ImgToModal(order.invoiceImg)"
+                                            class="btn btn-outline-secondary noPrint btn-sm" data-toggle="modal"
+                                            data-target=".bd-example-modal-lg">Reprint Invoice</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-    <!-- <div class="row">
+                    <!-- <div class="row">
         <div class="col-lg-6">
             <form @submit.prevent="searchDate">
                 <div class="form-group">
@@ -112,10 +112,9 @@
             </form>
         </div>
     </div> -->
-</div>  <!-----------End_Search_text_box------------------>
+                </div> <!-----------End_Search_text_box------------------>
             </div>
         </div>
-       
         <img :src="modalImg" id="printMe" v-show="showNow">
     </div>
 </template>
@@ -126,138 +125,139 @@ import html2canvas from 'html2canvas';
 import moment from 'moment'
 import VueDaterangePicker from 'vue-daterange-picker';
 
-    export default {
-        components: {
-    VueDaterangePicker
-  },
-        created() {
-            let dateNow = new Date();
-            let month = dateNow.getMonth() + 1;
-            let monthName = moment(month, "DD-MM-YYYY")
-                        .format('MMMM')
-    
-            this.month = monthName;
-            this.searchMonth();
-            
-        },
-        mounted(){
-            if (!User.loggedIn()) {
-                this.$router.push({ name:'/' })
+export default {
+    components: {
+        VueDaterangePicker
+    },
+    created() {
+        let dateNow = new Date();
+        let month = dateNow.getMonth() + 1;
+        let monthName = moment(month, "DD-MM-YYYY")
+            .format('MMMM')
+
+        this.month = monthName;
+        this.searchMonth();
+
+    },
+    mounted() {
+        if (!User.loggedIn()) {
+            this.$router.push({ name: '/' })
+        }
+    },
+    data() {
+        return {
+            date: '',
+            orders: [],
+            month: '',
+            searchTerm: '',
+            modalImg: '',
+            showNow: true,
+            waterMark: 'Select a Range',
+            datesss: {},
+            startDate: '',
+            endDate: ''
+        }
+    },
+    computed: {
+        quantity() {
+            let sum = 0;
+            for (let i = 0; i < this.orders.length; i++) {
+                sum += (parseFloat(this.orders[i].qty));
             }
+            return sum;
         },
-        data(){
-            return{
-                date :'',
-                orders:[],
-                month:'',
-                searchTerm:'',
-                modalImg:'',
-                showNow:true,
-
-                waterMark : 'Select a Range',
-                datesss:{},
-                startDate:'',
-                endDate:''
-     
-
+        subtotal() {
+            let sum = 0;
+            for (let i = 0; i < this.orders.length; i++) {
+                sum += (parseFloat(this.orders[i].sub_total));
             }
+            return sum;
         },
-        computed:{
-            quantity(){
-                let sum=0;
-                for(let i=0; i < this.orders.length; i++ ){
-                    sum += (parseFloat(this.orders[i].qty));
-                }
-                return sum;
-            },
-            subtotal(){
-                let sum=0;
-                for(let i=0; i < this.orders.length; i++ ){
-                    sum += (parseFloat(this.orders[i].sub_total));
-                }
-                return sum;
-            },
-            total(){
-                let sum=0;
-                for(let i=0; i < this.orders.length; i++ ){
-                    sum += (parseFloat(this.orders[i].total));
-                }
-                return sum;
-            },
-            pay(){
-                let sum=0;
-                for(let i=0; i < this.orders.length; i++ ){
-                    sum += (parseFloat(this.orders[i].pay));
-                }
-                return sum;
-            },
-            due(){
-                let sum=0;
-                for(let i=0; i < this.orders.length; i++ ){
-                    sum += (parseFloat(this.orders[i].due));
-                }
-                return sum;
-            },
-            filtersearch(){
-                return this.orders.filter(order => {
-                    return order.invoiceNum.toLowerCase().match(this.searchTerm.toLowerCase())
-                })
-            },
-            filterSearchWithDate(){
-                let filtered = this.filtersearch.filter((x) => {
-                    if(new Date(x.order_date) >= new Date(this.startDate) && new Date(x.order_date) <= new Date(this.endDate)) {
-                        return x;
-                    }
-                });
-
-                if(this.startDate && this.endDate) {
-                    return filtered;
-                } else {
-                    return this.filtersearch;
-                }
+        total() {
+            let sum = 0;
+            for (let i = 0; i < this.orders.length; i++) {
+                sum += (parseFloat(this.orders[i].total));
             }
+            return sum;
         },
-        methods:{
-            getDates(i) {
-                this.startDate = i.startDate;
-                this.endDate = i.endDate;
+        pay() {
+            let sum = 0;
+            for (let i = 0; i < this.orders.length; i++) {
+                sum += (parseFloat(this.orders[i].pay));
+            }
+            return sum;
+        },
+        due() {
+            let sum = 0;
+            for (let i = 0; i < this.orders.length; i++) {
+                sum += (parseFloat(this.orders[i].due));
+            }
+            return sum;
+        },
+        filtersearch() {
+            return this.orders.filter(order => {
+                return order.invoiceNum.toLowerCase().match(this.searchTerm.toLowerCase())
+            })
+        },
+        filterSearchWithDate() {
+            let filtered = this.filtersearch.filter((x) => {
+                if (new Date(x.order_date) >= new Date(this.startDate) && new Date(x.order_date) <= new Date(this.endDate)) {
+                    return x;
+                }
+            });
 
-            },
-            searchDate(){
-                var data = {date: this.date}
-                axios.post('/api/search/order',data)
-                    .then(({data}) => (this.orders = data))
-                    .catch()
-            },
-            searchMonth(){
-                var data = {month: this.month}
-                axios.post('/api/search/month',data)
-                    .then(({data}) => (this.orders = data))
-            }, 
-            ImgToModal(base64) {
-                this.modalImg = base64;
-                this.printNa();
-            },
-            async print() {
-                await this.$htmlToPaper("printMe");
-            },
-            printNa() {
-                this.showNow = true;
-                html2canvas(document.querySelector("#printMe")).then((canvas) => {
+            if (this.startDate && this.endDate) {
+                return filtered;
+            } else {
+                return this.filtersearch;
+            }
+        }
+    },
+    methods: {
+        getDates(i) {
+            this.startDate = i.startDate;
+            this.endDate = i.endDate;
+
+        },
+        searchDate() {
+            var data = { date: this.date }
+            axios.post('/api/search/order', data)
+                .then(({ data }) => (this.orders = data))
+                .catch()
+        },
+        searchMonth() {
+            var data = { month: this.month }
+            axios.post('/api/search/month', data)
+                .then(({ data }) => (this.orders = data))
+        },
+        ImgToModal(base64) {
+            this.modalImg = base64;
+            this.printNa();
+        },
+        async print() {
+            await this.$htmlToPaper("printMe");
+        },
+        printNa() {
+            this.showNow = true;
+            html2canvas(document.querySelector("#printMe")).then((canvas) => {
                 print();
-                this.showNow = false;  
-                })
-            },
+                this.showNow = false;
+            })
+        },
+        reload() {
+            location.reload();
         }
     }
+}
 </script>
 
 
 <style>
-    #add_new {
-        float: right;
-    }
-    @media print {
+#add_new {
+    float: right;
+}
+
+@media print {
     .noPrint {
         display: none;
     }
