@@ -434,7 +434,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
+            <div class="col">
+                
+                {{ serialNumbersForItemQnty }}
+
+                <hr>
+            
+            {{ products }}
+            </div>
         </div>
     </div>
 </template>
@@ -522,12 +529,9 @@ export default {
                 }
             }
 
-            // console.log('arr here!!!',arr)
-
-            // this.serialNumbersForItemQnty = arr;
-
             let arr2 = [];
             for (let i = 0; i < arr.length; i++) {
+                let g = this.returnCategory(arr[i].pro_id);
                 arr2.push({
                     created_at: arr[i].created_at,
                     id: arr[i].id,
@@ -536,11 +540,13 @@ export default {
                     pro_quantity: arr[i].pro_quantity,
                     product_price: arr[i].product_price,
                     serials: arr[i].serials,
+                    category_id: g,
                     updated_at: arr[i].updated_at,
 
                 })
 
             }
+            console.log('arr2', arr2)
             this.serialNumbersForItemQnty = arr2;
             return arr
         },
@@ -600,6 +606,10 @@ export default {
         }
     },
     methods: {
+        returnCategory(id) {
+            let h = this.products.filter((x) => x.id == id);
+            return h[0].category_id;
+        },
         sukli(pay, subtotal) {
             let a = pay - subtotal;
             this.change = a;
@@ -611,7 +621,7 @@ export default {
         },
         toNextRoute() {
             this.showNow = false;
-            this.$router.push({ name: 'home' });
+            // this.$router.push({ name: 'home' });
         },
         printNa(serialsRecieved) {
             html2canvas(document.querySelector("#printMe")).then((canvas) => {
@@ -661,6 +671,7 @@ export default {
                         pro_id: card.id,
                         pro_code: card.product_code,
                         pro_name: card.product_name,
+                        category_id: card.category_id,
                         pro_quantity: card.product_quantity,
                         product_price: "31000",
                         serials: [
@@ -793,6 +804,7 @@ export default {
                         id: serialsRecieved[j].id,
                         product_id: serialsRecieved[j].pro_id,
                         product_name: serialsRecieved[j].pro_name,
+                        category_id: serialsRecieved[j].category_id,
                         order_quantity: serialsRecieved[j].pro_quantity,
                         product_price: serialsRecieved[j].product_price,
                         created_by: Cookies.get('userNow'),
@@ -816,8 +828,8 @@ export default {
                 .then((r) => {
                     // console.log('logssss', r)
                     // this.$router.push({ name: 'home' });
+                    this.showNow = true;
                     this.print();
-                    this.showNow = false;
                 })
                 .catch(error => this.errors = error.response.data.errors)
             // if (this.ssImg) {

@@ -66,28 +66,28 @@ class PosController extends Controller
 //-------------home_component----------------------------
     public function TodaySell()
     {
-        $date = date('d/m/Y');
+        $date = date('m/d/Y');
         $sell = DB::table("orders")->where('order_date',$date)->sum('total');
         return response()->json($sell);
     }
 
     public function TodayIncome()
     {
-        $date = date('d/m/Y');
+        $date = date('m/d/Y');
         $income = DB::table("orders")->where('order_date',$date)->sum('pay');
         return response()->json($income);
     }
 
     public function TodayDue()
     {
-        $date = date('d/m/Y');
+        $date = date('m/d/Y');
         $due = DB::table("orders")->where('order_date',$date)->sum('due');
         return response()->json($due);
     }
 
     public function TodayExpense()
     {
-        $date = date('d/m/Y');
+        $date = date('m/d/Y');
         $expense = DB::table("expenses")->where('expense_date',$date)->sum('amount');
         return response()->json($expense);
     }

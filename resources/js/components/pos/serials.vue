@@ -32,7 +32,7 @@
   <button class="btn btn-md btn-primary text-white" style="width: 20%;"  type="submit"> Submit</button>
 </div>
   </form>
-<!-- {{serials}} -->
+{{serials}}
   </div>
 </template>
 <script>

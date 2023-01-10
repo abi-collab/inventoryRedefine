@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function TodayOrder()
     {
-        $data=date('d/m/Y');
+        $data=date('m/d/Y');
         $order=DB::table('orders')
             ->join('customers','orders.customer_id','customers.id')
             ->where('orders.order_date',$data)

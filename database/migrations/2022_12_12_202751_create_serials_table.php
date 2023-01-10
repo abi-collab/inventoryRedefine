@@ -22,6 +22,7 @@ class CreateSerialsTable extends Migration
             $table->string('customerName');
             $table->integer('product_id');
             $table->string('product_name');
+            $table->integer('category_id');
             $table->string('order_quantity');   
             $table->string('product_price'); 
             $table->string('created_by'); 

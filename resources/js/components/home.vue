@@ -108,8 +108,6 @@
         </div>
     </div>
 </div>  <!------End_Stock_ Out_Products------>
-
-
     </div>  <!------End_total_<div>------>
 </template>
 

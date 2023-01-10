@@ -141,7 +141,7 @@ export default {
     created() {
         let dateNow = new Date();
         let month = dateNow.getMonth() + 1;
-        let monthName = moment(month, "DD-MM-YYYY")
+        let monthName = moment(month, "MM-DD-YYYY")
             .format('MMMM')
 
         this.month = monthName;

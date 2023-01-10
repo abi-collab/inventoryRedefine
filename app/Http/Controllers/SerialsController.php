@@ -63,6 +63,7 @@ class SerialsController extends Controller
         $serial->customerName = $request->customerName;
         $serial->product_id = $request->product_id;
         $serial->product_name = $request->product_name;
+        $serial->category_id = $request->category_id;
         $serial->order_quantity = $request->order_quantity;
         $serial->product_price = $request->product_price;
         $serial->created_by = $request->created_by;
