@@ -16,6 +16,10 @@ import {routes} from './routes';
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 
+import JsonExcel from "vue-json-excel";
+ 
+Vue.component("downloadExcel", JsonExcel);
+
 const options = {
   name: '_blank',
   specs: [

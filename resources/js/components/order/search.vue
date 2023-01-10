@@ -28,14 +28,21 @@
                             <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
                                 start-place-holders="12/01/2000" end-place-holders="04/01/2030" @get-dates="getDates" />
                         </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-outline-success" @click="reload()">reset</button>
+                        <div class="col" style="display: flex;">
+                            <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
+                            <!-- <button type="button" class="btn btn-outline-success" @click="htmlTableToExcel()">Export Excel</button> -->
+                            <download-excel 
+                                :data="dataForExcel"
+                                :name="xlName() + '.xls'"
+                                >
+                                <button type="button" class="btn btn-outline-success">Export Excel</button>
+                            </download-excel>
                         </div>
                     </div>
                     <br>
                     <br>
                     <div class="table table-responsive">
-                        <table class="table table-bordered table-striped table-hover table-warning border-light" id=""
+                        <table class="table table-bordered table-striped table-hover table-warning border-light" id="tblToExcl"
                             width="100%" cellspacing="0">
                             <thead class="noPrint">
                                 <tr class="bg-info text-white">
@@ -45,7 +52,7 @@
                                     <th>Total Due</th>
                                     <td>View</td>
                                 </tr>
-                            </thead>
+                            </thead>    
                             <tbody>
                                 <tr v-for="order in filterSearchWithDate" :key="order.id">
                                     <td class="noPrint">{{ order.invoiceNum }}</td>
@@ -116,11 +123,13 @@
             </div>
         </div>
         <img :src="modalImg" id="printMe" v-show="showNow">
+        {{ dataForExcel }}
     </div>
 </template>
 
 <script>
 // import $ from 'jquery'; 
+import XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
 import moment from 'moment'
 import VueDaterangePicker from 'vue-daterange-picker';
@@ -211,6 +220,14 @@ export default {
             } else {
                 return this.filtersearch;
             }
+        },
+        dataForExcel() {
+            let x = this.filterSearchWithDate;
+            for(let c=0; c < x.length; c++) {
+                x[c].invoiceImg = '';
+            }
+            
+            return x;
         }
     },
     methods: {
@@ -246,6 +263,15 @@ export default {
         },
         reload() {
             location.reload();
+        },
+        htmlTableToExcel(type){
+            var data = document.getElementById('tblToExcl');
+            var excelFile = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+            XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
+            XLSX.writeFile(excelFile, 'ExportedFile:HTMLTableToExcel' + type);
+        },
+        xlName() {
+            return new Date().getTime() / 1000;
         }
     }
 }
