@@ -123,7 +123,6 @@
             </div>
         </div>
         <img :src="modalImg" id="printMe" v-show="showNow">
-        {{ dataForExcel }}
     </div>
 </template>
 
