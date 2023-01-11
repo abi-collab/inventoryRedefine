@@ -128,14 +128,14 @@
             </div>
 
             <!------------------ serial number modal------------------2-------->
-            <div class="modal fade" id="serialnums" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="serialnums" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Provide the serial numbers for the ordered
                                 items</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal" @click="showNow=false" >
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -146,10 +146,10 @@
                     </div>
                 </div>
             </div>
+            
             <!------------end serial number modal------------------------->
             <!------------------customer add modal------------------2-------->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -354,7 +354,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 1000px;">
+            <div class="col"></div>
             <div class="col" id="printMe" v-show="showNow">
                 <div class="container">
                     <h4>Invoice #: {{ getRandomId }}</h4>
@@ -434,14 +435,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-                
-                {{ serialNumbersForItemQnty }}
-
-                <hr>
-            
-            {{ products }}
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 </template>

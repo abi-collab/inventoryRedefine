@@ -21,6 +21,7 @@
                       type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                       style="margin: 2px 0px"
                       v-model="serials[sIndex].serials[iIndex].serialnum"
+                      @keypress.13.prevent
                       required
                   >
               </span>
@@ -29,10 +30,9 @@
     </tbody>
 </table>
 <div style="display:flex; justify-content:flex-end;">
-  <button class="btn btn-md btn-primary text-white" style="width: 20%;"  type="submit"> Submit</button>
+  <button class="btn btn-md btn-primary text-white" style="width: 20%;" type="submit"> Submit</button>
 </div>
   </form>
-{{serials}}
   </div>
 </template>
 <script>
