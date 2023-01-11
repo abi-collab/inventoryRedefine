@@ -30,13 +30,13 @@
                         </div>
                         <div class="col" style="display: flex;">
                             <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
-                            <!-- <button type="button" class="btn btn-outline-success" @click="htmlTableToExcel()">Export Excel</button> -->
-                            <download-excel 
-                                :data="dataForExcel"
+                            <button type="button" class="btn btn-outline-success" @click="htmlTableToExcel()">Export Excel</button>
+                            <!-- <download-excel 
+                                :data="excelData"
                                 :name="xlName() + '.xls'"
                                 >
                                 <button type="button" class="btn btn-outline-success">Export Excel</button>
-                            </download-excel>
+                            </download-excel> -->
                         </div>
                     </div>
                     <br>
@@ -71,7 +71,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <!-- <div class="row">
         <div class="col-lg-6">
             <form @submit.prevent="searchDate">
@@ -122,7 +121,7 @@
                 </div> <!-----------End_Search_text_box------------------>
             </div>
         </div>
-        <img :src="modalImg" id="printMe" v-show="showNow">
+        <img id="printMe" :src="modalImg" v-show="showNow">
     </div>
 </template>
 
@@ -163,7 +162,8 @@ export default {
             waterMark: 'Select a Range',
             datesss: {},
             startDate: '',
-            endDate: ''
+            endDate: '',
+            excelData:[]
         }
     },
     computed: {
@@ -220,14 +220,7 @@ export default {
                 return this.filtersearch;
             }
         },
-        dataForExcel() {
-            let x = this.filterSearchWithDate;
-            for(let c=0; c < x.length; c++) {
-                x[c].invoiceImg = '';
-            }
-            
-            return x;
-        }
+        
     },
     methods: {
         getDates(i) {
@@ -271,6 +264,14 @@ export default {
         },
         xlName() {
             return new Date().getTime() / 1000;
+        },
+        dataForExcel() {
+            let x = this.filterSearchWithDate;
+            for(let c=0; c < x.length; c++) {
+                x[c].invoiceImg = '';
+            }
+            this.excelData = x;
+            return x;
         }
     }
 }
