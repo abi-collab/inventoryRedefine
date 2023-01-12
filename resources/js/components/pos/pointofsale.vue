@@ -862,8 +862,7 @@ export default {
             //-------------2---
             this.form3.activity = `create ${this.nameIs} as customer`;//4
             axios.post('/api/Customer/', this.form)
-                .then(() => {
-                    $('#closeModal').click();
+                .then(() => { 
                     Reload.$emit('customerReload'); //first global declar in app.js, then goto created() on above
                     Notification.success()
                     // this.customers = this.customers.filter(customer =>{   //--Or-/use Reload--
@@ -872,6 +871,9 @@ export default {
                     axios.post('/api/activitylog',this.form3)  //5
                     .then((r) => {
                         console.log('logssss',r)
+                        // $('#closeModal').click();
+                        location.reload();
+
                     })
                     .catch(error => this.errors = error.response.data.errors)
                 })

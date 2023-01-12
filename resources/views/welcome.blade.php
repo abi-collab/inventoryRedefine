@@ -59,7 +59,7 @@
                           
                             <router-link class="nav-link mt-4" to="/home">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> -->
-                               <b>Dashboard</b> 
+                               <b>DASHBOARD</b> 
                             </router-link>
                           
                             <router-link class="nav-link" to="/pos">
