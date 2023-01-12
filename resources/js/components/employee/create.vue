@@ -100,7 +100,6 @@
 			</div>
 		</div>
 		<!-- {{nameIs}} - {{form2.activity}} -->
-		<button @click="confirm()">confirm</button>
 	</div>
 	
 </template>

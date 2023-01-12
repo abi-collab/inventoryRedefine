@@ -17,7 +17,7 @@
           </div>
 
           <div class="card-body p-0 m-0">
-            <form @submit.prevent="expenseInsert">
+            <form @submit.prevent="confirm">
                 <div class="form-group">
 	              <div class="form-row">
 	               <div class="col-md-12">
@@ -89,6 +89,34 @@ import Cookies from 'js-cookie'; //1
               })
               .catch(error => this.errors = error.response.data.errors)
         	},
+          confirm() {
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+              title: 'Are you sure?',
+              text: "Entered details can still be update when saved",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.expenseInsert();
+                swalWithBootstrapButtons.fire('Successfully Saved')
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                  'Cancelled',
+                )
+              }
+            })
+          }
         }
     }
 </script>

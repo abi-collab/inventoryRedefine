@@ -14,7 +14,7 @@
                     <i class="fas fa-chart-area"></i>
                     Product Stock Update
                 </div>
-                <form @submit.prevent="stockUpdate" >
+                <form @submit.prevent="confirm" >
                     <div class="card-body p-0 m-0">
                         <div class="form-group">
                             <div class="row">
@@ -102,12 +102,6 @@ import Cookies from 'js-cookie'; //1
             stockUpdate(){
                 this.form2.activity = `update product quantity of ${this.nameIs}, added ${this.toAdd_quantity} new stock to ${this.form.product_quantity} existing in-stock.`;//4
                 let id = this.$route.params.id
-                let dateNow = new Date();
-                // let day = dateNow.getDate();
-                // let month = dateNow.getMonth() + 1;
-                // let year = dateNow.getFullYear(); 
-                // let formatedDate = year + '/' + month + '/' + day;
-                // console.log(formatedDate);
                 axios.post('/api/stock/update/'+id,{product_quantity:this.newStock})
                     .then(() => {
                         this.$router.push({ name: 'stock' })
@@ -121,6 +115,34 @@ import Cookies from 'js-cookie'; //1
                     })
                     .catch(error => this.errors = error.response.data.errors)
             },
+            confirm() {
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: true
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Are you sure?',
+					text: "Following details can still be update when saved",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Confirm',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.stockUpdate();
+						swalWithBootstrapButtons.fire('Successfully Saved')
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						swalWithBootstrapButtons.fire(
+							'Cancelled',
+						)
+					}
+				})
+			}
         }
     }
 </script>

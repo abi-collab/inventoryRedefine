@@ -16,7 +16,7 @@
                     <router-link to="/supplier" class="btn btn-dark" id="add_new"> All Supplier</router-link>
                 </div>
                 <div class="card-body p-0 m-0">
-                    <form @submit.prevent="supplierUpdate" enctype="multipart/form-data">
+                    <form @submit.prevent="confirm" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -159,6 +159,34 @@ import Cookies from 'js-cookie'; //1
                     })
                     .catch(error => this.errors = error.response.data.errors)
             },
+            confirm() {
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: true
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Are you sure?',
+					text: "Following details can still be update when saved",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Confirm',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.supplierUpdate();
+						swalWithBootstrapButtons.fire('Successfully Saved')
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						swalWithBootstrapButtons.fire(
+							'Cancelled',
+						)
+					}
+				})
+			}
         }
     }
 </script>

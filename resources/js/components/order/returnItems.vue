@@ -7,6 +7,16 @@
           </li>
           <li class="breadcrumb-item active">Warranty</li>
         </ol>
+        <p>
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Add an item
+        </button>
+      </div>
+  
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-header">
     <input type="text" v-model="searchTerm" class="form-control d-inline my-4" placeholder="Enter Invoice number or serial number" style="width:100%;">
     <div v-if="searchTerm">
       <div style="text-align: center; padding:10px 0px 20px 0px" v-if="filtersearch.length < 1">
@@ -27,12 +37,14 @@
                   <td>{{ item.serialNo}}</td>
                   <td>{{ item.product_name }}</td>
                   <td style="text-align: center;">
-                      <button class="btn btn-secondary" @click="saveReturn(item)">Add to Return</button>
+                      <button class="btn btn-secondary" @click="confirm(item)">Add to Return</button>
                   </td>
               </tr>
           </tbody>
         </table>
     </div>
+  </div>
+</div>
     
     <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0" >
       <thead>
@@ -85,7 +97,7 @@
                                   <option value="For Release">For Release</option>
                                 </select>
                             </div>
-                            <button class="btn btn-success text-white btn-lg" @click="updateStatus()">Update Status</button>
+                            <button class="btn btn-success text-white btn-lg" @click="confirm2(item)">Update Status</button>
                         </div>
                     </div>
                 </div>
@@ -104,7 +116,7 @@
                                   <div class="modal-body">
                                       <textarea name="" id="" cols="30" rows="10" v-model="remarkText" style="width: 100%;"></textarea>
                                   </div>
-                                  <button class="btn btn-success text-white btn-lg" @click="saveRemarks()">Save Remarks</button>
+                                  <button class="btn btn-success text-white btn-lg" @click="confirm3(item)">Save Remarks</button>
                               </div>
                           </div>
                       </div>
@@ -126,7 +138,11 @@ export default {
       statusText:'',
       item_name:'',
       item_serNo:'',
-      returnId:null
+      returnId:null,
+      form2:{ //2
+							activity :'',
+							createdby : Cookies.get('usersname')
+						},
     }
   },
   created() {
@@ -156,23 +172,36 @@ export default {
       this.item_serNo = i.serialNo;
     },
 
-    saveRemarks() {
+    saveRemarks(item) {
       axios.put('api/returns/' + this.returnId, {
         remarks:this.remarkText
       }).then((res) =>{
-        location.reload();
+        this.form2.activity = `In-Warranty: updates product remarks with serial No. ${this.item_serNo}`;//4
+        axios.post('/api/activitylog',this.form2)  //5
+          .then((r) => {
+              // location.reload();
+          })
+          .catch(error => this.errors = error.response.data.errors)
+          location.reload();
       });
     },
 
-    updateStatus() {
+    updateStatus(item) {
       axios.put('api/returns/' + this.returnId, {
         status:this.statusText
       }).then((res) =>{
-        location.reload();
+        this.form2.activity = `In-Warranty: updates product status with serial No. ${item.serialNo}`;//4
+        axios.post('/api/activitylog',this.form2)  //5
+          .then((r) => {
+              location.reload();
+          })
+          .catch(error => this.errors = error.response.data.errors)
+        
       });
     },
 
     saveReturn(item) {
+      this.form2.activity = `added product with serial No. ${item.serialNo}, in under returned item with active warranty`;//4
       console.log(item)
       this.searchTerm = '';
       let d = new Date();
@@ -191,12 +220,17 @@ export default {
           product_id:item.product_id,
           product_name:item.product_name,
           created_by:Cookies.get('userNow'),
-          remarks:'test',
+          remarks:'',
           status:'pending'
         }
       )  
       .then((r) => {
         console.log('return r',r)
+        axios.post('/api/activitylog',this.form2)  //5
+                    .then((r) => {
+                        console.log('logssss',r)
+                    })
+                    .catch(error => this.errors = error.response.data.errors)
       })
       .catch()
       this.getReturns();
@@ -225,7 +259,88 @@ export default {
       axios.get('/api/returns')
         .then(({data}) => (this.returnItems = data, console.log('return items',data)))
         .catch()
-    }
+    },
+    confirm(item) {
+						const swalWithBootstrapButtons = Swal.mixin({
+							customClass: {
+								confirmButton: 'btn btn-success',
+								cancelButton: 'btn btn-danger'
+							},
+							buttonsStyling: true
+						})
+
+						swalWithBootstrapButtons.fire({
+							title: 'Are you sure to add this Item?',
+							icon: 'warning',
+							showCancelButton: true,
+							confirmButtonText: 'Confirm',
+							cancelButtonText: 'Cancel',
+							reverseButtons: true
+						}).then((result) => {
+							if (result.isConfirmed) {
+								this.saveReturn(item);
+								swalWithBootstrapButtons.fire('Successfully Saved')
+							} else if (result.dismiss === Swal.DismissReason.cancel) {
+								swalWithBootstrapButtons.fire(
+									'Cancelled',
+								)
+							}
+						})
+					},
+          confirm2(item) {
+						const swalWithBootstrapButtons = Swal.mixin({
+							customClass: {
+								confirmButton: 'btn btn-success',
+								cancelButton: 'btn btn-danger'
+							},
+							buttonsStyling: true
+						})
+
+						swalWithBootstrapButtons.fire({
+							title: 'Are you sure with this update?',
+							icon: 'warning',
+							showCancelButton: true,
+							confirmButtonText: 'Confirm',
+							cancelButtonText: 'Cancel',
+							reverseButtons: true
+						}).then((result) => {
+							if (result.isConfirmed) {
+								this.updateStatus(item);
+								swalWithBootstrapButtons.fire('Successfully Saved')
+							} else if (result.dismiss === Swal.DismissReason.cancel) {
+								swalWithBootstrapButtons.fire(
+									'Cancelled',
+								)
+							}
+						})
+					},
+          confirm3(item) {
+						const swalWithBootstrapButtons = Swal.mixin({
+							customClass: {
+								confirmButton: 'btn btn-success',
+								cancelButton: 'btn btn-danger'
+							},
+							buttonsStyling: true
+						})
+
+						swalWithBootstrapButtons.fire({
+							title: 'Are you sure with this remark?',
+							icon: 'warning',
+							showCancelButton: true,
+							confirmButtonText: 'Confirm',
+							cancelButtonText: 'Cancel',
+							reverseButtons: true
+						}).then((result) => {
+							if (result.isConfirmed) {
+								this.saveRemarks(item);
+								swalWithBootstrapButtons.fire('Successfully Saved')
+							} else if (result.dismiss === Swal.DismissReason.cancel) {
+								swalWithBootstrapButtons.fire(
+									'Cancelled',
+								)
+							}
+						})
+					}
   }
 }
 
