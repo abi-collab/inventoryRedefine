@@ -28,9 +28,12 @@
                             <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
                                 start-place-holders="12/01/2000" end-place-holders="04/01/2030" @get-dates="getDates" />
                         </div>
-                        <div class="col" style="display: flex;">
-                            <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
+                        <div class="col">
+                            <div  style="display: flex;">
+ <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
                             <button type="button" class="btn btn-outline-success" @click="htmlTableToExcel()">Export Excel</button>
+                            </div>
+                           
                             <!-- <download-excel 
                                 :data="excelData"
                                 :name="xlName() + '.xls'"
@@ -54,7 +57,7 @@
                                 </tr>
                             </thead>    
                             <tbody>
-                                <tr v-for="order in filterSearchWithDate" :key="order.id">
+                                <tr v-for="order in filterSearchWithDate.reverse()" :key="order.id">
                                     <td class="noPrint">{{ order.invoiceNum }}</td>
                                     <td class="noPrint">{{ order.name }}</td>
                                     <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>

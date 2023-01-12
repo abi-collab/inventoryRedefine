@@ -35,7 +35,7 @@
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
                     
-                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i> {{$_COOKIE['usersname']}}</a>
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i> </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <!-- <router-link class="dropdown-item" to="/log">Activity Log</router-link>
                         <div class="dropdown-divider"></div> -->
@@ -56,9 +56,10 @@
                         <div class="nav">                       <!----------------------------->
                             {{-- <div class="sb-sidenav-menu-heading">Core</div> --}}
                             <!-- <marquee class="text-white">#&nbsp&nbsp Laraval-5.8 &nbsp&nbsp#&nbsp&nbsp Vue  &nbsp&nbsp#&nbsp&nbsp Api &nbsp&nbsp#&nbsp&nbsp JWT &nbsp&nbsp#&nbsp&nbsp Inventory_POS</marquee> -->
-                            <router-link class="nav-link" to="/home">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
+                          
+                            <router-link class="nav-link mt-4" to="/home">
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> -->
+                               <b>Dashboard</b> 
                             </router-link>
                           
                             <router-link class="nav-link" to="/pos">

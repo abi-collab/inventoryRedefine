@@ -282,8 +282,8 @@
                                     <button v-else disabled class="btn btn-sm productCard"
                                         @click.prevent="AddToCart(product)"> <!--------3------->
                                         <div class="card" style="width: 9rem; height: 210px;">
-                                            <img :src="product.image" class="card-img-top"
-                                                style="height: 100px; width: 100px;">
+                                            <img :src="product.image" class="card-img-top mx-auto w-full"
+                                                style="height: 100px;">
                                             <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ product.product_name }}</small><br>
 
@@ -315,8 +315,8 @@
                                     <button v-if="getproduct.product_quantity >= 1" class="btn btn-sm"
                                         @click.prevent="AddToCart(getproduct.id)">
                                         <div class="card" style="width: 9rem; height: 180px;">
-                                            <img :src="getproduct.image" class="card-img-top"
-                                                style="height: 100px; width: 100px;">
+                                            <img :src="getproduct.image" class="card-img-top mx-auto w-full"
+                                                style="height: 100px;">
                                             <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
@@ -332,8 +332,8 @@
                                     <button v-else disabled class="btn btn-sm"
                                         @click.prevent="AddToCart(getproduct.id)">
                                         <div class="card" style="width: 9rem; height: 180px;">
-                                            <img :src="getproduct.image" class="card-img-top"
-                                                style="height: 100px; width: 100px;">
+                                            <img :src="getproduct.image" class="card-img-top mx-auto w-full"
+                                                style="height: 100px;">
                                             <div class="card-body p-0 m-0">
                                                 <small class="card-title">{{ getproduct.product_name }}</small> <br>
                                                 <span class="badge badge-success"
@@ -355,7 +355,6 @@
             </div>
         </div>
         <div class="row" style="margin-top: 1000px;">
-            <div class="col"></div>
             <div class="col" id="printMe" v-show="showNow">
                 <div class="container">
                     <h4>Invoice #: {{ getRandomId }}</h4>
@@ -435,7 +434,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
         </div>
     </div>
 </template>
@@ -614,17 +612,16 @@ export default {
         },
         async print() {
             await this.$htmlToPaper("printMe");
-            setTimeout(this.toNextRoute(), 30000);
+            this.toNextRoute();
         },
         toNextRoute() {
             this.showNow = false;
-            // this.$router.push({ name: 'home' });
+            setTimeout(() => this.$router.push({ name: 'home' }), 3000);
         },
         printNa(serialsRecieved) {
             html2canvas(document.querySelector("#printMe")).then((canvas) => {
                 this.ssImg = canvas.toDataURL("image/png", 0.9);
                 if (this.ssImg) {
-                    // this.print();
                     this.orderSave(serialsRecieved);
                 }
             })
@@ -765,19 +762,19 @@ export default {
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
             var data = {
-                invoiceNum: this.getRandomId,
-                qty: this.qty,
-                subtotal: this.subtotal,
-                customer_id: this.customer_id,
-                payby: this.payby,
-                pay: this.pay,
-                due: due,
-                vat: this.vats.vat,
-                total: total,
-                change: this.change,
-                invoiceImg: this.ssImg
-                // cashTendered: this.
-            }       //due:this.due //due_dynamic
+                    invoiceNum: this.getRandomId,
+                    qty: this.qty,
+                    subtotal: this.subtotal,
+                    customer_id: this.customer_id,
+                    payby: this.payby,
+                    pay: this.pay,
+                    due: due,
+                    vat: this.vats.vat,
+                    total: total,
+                    change: this.change,
+                    invoiceImg: this.ssImg
+                    // cashTendered: this.
+                }       //due:this.due //due_dynamic
 
             axios.post('/api/orderdone/', data)
                 .then((res) => {
@@ -787,9 +784,7 @@ export default {
                 })
 
             let customer = this.customers.filter((h) => h.id == this.customer_id);
-            // console.log(customer[0].name);
-            // console.log('serialsRecieved', serialsRecieved);
-
+    
             let serialList = [];
             for (let j = 0; j < serialsRecieved.length; j++) {
                 for (let x = 0; x < serialsRecieved[j].serials.length; x++) {
@@ -808,9 +803,7 @@ export default {
                     })
                 }
             }
-            // console.log(this.getRandomId);
-            // console.log('serialList', serialList);
-
+          
             for (let l = 0; l < serialList.length; l++) {
                 axios.post('/api/serials', serialList[l])
                     .then((res) => {
@@ -823,15 +816,10 @@ export default {
             this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;//4
             axios.post('/api/activitylog', this.form3)  //5
                 .then((r) => {
-                    // console.log('logssss', r)
-                    // this.$router.push({ name: 'home' });
                     this.showNow = true;
                     this.print();
                 })
                 .catch(error => this.errors = error.response.data.errors)
-            // if (this.ssImg) {
-            //     print();
-            // }
         },
         //---End_cart_methods----
 
