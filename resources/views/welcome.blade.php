@@ -70,7 +70,7 @@
                               
                               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
-                                Orders
+                                Sales
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
@@ -83,10 +83,10 @@
                             </div>
 
                     <!--------------Employee----------->
-                            <router-link class="nav-link" to="/employee" v-if="{{$_COOKIE['userNow']}} == 1">
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> -->
+                            <!-- <router-link class="nav-link" to="/employee" v-if="{{$_COOKIE['userNow']}} == 1">
+                              
                                 Employees 
-                            </router-link>
+                            </router-link> -->
                             <!-- {{-- <div class="sb-sidenav-menu-heading">Interface</div> --}}
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -200,23 +200,19 @@
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>
-                            <router-link class="nav-link collapsed" to="/log" v-if="{{$_COOKIE['userNow']}} == 1">Activity Logs</router-link>
-                            <!-- <router-link class="nav-link collapsed" to="/   " v-if="{{$_COOKIE['userNow']}} == 1">Archive</router-link> -->
-
+                            <router-link class="nav-link collapsed" to="/log" v-if="{{$_COOKIE['userNow']}} == 1">Audit Trail</router-link>
+                            <!-- <router-link class="nav-link collapsed" to="/users" v-if="{{$_COOKIE['userNow']}} == 1">Users</router-link>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1" >
-                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
                                 Archive
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="archive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <!-- <router-link class="nav-link" to="/order">Today Order</router-link> -->
                                     <router-link class="nav-link" to="/searchorder">Employee</router-link>
-                                    <router-link class="nav-link" to="/sold-items">Suupliers</router-link>
+                                    <router-link class="nav-link" to="/sold-items">Suppliers</router-link>
                                     <router-link class="nav-link" to="/return-items">Products</router-link>
                                     <router-link class="nav-link" to="/return-items">Customers</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </nav>

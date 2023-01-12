@@ -5,13 +5,13 @@
         <li class="breadcrumb-item">
           <router-link to="/home">Dashboard</router-link>
         </li>
-        <li class="breadcrumb-item active">Activity Logs</li>
+        <li class="breadcrumb-item active">Activity Logs (Audit Trail)</li>
       </ol>
       <!-- Icon Cards-->
      <div class="row card container-fluid shadow mb-3">
         <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
           <i class="fas fa-chart-area"></i>
-          Activity Logs
+          Logs
         </div>
         <div class="card-body p-0 m-0">
           <div class="card-body p-0 m-0">

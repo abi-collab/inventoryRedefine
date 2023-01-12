@@ -50,6 +50,9 @@ let searchorder = require('./components/order/search.vue').default;
 let log = require('./components/log/Activity_log.vue').default;
 let solditems = require('./components/order/soldItems.vue').default;
 let returnItems = require('./components/order/returnItems.vue').default;
+//------users-----------------------
+let users = require('./components/users/users.vue').default;
+let editUsers = require('./components/users/edit.vue').default;
 
 
 export const routes = [
@@ -103,5 +106,7 @@ export const routes = [
     { path: '/log', component: log, name:'log' },
     { path: '/sold-items', component: solditems, name:'solditems' },
     { path: '/return-items', component: returnItems, name:'returnItems' },
-
+    //-------Users-----------
+    { path: '/users', component: users, name:'users' },
+    { path: '/edit-users/:id', component: editUsers, name:'editUsers' },
 ]

@@ -21,7 +21,7 @@
             </router-link>
         </div>
     </div >
-    <div class="col-xl-3 col-md-6">
+    <!-- <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div v-if="!categories" class="card-body">
                 <div class="spinner-grow text-primary" role="status">
@@ -34,7 +34,7 @@
                 <div><i class="fas fa-angle-right"></i></div>
             </router-link>
         </div>
-    </div>
+    </div> -->
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div v-if="!soldItems" class="card-body">
@@ -49,7 +49,7 @@
             </router-link>
         </div>
     </div>
-    <!-- <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div v-if="!products" class="card-body">
                 <div class="spinner-grow text-warning" role="status">
@@ -62,7 +62,8 @@
                 <div><i class="fas fa-angle-right"></i></div>
             </router-link>
         </div>
-    </div> -->
+    </div>
+  
 </div>      <!------End_Dashboard------>
 
 <!------Stock_Out_Products------>
