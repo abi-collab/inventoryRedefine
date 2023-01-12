@@ -46,13 +46,13 @@
 										<small class="text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<!-- <div class="col-md-6">
 									<div class="form-label-group">
 										<label for="sallery">Salary</label>
 										<input type="text" id="sallery" v-model="form.salary" class="form-control" required placeholder="Enter Salary">
 										<small class="text-danger" v-if="errors.salary">{{ errors.salary[0] }}</small>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="form-group">
@@ -64,13 +64,13 @@
 										<small class="text-danger" v-if="errors.joining_date">{{ errors.joining_date[0] }}</small>
 									</div>
 								</div>
-								<div class="col-md-4">
+								<!-- <div class="col-md-4">
 									<div class="form-label-group">
 										<label for="nid">NID Number</label>
 										<input type="text" id="nid" v-model="form.nid" class="form-control" required placeholder="Enter NID">
 										<small class="text-danger" v-if="errors.nid">{{ errors.nid[0] }}</small>
 									</div>
-								</div>
+								</div> -->
 								<div class="col-md-4">
 									<div class="form-label-group">
 										<label for="phone">Phone Number</label>

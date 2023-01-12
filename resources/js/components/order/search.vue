@@ -22,7 +22,7 @@
                         <div class="col" style="display: flex; justify-content:end;">
                             <!-- <label class="d-inline">Search : </label>  -->
                             <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:300px"
-                                placeholder="Search by Invoice">
+                                placeholder="Enter Invoice Number ">
                         </div>
                         <div class="col" style="display:flex; justify-content: end">
                             <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"

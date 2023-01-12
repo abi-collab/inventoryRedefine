@@ -62,13 +62,13 @@
                                         <small class="text-danger" v-if="errors.joining_date">{{ errors.joining_date[0] }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label for="nid">NID Number</label>
                                         <input type="text" id="nid" v-model="form.nid" class="form-control"  required="">
                                         <small class="text-danger" v-if="errors.nid">{{ errors.nid[0] }}</small>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label for="phone">Phone Number</label>
@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -122,14 +123,25 @@
                     joining_date:''
                 },
                 errors:{},
+                oldName:'',
+                form2:{ //2
+                    activity :'',
+                    createdby : Cookies.get('usersname')
+                },
             }
         },
         created(){                    //---for showing existing data in form to Edit/update
             let id = this.$route.params.id              //--taking id from route/url
             axios.get('/api/employee/'+id)              //--targeting show() method
-                .then(({data}) => (this.form = data))
+                .then(({data}) => (this.form = data,
+                this.oldName = this.form.name))
                 .catch()
         },
+        computed: { //3
+					nameIs() {
+						return this.form.name;
+					}
+				},
         methods:{
             onFileselected(event){          //click korlei ai 'event' er vitor pic er sob details chole asbe
                 let file=event.target.files[0];     //now,File's(name,size,type) available in variable 'file'
@@ -143,12 +155,24 @@
                     reader.readAsDataURL(file);
                 }
             },
-            employeeUpdate(){                       //--updating process are here
+            employeeUpdate(){    
+                if(this.nameIs == this.oldName) {
+							this.form2.activity = `Update info of employee ${this.nameIs }`
+						} else {
+							this.form2.activity = `employee update: changed name from ${this.oldName} to ${this.nameIs}`;//4
+						}
+                                           //--updating process are here
                 let id = this.$route.params.id                //--taking id from route/url
                 axios.patch('/api/employee/'+id,this.form)    //--patch will auto call update() mathod
                     .then(() => {
                         this.$router.push({ name: 'employee' })
-                        Notification.success()
+                        Notification.success();
+                        axios.post('/api/activitylog',this.form2)  //5
+                        .then((r) => {
+                            console.log('logssss',r)
+                        })
+                        .catch(error => this.errors = error.response.data.errors)
+                        
                     })
                     .catch(error => this.errors = error.response.data.errors)
             },

@@ -19,7 +19,7 @@
               <div style="display: flex; justify-content: space-between; margin: 20px">
                 <div>
                   <label class="d-inline">Search : </label>
-                  <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:200px;" placeholder="Search by name">
+                  <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:500px;" placeholder="Enter Invoice Number or Serial Number">
                 </div>
                 <div style="display:flex; justify-content: end">
                     <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
@@ -45,7 +45,7 @@
                       <th v-if="sort.comps != 0"> <small> <b>Pc Peripherals</b> </small> </th>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr style="text-align: center;">
                         <td v-if="sort.laptop != 0"> <h5>{{ sort.laptop }}</h5> </td>
                         <td v-if="sort.pc != 0"> <h5>{{ sort.pc }}</h5> </td>
                         <td v-if="sort.comps != 0"> <h5>{{ sort.comps }}</h5> </td>
@@ -196,7 +196,7 @@ float: right;
 height: 40px;
 width: 40px;
 }
-th, td {
+th {
   text-align: center;
 }
 </style>

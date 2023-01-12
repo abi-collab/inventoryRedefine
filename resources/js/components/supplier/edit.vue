@@ -87,6 +87,7 @@
 
 
 <script>
+import Cookies from 'js-cookie'; //1
     export default {
         mounted(){
             if (!User.loggedIn()) {
@@ -107,14 +108,25 @@
                     joining_date:''
                 },
                 errors:{},
+                oldName:'',
+                form2:{ //2
+                    activity :'',
+                    createdby : Cookies.get('usersname')
+                },
             }
         },
         created(){
             let id = this.$route.params.id
             axios.get('/api/supplier/'+id)
-                .then(({data}) => (this.form = data))
+                .then(({data}) => (this.form = data,
+                this.oldName = this.form.name))
                 .catch()
         },
+        computed: { //3
+					nameIs() {
+						return this.form.name;
+					}
+				},
         methods:{
             onFileselected(event){
                 let file=event.target.files[0];
@@ -129,11 +141,21 @@
                 }
             },
             supplierUpdate(){
+                if(this.nameIs == this.oldName) {
+							this.form2.activity = `Update info of supplier ${this.nameIs }`
+						} else {
+							this.form2.activity = `supplier update: changed name from ${this.oldName} to ${this.nameIs}`;//4
+						}
                 let id = this.$route.params.id
                 axios.patch('/api/supplier/'+id,this.form)
                     .then(() => {
                         this.$router.push({ name: 'supplier' })
-                        Notification.success()
+                        Notification.success();
+                        axios.post('/api/activitylog',this.form2)  //5
+                        .then((r) => {
+                            console.log('logssss',r)
+                        })
+                        .catch(error => this.errors = error.response.data.errors)
                     })
                     .catch(error => this.errors = error.response.data.errors)
             },

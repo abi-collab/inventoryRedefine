@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="csrf-token" content="{{ csrf_token() }}">   <!--this is for 'error free console'/(vue_devTool)-->
-        <title>Admin-Inventory - Vue+Laravel</title>
+        <title>Kuya Allan Computer Center</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">   <!--must be linked at the Top of All other CSS_files-->
         <link href="{{ asset('backend/css/styles.css') }}" rel="stylesheet" />
@@ -22,22 +22,23 @@
             <router-link class="navbar-brand" to="/home"> Inventory System </router-link>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-                <!-- <div class="input-group">
+            <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button>
                     </div>
-                </div> -->
-            </form>
+                </div>
+            </form> -->
+            <marquee class="text-white d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">Kuya  Allan Computer Center Sales and Inventory System</marquee>
 
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i> {{$_COOKIE['usersname']}}</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <router-link class="dropdown-item" to="/log">Activity Log</router-link>
-                        <div class="dropdown-divider"></div>
+                        <!-- <router-link class="dropdown-item" to="/log">Activity Log</router-link>
+                        <div class="dropdown-divider"></div> -->
                         <router-link class="dropdown-item" to="/logout">Logout</a>   <!------------Logout------------>
                     </div>
                 </li>
@@ -55,7 +56,6 @@
                         <div class="nav">                       <!----------------------------->
                             {{-- <div class="sb-sidenav-menu-heading">Core</div> --}}
                             <!-- <marquee class="text-white">#&nbsp&nbsp Laraval-5.8 &nbsp&nbsp#&nbsp&nbsp Vue  &nbsp&nbsp#&nbsp&nbsp Api &nbsp&nbsp#&nbsp&nbsp JWT &nbsp&nbsp#&nbsp&nbsp Inventory_POS</marquee> -->
-                            <marquee class="text-white">Kuya  Allan Computer Center Sales and Inventory System</marquee>
                             <router-link class="nav-link" to="/home">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
@@ -116,9 +116,9 @@
                             </div> -->
 
                     <!--------------Categories----------->
-                            <router-link class="nav-link" to="/category" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <!-- <router-link class="nav-link" to="/category" v-if="{{$_COOKIE['userNow']}} == 1">
                                 Categories
-                            </router-link>
+                            </router-link> -->
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Categories
@@ -200,6 +200,23 @@
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>
+                            <router-link class="nav-link collapsed" to="/log" v-if="{{$_COOKIE['userNow']}} == 1">Activity Logs</router-link>
+                            <!-- <router-link class="nav-link collapsed" to="/   " v-if="{{$_COOKIE['userNow']}} == 1">Archive</router-link> -->
+
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1" >
+                                <!-- <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> -->
+                                Archive
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="archive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <!-- <router-link class="nav-link" to="/order">Today Order</router-link> -->
+                                    <router-link class="nav-link" to="/searchorder">Employee</router-link>
+                                    <router-link class="nav-link" to="/sold-items">Suupliers</router-link>
+                                    <router-link class="nav-link" to="/return-items">Products</router-link>
+                                    <router-link class="nav-link" to="/return-items">Customers</router-link>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </nav>

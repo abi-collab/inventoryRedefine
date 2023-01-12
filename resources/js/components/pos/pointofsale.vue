@@ -597,6 +597,9 @@ export default {
             let all = day + '' + month + '' + year + '' + hour + '' + minutes + '' + seconds + '' + milli;
             this.invoiceRandomNumber = all;
             return all;
+        },
+        nameIs() {
+            return this.form.name;
         }
     },
     methods: {
@@ -869,6 +872,7 @@ export default {
         },
         customerInsert() {
             //-------------2---
+            this.form3.activity = `create ${this.nameIs} as customer`;//4
             axios.post('/api/Customer/', this.form)
                 .then(() => {
                     $('#closeModal').click();
@@ -877,6 +881,11 @@ export default {
                     // this.customers = this.customers.filter(customer =>{   //--Or-/use Reload--
                     //     return customer.id !=id
                     // })
+                    axios.post('/api/activitylog',this.form3)  //5
+                    .then((r) => {
+                        console.log('logssss',r)
+                    })
+                    .catch(error => this.errors = error.response.data.errors)
                 })
         },
 
