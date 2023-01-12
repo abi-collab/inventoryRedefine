@@ -18,7 +18,7 @@
 				</div>
 
 				<div class="card-body p-0 m-0">
-					<form @submit.prevent="employeeInsert" enctype="multipart/form-data">	<!------------------------>
+					<form @submit.prevent="confirm" enctype="multipart/form-data">	<!------------------------>
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-md-6">
@@ -100,6 +100,7 @@
 			</div>
 		</div>
 		<!-- {{nameIs}} - {{form2.activity}} -->
+		<button @click="confirm()">confirm</button>
 	</div>
 	
 </template>
@@ -165,12 +166,37 @@ import Cookies from 'js-cookie';
 
 				axios.post('/api/activitylog',this.form2)  //resource_route|api.php|post_method+route= go>Controller>Store()
 				.then((r) => {
-					// this.$router.push({ name: 'log' })   //(index.vue)all-employee vue page e jabe
-					// Notification.success()
-					console.log('logssss',r)
 				})
 				.catch(error => this.errors = error.response.data.errors)
 			},
+			confirm() {
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: true
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Are you sure?',
+					text: "Entered details can still be update when saved",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Confirm',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.employeeInsert();
+						swalWithBootstrapButtons.fire('Successfully Saved')
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						swalWithBootstrapButtons.fire(
+							'Cancelled',
+						)
+					}
+				})
+			}
 		}
 	}
 </script>

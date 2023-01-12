@@ -16,7 +16,7 @@
                     <router-link to="/employee" class="btn btn-dark" id="add_new"> All Employee</router-link>
                 </div>
                 <div class="card-body p-0 m-0">
-                    <form @submit.prevent="employeeUpdate" enctype="multipart/form-data">   <!----------------->
+                    <form @submit.prevent="confirm" enctype="multipart/form-data">   <!----------------->
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -53,7 +53,7 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <div class="form-label-group">
@@ -62,13 +62,13 @@
                                         <small class="text-danger" v-if="errors.joining_date">{{ errors.joining_date[0] }}</small>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label for="nid">NID Number</label>
                                         <input type="text" id="nid" v-model="form.nid" class="form-control"  required="">
                                         <small class="text-danger" v-if="errors.nid">{{ errors.nid[0] }}</small>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label for="phone">Phone Number</label>
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -157,7 +157,7 @@ import Cookies from 'js-cookie'; //1
             },
             employeeUpdate(){    
                 if(this.nameIs == this.oldName) {
-							this.form2.activity = `Update info of employee ${this.nameIs }`
+							this.form2.activity = `Update info of employee ${this.nameIs}`
 						} else {
 							this.form2.activity = `employee update: changed name from ${this.oldName} to ${this.nameIs}`;//4
 						}
@@ -176,6 +176,34 @@ import Cookies from 'js-cookie'; //1
                     })
                     .catch(error => this.errors = error.response.data.errors)
             },
+            confirm() {
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: true
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Are you sure?',
+					text: "Following details can still be update when saved",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Confirm',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.employeeUpdate();
+						swalWithBootstrapButtons.fire('Successfully Saved')
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						swalWithBootstrapButtons.fire(
+							'Cancelled',
+						)
+					}
+				})
+			}
         }
     }
 </script>
