@@ -26,15 +26,15 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->string('product_quantity')->nullable();
 
-            $table->string('manufacturer');
-            $table->string('connectivity');
-            $table->string('Processor');
-            $table->string('ram');
-            $table->string('hard_drive');
-            $table->string('hard_drive_size');
-            $table->string('os');
-            $table->string('os_version');
-
+            $table->string('manufacturer')->nullable();
+            $table->string('connectivity')->nullable();
+            $table->string('Processor')->nullable();
+            $table->integer('ram')->nullable();
+            $table->string('hard_drive')->nullable();
+            $table->integer('hard_drive_size')->nullable();
+            $table->string('hard_drive_byte')->nullable();
+            $table->string('os')->nullable();
+            $table->string('os_version')->nullable();
 
             $table->timestamps();
         });

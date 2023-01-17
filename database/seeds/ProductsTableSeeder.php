@@ -24,6 +24,16 @@ class ProductsTableSeeder extends Seeder
                     'buying_date' => '2022-11-5',
                     'image' => '',
                     'product_quantity' => 4,
+
+                    'manufacturer' => 'Asus',
+                    'Processor' => 'Rogue Galaxy',
+                    'ram' => 5,
+                    'connectivity' => 'VGA,HDMI',
+                    'hard_drive' => 'SSD',
+                    'hard_drive_size' => 500,
+                    'hard_drive_byte' => 'GB',
+                    'os' => 'Windows',
+                    'os_version' => '8'
                 ],
                 [   
                     'category_id' => 1,
@@ -36,6 +46,16 @@ class ProductsTableSeeder extends Seeder
                     'buying_date' => '2022-11-5',
                     'image' => '',
                     'product_quantity' => 2,
+
+                    'manufacturer' => 'Lenovo',
+                    'Processor' => 'Core i5',
+                    'ram' => 16,
+                    'connectivity' => 'VGA,HDMI',
+                    'hard_drive' => 'SSD',
+                    'hard_drive_size' => 500,
+                    'hard_drive_byte' => 'GB',
+                    'os' => 'Windows',
+                    'os_version' => '10'
                 ],
                 [   
                     'category_id' => 1,
@@ -48,6 +68,16 @@ class ProductsTableSeeder extends Seeder
                     'buying_date' => '2022-11-5',
                     'image' => '',
                     'product_quantity' => 1,
+
+                    'manufacturer' => 'HP',
+                    'Processor' => 'Ryzen 5',
+                    'ram' => 8,
+                    'connectivity' => 'VGA,HDMI',
+                    'hard_drive' => 'SSD',
+                    'hard_drive_size' => 1,
+                    'hard_drive_byte' => 'TB',
+                    'os' => 'Windows',
+                    'os_version' => '10'
                 ],
                 [   
                     'category_id' => 2,
@@ -60,6 +90,16 @@ class ProductsTableSeeder extends Seeder
                     'buying_date' => '2022-11-5',
                     'image' => '',
                     'product_quantity' => 3,
+
+                    'manufacturer' => 'Custom',
+                    'Processor' => 'Ultra Dragon',
+                    'ram' => 16,
+                    'connectivity' => 'VGA,HDMI',
+                    'hard_drive' => 'SSD',
+                    'hard_drive_size' => 1,
+                    'hard_drive_byte' => 'TB',
+                    'os' => 'Windows',
+                    'os_version' => '11'
                 ],
                 [   
                     'category_id' => 3,
@@ -72,6 +112,16 @@ class ProductsTableSeeder extends Seeder
                     'buying_date' => '2022-11-6',
                     'image' => '',
                     'product_quantity' => 10,
+
+                    'manufacturer' => 'Rapoo',
+                    'Processor' => '',
+                    'ram' => 0,
+                    'connectivity' => '',
+                    'hard_drive' => '',
+                    'hard_drive_size' => 0,
+                    'hard_drive_byte' => '',
+                    'os' => '',
+                    'os_version' => ''
                 ]
                
             ]

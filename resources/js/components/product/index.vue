@@ -8,7 +8,7 @@
             <li class="breadcrumb-item active">All Product</li>
         </ol>
         <!-- Icon Cards-->
-        <div class="row card container-fluid shadow mb-3">
+        <div class="row card shadow mb-3">
             <div class="card-header" style="font-size: 20px; font-weight:700;">
                 <i class="fas fa-chart-area"></i>
                 All Product
@@ -24,25 +24,39 @@
                             <thead>
                             <tr class="bg-info text-white">
                                 <th>Name</th>
-                                <th>Code</th>
+                                <!-- <th>Code</th> -->
                                 <th>Photo</th>
                                 <th>Category</th>
+                                <th>Manufacturer/Brand</th>
+                                <th>Processor</th>
+                                <th>Connectivity</th>
+                                <th>RAM</th>
+                                <th>Hard Drive</th>
+                                <th>OS</th>
                                 <th>Buying Price</th>
                                 <th>Selling Price</th>
-                                <th>Root</th>
+                                <!-- <th>Root</th> -->
                                 <th>Action</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             <tr v-for="product in filtersearch" :key="product.id">
-                                <td>{{ product.product_name}}</td>
-                                <td>{{ product.product_code}}</td>
+                                <td>{{ product.product_name }}</td>
+                                <!-- <td>{{ product.product_code}}</td> -->
                                 <td><img :src="product.image" id="em_photo"></td>
                                 <td>{{ product.category_name }}</td>
-                                <td>{{ product.buying_price }}</td>
-                                <td>{{ product.selling_price }}</td>
-                                <td>{{ product.root }}</td>
+                                <td>{{ product.manufacturer }}</td>
+                                <td>{{ product.Processor }}</td>
+                                <td>{{ product.connectivity }}</td>
+                                <td>{{ product.ram }}</td>
+                                <td>{{ product.hard_drive}} {{ product.hard_drive_size }} {{ product.hard_drive_byte }}</td>
+                                <td>{{ product.os }} {{ product.os_version }}</td>
+                                <td>&#8369; &nbsp; &nbsp;{{ product.buying_price }} </td>
+                                <td>&#8369; &nbsp; &nbsp;{{ product.selling_price }}</td>
+                                <!-- <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.buying_price).toLocaleString() || 0)}}</td>
+                                <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.selling_price).toLocaleString() || 0)}}</td> -->
+                                <!-- <td>{{ product.root }}</td> -->
                                 <td>
                                     <router-link :to="{name: 'edit-product', params:{id: product.id} }" class="btn btn-sm btn-info">Edit</router-link>
                                     <!-- <router-link :to="'/edit-category/'+category.id" class="btn btn-warning mr-1">Edit</router-link> -->   <!--or-->
@@ -131,5 +145,8 @@
     #em_photo{
         height: 40px;
         width: 40px;
+    }
+    th,td {
+        font-size: small;
     }
 </style>

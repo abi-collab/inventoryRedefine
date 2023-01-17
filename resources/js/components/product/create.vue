@@ -45,7 +45,7 @@
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label>Manufacturer/Brand</label>
-                                        <input type="text" class="form-control" required placeholder="Enter Brand">
+                                        <input type="text" v-model="form.manufacturer" class="form-control" required placeholder="Enter Brand">
                                         <small class="text-danger" v-if="errors.root">{{ errors.root[0] }}</small>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label>Processor</label>
-                                        <input type="text" class="form-control" required placeholder="Processor">
+                                        <input type="text"  v-model="form.Processor"  class="form-control" required placeholder="Processor">
                                         <small class="text-danger" v-if="errors.buying_price">{{
                                             errors.buying_price[0]
                                         }}</small>
@@ -72,13 +72,13 @@
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label>Connectivity</label>
-                                        <input type="text" class="form-control" required>
+                                        <input type="text"  v-model="form.connectivity"  class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label>RAM</label>
-                                        <select class="form-control" required>
+                                        <select  v-model="form.ram"  class="form-control" required>
                                             <option value="4">4 GB</option>
                                             <option value="8">8 GB</option>
                                             <option value="12">12 GB</option>
@@ -144,13 +144,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Hard Drive Type</span>
                                         </div>
-                                        <select class="form-control" required>
+                                        <select  v-model="form.hard_drive"  class="form-control" required>
                                             <option value="SSD">SSD</option>
                                             <option value="HDD">HDD</option>
                                         </select>
                                         <div class="input-group-append">
-                                            <input type="number" class="form-control" required placeholder="0">
-                                            <select class="form-control" required>
+                                            <input type="number" v-model="form.hard_drive_size"  class="form-control" required placeholder="0">
+                                            <select v-model="form.hard_drive_byte" class="form-control" required>
                                                 <option value="MB">MB</option>
                                                 <option value="GB">GB</option>
                                                 <option value="TB">TB</option>
@@ -163,20 +163,17 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Operating System(OS)</span>
                                         </div>
-                                        <select class="form-control" required>
+                                        <select  v-model="form.os"  class="form-control" required>
                                             <option value="Windows">Windows</option>
                                             <option value="Mac OS">Mac OS</option>
                                         </select>
                                         <div class="input-group-append">
-
-                                            <input type="number" class="form-control" required placeholder="OS Version">
+                                            <input type="text"  v-model="form.os_version"  class="form-control" required placeholder="OS Version">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="form-group">
                             <div class="form-row">
 
@@ -216,7 +213,6 @@
     </div>
 </template>
 
-
 <script>
 import { ModelSelect } from 'vue-search-select'
 import Cookies from 'js-cookie'; //1
@@ -241,7 +237,18 @@ export default {
                 selling_price: '',
                 buying_date: '',
                 image: '',
-                product_quantity: ''
+                product_quantity: '',
+
+                manufacturer:'',
+                Processor:'',
+                ram:0,
+                connectivity:'',
+                hard_drive:'',
+                hard_drive_size:0,
+                os:'',
+                os_version:'',
+                hard_drive_byte:''
+
             },
             form2: { //2
                 activity: '',
