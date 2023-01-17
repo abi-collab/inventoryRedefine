@@ -19,34 +19,76 @@
                     <form @submit.prevent="confirm" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label>Product Name</label>
-                                        <input type="text" v-model="form.product_name" class="form-control" required placeholder="Enter Product Name">
-                                        <small class="text-danger" v-if="errors.product_name">{{ errors.product_name[0] }}</small>
+                                        <input type="text" v-model="form.product_name" class="form-control" required
+                                            placeholder="Enter Product Name">
+                                        <small class="text-danger" v-if="errors.product_name">{{
+                                            errors.product_name[0]
+                                        }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampl1">Category</label>
+                                        <select class="form-control" id="exampl1" v-model="form.category_id">
+                                            <option :value="category.id" v-for="category in categories">{{
+                                                category.category_name
+                                            }}</option>
+                                        </select>
+                                        <small class="text-danger" v-if="errors.category_id">{{
+                                            errors.category_id[0]
+                                        }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-label-group">
+                                        <label>Manufacturer/Brand</label>
+                                        <input type="text" class="form-control" required placeholder="Enter Brand">
+                                        <small class="text-danger" v-if="errors.root">{{ errors.root[0] }}</small>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
                                     <div class="form-label-group">
                                         <label >Product Code</label>
                                         <input type="text" v-model="form.product_code" class="form-control" required placeholder="Enter Product Code" >
                                         <small class="text-danger" v-if="errors.product_code">{{ errors.product_code[0] }}</small>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="">
+                        <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampl1">Category</label>
-                                        <select class="form-control" id="exampl1" v-model="form.category_id">
-                                            <option :value="category.id" v-for="category in categories">{{ category.category_name }}</option>
-                                        </select>
-                                        <small class="text-danger" v-if="errors.category_id">{{ errors.category_id[0] }}</small>
+                                <div class="col-md-4">
+                                    <div class="form-label-group">
+                                        <label>Processor</label>
+                                        <input type="text" class="form-control" required placeholder="Processor">
+                                        <small class="text-danger" v-if="errors.buying_price">{{
+                                            errors.buying_price[0]
+                                        }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-label-group">
+                                        <label>Connectivity</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-label-group">
+                                        <label>RAM</label>
+                                        <select class="form-control" required>
+                                            <option value="4">4 GB</option>
+                                            <option value="8">8 GB</option>
+                                            <option value="12">12 GB</option>
+                                            <option value="16">16 GB</option>
+                                            <option value="24">24 GB</option>
+                                            <option value="32">32 GB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Supplier</label>
                                         <select class="form-control" v-model="form.supplier_id">
@@ -54,11 +96,11 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.supplier_id">{{ errors.supplier_id[0] }}</small>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div><br>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-label-group">
@@ -75,8 +117,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><br>
-
+                        </div><br> -->
+                        <!-- <br>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
@@ -93,147 +135,211 @@
                                         <small class="text-danger" v-if="errors.buying_price">{{ errors.buying_price[0] }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-label-group">
-                                         <label >Selling Price </label>
-                                        <input type="text" v-model="form.selling_price" class="form-control" required placeholder="Enter Selling Price">
-                                        <small class="text-danger" v-if="errors.selling_price">{{ errors.selling_price[0] }}</small>
-                                    </div>
-                                </div>
                             </div>
-                        </div><br>
-
+                        </div> -->
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Hard Drive Type</span>
+                                        </div>
+                                        <select class="form-control" required>
+                                            <option value="SSD">SSD</option>
+                                            <option value="HDD">HDD</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <input type="number" class="form-control" required placeholder="0">
+                                            <select class="form-control" required>
+                                                <option value="MB">MB</option>
+                                                <option value="GB">GB</option>
+                                                <option value="TB">TB</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Operating System(OS)</span>
+                                        </div>
+                                        <select class="form-control" required>
+                                            <option value="Windows">Windows</option>
+                                            <option value="Mac OS">Mac OS</option>
+                                        </select>
+                                        <div class="input-group-append">
+
+                                            <input type="number" class="form-control" required placeholder="OS Version">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="form-row">
+
+                                <div class="col-md-4">
+                                    <div class="form-label-group">
+                                        <label>Selling Price </label>
+                                        <input type="text" v-model="form.selling_price" class="form-control" required
+                                            placeholder="Enter Selling Price">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <br>
                                     <div class="form-label-group">
                                         <input type="file" class="btn btn-info" @change="onFileselected">
                                         <small class="text-danger" v-if="errors.image">{{ errors.image[0] }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-1">
+                                    <br>
                                     <img :src="form.image" style="height:40px; width: 40px;">
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button type="submit" class="btn btn-success" style="width: 100%;;">Submit</button>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <!-- <button type="submit" class="btn btn-success">Submit</button> -->
                     </form>
                 </div>
                 <div class="card-footer small text-muted"></div>
             </div>
         </div>
+        <h1>for POS</h1>
+        <model-select :options="options" v-model="item" placeholder="select item">
+        </model-select>
     </div>
 </template>
 
 
 <script>
+import { ModelSelect } from 'vue-search-select'
 import Cookies from 'js-cookie'; //1
-    export default {
-        mounted(){
-            if (!User.loggedIn()) {
-                this.$router.push({ name:'/' })
+export default {
+    components: {
+        ModelSelect
+    },
+    mounted() {
+        if (!User.loggedIn()) {
+            this.$router.push({ name: '/' })
+        }
+    },
+    data() {
+        return {
+            form: {
+                product_name: '',
+                product_code: '',
+                category_id: '',
+                supplier_id: '',
+                root: '',
+                buying_price: '',
+                selling_price: '',
+                buying_date: '',
+                image: '',
+                product_quantity: ''
+            },
+            form2: { //2
+                activity: '',
+                createdby: Cookies.get('usersname')
+            },
+            errors: {},
+            categories: {},      //--to take catagory from 'Category' controller
+            suppliers: {},       //--to take supplier from 'Supplier' controller
+            options: [
+                { value: '1', text: 'aa' + ' - ' + '1' },
+                { value: '2', text: 'ab' + ' - ' + '2' },
+                { value: '3', text: 'bc' + ' - ' + '3' },
+                { value: '4', text: 'cd' + ' - ' + '4' },
+                { value: '5', text: 'de' + ' - ' + '5' }
+            ],
+            item: {
+                value: '',
+                text: ''
+            },
+        }
+    },
+    created() {            //fatching data from Controller & keeping it in data() property
+        axios.get('/api/category')
+            .then(({ data }) => (this.categories = data))
+
+        axios.get('/api/supplier/')
+            .then(({ data }) => (this.suppliers = data))
+    },
+    computed: { //3
+        nameIs() {
+            return this.form.product_name;
+        }
+    },
+    methods: {
+        onFileselected(event) {
+            let file = event.target.files[0];
+            if (file.size > 1048770) {
+                Notification.image_validation()
+            } else {
+                let reader = new FileReader();
+                reader.onload = event => {
+                    this.form.image = event.target.result
+                    //console.log(event.target.result);
+                };
+                reader.readAsDataURL(file);
             }
         },
-        data(){
-            return{
-                form:{
-                    product_name :'',
-                    product_code :'',
-                    category_id:'',
-                    supplier_id:'',
-                    root :'',
-                    buying_price:'',
-                    selling_price : '',
-                    buying_date:'',
-                    image:'',
-                    product_quantity:''
+        productInsert() {
+            this.form2.activity = `creates ${this.nameIs} as new product`;//4
+            axios.post('/api/product/', this.form)
+                .then(() => {
+                    this.$router.push({ name: 'product' })
+                    Notification.success()
+                })
+                .catch(error => this.errors = error.response.data.errors)
+
+            axios.post('/api/activitylog', this.form2)  //5
+                .then((r) => {
+                    console.log('logssss', r)
+                })
+                .catch(error => this.errors = error.response.data.errors)
+
+        },
+        confirm() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
-                form2:{ //2
-					activity :'',
-					createdby : Cookies.get('usersname')
-				},
-                errors:{},
-                categories:{},      //--to take catagory from 'Category' controller
-                suppliers:{},       //--to take supplier from 'Supplier' controller
-            }
-        },
-        created(){            //fatching data from Controller & keeping it in data() property
-            axios.get('/api/category')
-                .then(({data}) => (this.categories = data))
+                buttonsStyling: true
+            })
 
-            axios.get('/api/supplier/')
-                .then(({data}) => (this.suppliers = data))
-        },
-        computed: { //3
-					nameIs() {
-						return this.form.product_name;
-					}
-				},
-        methods:{
-            onFileselected(event){
-                let file=event.target.files[0];
-                if (file.size > 1048770) {
-                    Notification.image_validation()
-                }else{
-                    let reader = new FileReader();
-                    reader.onload = event => {
-                        this.form.image = event.target.result
-                        //console.log(event.target.result);
-                    };
-                    reader.readAsDataURL(file);
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "Entered details can still be update when saved",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.productInsert();
+                    swalWithBootstrapButtons.fire('Successfully Saved')
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                    )
                 }
-            },
-            productInsert(){
-                this.form2.activity = `creates ${this.nameIs} as new product`;//4
-                axios.post('/api/product/',this.form)
-                    .then(() => {
-                        this.$router.push({ name: 'product' })
-                        Notification.success()
-                    })
-                    .catch(error => this.errors = error.response.data.errors)
-                
-                    axios.post('/api/activitylog',this.form2)  //5
-                    .then((r) => {
-                        console.log('logssss',r)
-                    })
-                    .catch(error => this.errors = error.response.data.errors)
-
-            },
-            confirm() {
-				const swalWithBootstrapButtons = Swal.mixin({
-					customClass: {
-						confirmButton: 'btn btn-success',
-						cancelButton: 'btn btn-danger'
-					},
-					buttonsStyling: true
-				})
-
-				swalWithBootstrapButtons.fire({
-					title: 'Are you sure?',
-					text: "Entered details can still be update when saved",
-					icon: 'warning',
-					showCancelButton: true,
-					confirmButtonText: 'Confirm',
-					cancelButtonText: 'Cancel',
-					reverseButtons: true
-				}).then((result) => {
-					if (result.isConfirmed) {
-						this.productInsert();
-						swalWithBootstrapButtons.fire('Successfully Saved')
-					} else if (result.dismiss === Swal.DismissReason.cancel) {
-						swalWithBootstrapButtons.fire(
-							'Cancelled',
-						)
-					}
-				})
-			}
+            })
         }
     }
+}
 </script>
 
 
 <style>
-    #add_new{
-        float: right;
-    }
+#add_new {
+    float: right;
+}
 </style>

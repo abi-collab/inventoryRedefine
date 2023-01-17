@@ -24,7 +24,18 @@ class CreateProductsTable extends Migration
             $table->integer('supplier_id')->nullable();
             $table->string('buying_date')->nullable();
             $table->string('image')->nullable();
-            $table->string('product_quantity');
+            $table->string('product_quantity')->nullable();
+
+            $table->string('manufacturer');
+            $table->string('connectivity');
+            $table->string('Processor');
+            $table->string('ram');
+            $table->string('hard_drive');
+            $table->string('hard_drive_size');
+            $table->string('os');
+            $table->string('os_version');
+
+
             $table->timestamps();
         });
     }

@@ -20,6 +20,8 @@ import JsonExcel from "vue-json-excel";
  
 Vue.component("downloadExcel", JsonExcel);
 
+import 'vue-search-select/dist/VueSearchSelect.css';
+
 const options = {
   name: '_blank',
   specs: [

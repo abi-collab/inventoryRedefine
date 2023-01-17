@@ -34,6 +34,7 @@
         "vue-json-excel": "^0.3.0",
         "vue-moment": "^4.1.0",
         "vue-router": "^3.4.3",
+        "vue-search-select": "^2.9.5",
         "vue-server-renderer": "^2.7.14",
         "vuex": "^3.4.0",
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.1/xlsx-0.19.1.tgz"
