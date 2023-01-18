@@ -43,8 +43,28 @@
                            
                         </div>
                     </div><br>
+                    <div class="row">
+                         <div class="col-lg-4">
+                         <h6 v-if="toAdd_quantity > 0">Please Enter {{ toAdd_quantity }} item's Serial Numbers</h6>
+                        <span v-for="z in serialQuantity" style="display: block;">
+                            <input 
+                                type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                                style="margin: 2px 0px"
+                                v-model="z.serial_number"
+                                @keypress.13.prevent
+                                required
+                            >  
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <h6>Select Supplier</h6>
+                        <model-select :options="selectSuppliers" v-model="item" placeholder="select item" aria-required="true" required>
+                        </model-select>
+                    </div>
+                    </div>
                     <button type="submit" class="btn btn-success" v-if="toAdd_quantity">Stock Update</button>
                 </form><br>
+                
             </div>
         </div>
     </div>
@@ -52,8 +72,12 @@
 
 
 <script>
+import { ModelSelect } from 'vue-search-select'
 import Cookies from 'js-cookie'; //1
     export default {
+        components: {
+        ModelSelect
+    },
         mounted(){
             if (!User.loggedIn()) {
                 this.$router.push({ name:'/' })
@@ -71,7 +95,10 @@ import Cookies from 'js-cookie'; //1
                 errors:{},
                 allProducts:[],
                 toAdd_quantity:'',
-                newStock_quantity:''
+                newStock_quantity:'',
+                serialQuantity:[],
+                suppliers:[],
+                item:''
             }
         },
         created(){
@@ -80,9 +107,17 @@ import Cookies from 'js-cookie'; //1
                 .then(({data}) => (this.form = data))
                 .catch()
 
-                axios.get('/api/product')
-                        .then(({data}) => (console.log( data), this.allProducts = data))
-                        .catch()
+            axios.get('/api/product')
+                .then(({data}) => (console.log( data), this.allProducts = data))
+                .catch()
+            
+            
+            axios.get('/api/supplier/')
+                .then((data) => {
+                   this.suppliers = data.data;
+                }) 
+                .catch()
+         
         },
         computed: { //3
 					nameIs() {
@@ -91,11 +126,34 @@ import Cookies from 'js-cookie'; //1
 						return pro[0]?.product_name;
 					},
                     newStock() {
+                        let id = this.$route.params.id
+                        let newArr = [];
                         this.newStock_quantity = Number(this.form.product_quantity) + Number(this.toAdd_quantity);
+
+                    for(let i = 0; i < this.toAdd_quantity; i++) {
+                        newArr.push({
+                            serial_number:'', 
+                            product_id:id
+                        });
+                    }
+
+                        this.serialQuantity = newArr;
                         return Number(this.form.product_quantity) + Number(this.toAdd_quantity);
                     },
                     getTimestampInSeconds () {
                     return Math.floor(Date.now() / 1000)
+                    },
+
+                    ///////////////// for select option
+                    selectSuppliers() {
+                        let newArr = [];
+                        for(let i = 0; i < this.suppliers.length; i++) {
+                            newArr.push({
+                                value:this.suppliers[i].id,
+                                text:this.suppliers[i].name
+                            })
+                        }
+                         return newArr; 
                     }
 				},
         methods:{
@@ -114,9 +172,20 @@ import Cookies from 'js-cookie'; //1
                         console.log('logssss',r)
                     })
                     .catch(error => this.errors = error.response.data.errors)
+
+                    for(let i= 0; i < this.serialQuantity.length; i++) {
+                        this.serialQuantity[i].supplier_id = this.item;
+                        axios.post('/api/saveSerialNumbers', this.serialQuantity[i]).then((res) => {
+                            console.log(res);
+                        })
+                    }
+                    
             },
             confirm() {
-				const swalWithBootstrapButtons = Swal.mixin({
+                if(!this.item) {
+                    Swal.fire('Please select a supplier')
+                } else {
+                    const swalWithBootstrapButtons = Swal.mixin({
 					customClass: {
 						confirmButton: 'btn btn-success',
 						cancelButton: 'btn btn-danger'
@@ -126,7 +195,7 @@ import Cookies from 'js-cookie'; //1
 
 				swalWithBootstrapButtons.fire({
 					title: 'Are you sure?',
-					text: "Following details can still be update when saved",
+					text: "This cannot be undone",
 					icon: 'warning',
 					showCancelButton: true,
 					confirmButtonText: 'Confirm',
@@ -142,6 +211,8 @@ import Cookies from 'js-cookie'; //1
 						)
 					}
 				})
+                }
+				
 			}
         }
     }

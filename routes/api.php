@@ -80,3 +80,5 @@ Route::get('/serials','SerialsController@getSerials');
 Route::post('/returns','ReturnitemController@saveReturns');
 Route::get('/returns','ReturnitemController@getReturns');
 Route::put('/returns/{id}','ReturnitemController@updateReturns');
+
+Route::post('/saveSerialNumbers','SerialnumbersController@saveSerialNumbers');
