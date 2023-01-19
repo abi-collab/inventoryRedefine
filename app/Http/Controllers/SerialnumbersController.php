@@ -15,6 +15,8 @@ class SerialnumbersController extends Controller
         $serial->supplier_id = $request->supplier_id;
         $serial->status = $request->status;
         $serial->createdby = $request->createdby;
+        $serial->buying_price = $request->buying_price;
+        $serial->sold_date = $request->sold_datey;
         $serial->save();
     }
 
@@ -36,7 +38,15 @@ class SerialnumbersController extends Controller
         ->where('serialnumbers.product_id', $id)
         // ->orderBy('id','DESC')->get();
         ->join('suppliers','serialnumbers.supplier_id','suppliers.id')
-        ->select('serialnumbers.serial_number','serialnumbers.created_at','products.product_name','suppliers.name','serialnumbers.status','serialnumbers.createdby')
+        ->select('serialnumbers.serial_number',
+                    'serialnumbers.created_at',
+                    'products.product_name',
+                    'suppliers.name',
+                    'serialnumbers.status',
+                    'serialnumbers.createdby', 
+                    'serialnumbers.buying_price',
+                    'serialnumbers.sold_date'
+        )
         ->get();
         return response()->json($serialnumbers);
         

@@ -21,6 +21,8 @@ class CreateSerialnumbersTable extends Migration
             $table->integer('supplier_id');
             $table->string('status');
             $table->string('createdby');
+            $table->integer('buying_price');
+            $table->date('sold_date')->nullable();
 
         });
     }

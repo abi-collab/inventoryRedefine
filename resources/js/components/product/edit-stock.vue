@@ -57,9 +57,16 @@
                         </span>
                     </div>
                     <div class="col-lg-4">
-                        <h6>Select Supplier</h6>
+                        <div>
+                            <h6>Select Supplier</h6>
                         <model-select :options="selectSuppliers" v-model="item" placeholder="select item" aria-required="true" required>
                         </model-select>
+                        </div>
+                        <h6>Buying Price</h6>
+                        <div>
+                            <input type="number" v-model="buying_price" class="form-control" required>
+                        </div>
+                        
                     </div>
                     </div>
                     <button type="submit" class="btn btn-success" v-if="toAdd_quantity">Stock Update</button>
@@ -98,7 +105,8 @@ import Cookies from 'js-cookie'; //1
                 newStock_quantity:'',
                 serialQuantity:[],
                 suppliers:[],
-                item:''
+                item:'',
+                buying_price:0
             }
         },
         created(){
@@ -176,7 +184,8 @@ import Cookies from 'js-cookie'; //1
                     for(let i= 0; i < this.serialQuantity.length; i++) {
                         this.serialQuantity[i].supplier_id = this.item;
                         this.serialQuantity[i].status = 'in-stock';
-                        this.serialQuantity[i].createdby = Cookies.get('usersname')
+                        this.serialQuantity[i].createdby = Cookies.get('usersname');
+                        this.serialQuantity[i].buying_price = this.buying_price;
                         axios.post('/api/saveSerialNumbers', this.serialQuantity[i]).then((res) => {
                             console.log(res);
                         })
@@ -186,7 +195,10 @@ import Cookies from 'js-cookie'; //1
             confirm() {
                 if(!this.item) {
                     Swal.fire('Please select a supplier')
-                } else {
+                } 
+                else if(this.buying_price == 0) {
+                    Swal.fire('Buying price must not be empty')
+                }else {
                     const swalWithBootstrapButtons = Swal.mixin({
 					customClass: {
 						confirmButton: 'btn btn-success',

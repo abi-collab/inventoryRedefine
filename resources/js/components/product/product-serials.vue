@@ -1,15 +1,16 @@
 <template>
   <div>
     <h1>{{ productName }} Serials</h1>
-    <table class="table table-responsive">
+    <table class="table table-bordered table-striped table-hover table-warning border-lights">
       <thead>
         <th>Serial Number</th>
         <th>Item Name</th>
         <th>Supplier</th>
         <th>Status</th>
-        <th>Sold Date</th>
+        <th>Buying Price</th>
         <th>Date Created</th>
         <th>Created By</th>
+        <th>Sold Date</th>
       </thead>
       <tbody>
         <tr v-for="i in serials">
@@ -17,9 +18,10 @@
           <td>{{ i.product_name }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.status }}</td>
-          <td></td>
+          <td>{{ i.buying_price }}</td>
           <td>{{ returnDate(i.created_at) }}</td>
           <td>{{ i.createdby }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
