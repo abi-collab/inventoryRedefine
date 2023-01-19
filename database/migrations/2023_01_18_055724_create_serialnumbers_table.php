@@ -19,6 +19,9 @@ class CreateSerialnumbersTable extends Migration
             $table->string('serial_number');
             $table->integer('product_id');
             $table->integer('supplier_id');
+            $table->string('status');
+            $table->string('createdby');
+
         });
     }
 

@@ -36,9 +36,9 @@
                                 <td>{{ product.product_code}}</td>
                                 <td><img :src="product.image" id="em_photo"></td>
                                 <td>{{ product.category_name }}</td>
-                                <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Availble</span></td>
+                                <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Available</span></td>
                                 <td v-else=""><span class="badge badge-danger">Stock Out</span></td>
-                                <td>{{ product.product_quantity }}</td>
+                                <td><router-link :to="{path:`/stock/${product.product_name}/${product.id}`, name:'productSerials', params:{ id: product.id, productName:product.product_name}}"><h4 style="text-align: center;">{{ product.product_quantity }}</h4></router-link></td>
                                 <td>
                                     <router-link :to="{name: 'edit-stock', params:{id: product.id} }" class="btn btn-sm btn-info">Add Stock</router-link>
                                     <!-- <router-link :to="'/edit-category/'+category.id" class="btn btn-warning mr-1">Edit</router-link> --> <!--or, -->

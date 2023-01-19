@@ -23,7 +23,7 @@ class ProductsTableSeeder extends Seeder
                     'supplier_id' => 2,
                     'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 4,
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Asus',
                     'Processor' => 'Rogue Galaxy',
@@ -45,7 +45,7 @@ class ProductsTableSeeder extends Seeder
                     'supplier_id' => 2,
                     'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 2,
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Lenovo',
                     'Processor' => 'Core i5',
@@ -67,7 +67,7 @@ class ProductsTableSeeder extends Seeder
                     'supplier_id' => 2,
                     'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 1,
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'HP',
                     'Processor' => 'Ryzen 5',
@@ -89,7 +89,7 @@ class ProductsTableSeeder extends Seeder
                     'supplier_id' => 1,
                     'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 3,
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Custom',
                     'Processor' => 'Ultra Dragon',
@@ -111,7 +111,7 @@ class ProductsTableSeeder extends Seeder
                     'supplier_id' => 3,
                     'buying_date' => '2022-11-6',
                     'image' => '',
-                    'product_quantity' => 10,
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Rapoo',
                     'Processor' => '',

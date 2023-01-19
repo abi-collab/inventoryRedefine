@@ -53,6 +53,9 @@ let returnItems = require('./components/order/returnItems.vue').default;
 //------users-----------------------
 let users = require('./components/users/users.vue').default;
 let editUsers = require('./components/users/edit.vue').default;
+//------serailnumbers-----------------------
+let serialnumbers = require('./components/product/serial-numbers.vue').default;
+let productSerials = require('./components/product/product-serials.vue').default;
 
 
 export const routes = [
@@ -109,4 +112,7 @@ export const routes = [
     //-------Users-----------
     { path: '/users', component: users, name:'users' },
     { path: '/edit-users/:id', component: editUsers, name:'editUsers' },
+    //-------Serial Numbers-----------
+    { path: '/serial-numbers', component: serialnumbers, name:'serialnumbers' },
+    { path: '/stock/:id', component: productSerials, name:'productSerials' },
 ]

@@ -175,6 +175,8 @@ import Cookies from 'js-cookie'; //1
 
                     for(let i= 0; i < this.serialQuantity.length; i++) {
                         this.serialQuantity[i].supplier_id = this.item;
+                        this.serialQuantity[i].status = 'in-stock';
+                        this.serialQuantity[i].createdby = Cookies.get('usersname')
                         axios.post('/api/saveSerialNumbers', this.serialQuantity[i]).then((res) => {
                             console.log(res);
                         })
