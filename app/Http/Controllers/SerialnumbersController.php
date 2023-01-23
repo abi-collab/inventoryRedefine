@@ -16,7 +16,7 @@ class SerialnumbersController extends Controller
         $serial->status = $request->status;
         $serial->createdby = $request->createdby;
         $serial->buying_price = $request->buying_price;
-        $serial->sold_date = $request->sold_datey;
+        $serial->sold_date = $request->sold_date;
         $serial->save();
     }
 
@@ -52,13 +52,14 @@ class SerialnumbersController extends Controller
         
     }
 
-    // public function OrderDetailsAll($id)
-    // {
-    //     $details=DB::table('order_details')
-    //         ->join('products','order_details.product_id','products.id')
-    //         ->where('order_details.order_id',$id)
-    //         ->select('products.product_name','products.product_code','products.image','order_details.*')
-    //         ->get();
-    //     return response()->json($details);
-    // }
+    public function SerialNumberUpdate(Request $request,$id)
+    {
+        $data=array();
+        // $data['id']=$request->id;
+        $data['status']=$request->status;
+        // $data['sold_date']=$request->sold_date;
+        DB::table('serialnumbers')->where('id',$id)->update($data);
+    }
+
+    
 }

@@ -129,7 +129,6 @@ class ProductController extends Controller
             $oldlogo=$request->image;
             $data['image']=$oldlogo;
             DB::table('products')->where('id',$id)->update($data);
-
         }
     }
 

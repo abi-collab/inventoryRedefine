@@ -60,8 +60,6 @@ export default {
   },
   created() {
     axios.get('/api/productSerials').then((res) => {
-      // this.serialList = res.data;
-      // console.log('serialList',res.data);
       res.data.forEach(element => {
         this.serialList.push({
           value:element.serial_number,

@@ -67,6 +67,7 @@
                     <th>Customer&nbsp;Name</th>
                     <th>Created&nbsp;By</th>
                     <th>Date&nbsp;Sold</th>
+                    <th>product id</th>
                   </tr>
                 </thead>
 
@@ -79,6 +80,7 @@
                     <td>{{item.customerName}}</td>
                     <td>{{returnName(item.created_by)}}</td>
                     <td>{{ returnStrtingDate(item.created_at) }}</td>
+                    <td>{{ item.product_id }}</td>
                     
                   </tr>
                 </tbody>

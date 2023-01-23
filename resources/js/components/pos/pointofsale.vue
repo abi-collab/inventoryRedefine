@@ -467,6 +467,7 @@ export default {
         Reload.$on('customerReload', () => {   //--added by me
             this.allCustomer();
         })
+
     },
     data() {
         return {
@@ -506,7 +507,8 @@ export default {
             invoiceRandomNumber: '',
             change: 0,
 
-            showNow: false
+            showNow: false,
+            newSerials:[]
         }
     },
     computed: {
@@ -536,7 +538,6 @@ export default {
                     updated_at: arr[i].updated_at,
 
                 })
-
             }
             console.log('arr2', arr2)
             this.serialNumbersForItemQnty = arr2;
@@ -803,13 +804,20 @@ export default {
                     })
                 }
             }
-          
+            
             for (let l = 0; l < serialList.length; l++) {
                 axios.post('/api/serials', serialList[l])
-                    .then((res) => {
-                        // Notification.success()
-                        // this.$router.push({ name: 'home' })
-                        console.log('res', res);
+                    .then(() => {
+                        axios.get('/api/productSerials/').then((data) => {
+                            let g = data.data.filter(i => i.serial_number == serialList[l].serialNo)
+                            axios.patch('/api/productSerials/'+ g[0].id, {
+                            status:'sold'
+                            // sold_date: moment(new Date).format("MMM Do YY")
+                                }).then((ress) => {
+                                    console.log(ress);
+                                })
+                        })
+                        
                     })
             }
 

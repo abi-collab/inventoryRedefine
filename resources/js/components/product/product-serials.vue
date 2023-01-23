@@ -21,7 +21,7 @@
           <td>{{ i.buying_price }}</td>
           <td>{{ returnDate(i.created_at) }}</td>
           <td>{{ i.createdby }}</td>
-          <td></td>
+          <td>{{ i.sold_date }}</td>
         </tr>
       </tbody>
     </table>
