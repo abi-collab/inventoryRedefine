@@ -17,13 +17,15 @@
             </td>
             <td>
               <span v-for="(z, iIndex) in x.serials" style="display: block;">
-                  <input 
+                  <!-- <input 
                       type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                       style="margin: 2px 0px"
                       v-model="serials[sIndex].serials[iIndex].serialnum"
                       @keypress.13.prevent
                       required
-                  >
+                  > -->
+                  <model-select :options="serialList"  v-model="serials[sIndex].serials[iIndex].serialnum" placeholder="select serial"  @keypress.13.prevent
+                      required></model-select>
               </span>
             </td>
         </tr>
@@ -36,16 +38,44 @@
   </div>
 </template>
 <script>
+import { ModelSelect } from 'vue-search-select'
 export default {
-props:{
-  serials: Array
-},
-methods: {
-  save(serials) {
-    // console.log('serials',serials);
-    this.$emit('my-event',serials);
+  components: {
+        ModelSelect
+    },
+  props:{
+    serials: Array
+  },
+  data() {
+    return {
+      options: [
+                { value: '1', text: 'aa' + ' - ' + '1' },
+                { value: '2', text: 'ab' + ' - ' + '2' },
+                { value: '3', text: 'bc' + ' - ' + '3' },
+                { value: '4', text: 'cd' + ' - ' + '4' },
+                { value: '5', text: 'de' + ' - ' + '5' }
+            ],
+            serialList:[]
+    }
+  },
+  created() {
+    axios.get('/api/productSerials').then((res) => {
+      // this.serialList = res.data;
+      // console.log('serialList',res.data);
+      res.data.forEach(element => {
+        this.serialList.push({
+          value:element.serial_number,
+          text:element.serial_number
+        })
+      });
+    })
+  },
+  methods: {
+    save(serials) {
+      // console.log('serials',serials);
+      this.$emit('my-event',serials);
+    }
   }
-}
 }
 
 

@@ -22,11 +22,12 @@
                             <thead>
                             <tr class="bg-info text-white">
                                 <th>Name</th>
-                                <th>Code</th>
+                                <!-- <th>Code</th> -->
                                 <th>Photo</th>
                                 <th>Category</th>
+                                <th>Serial No's</th>
                                 <th>Status</th>
-                                <th>Serials</th>
+                                <th>Available</th>
                                 <th>Sold</th>
                                 <th>Action</th>
                             </tr>
@@ -34,12 +35,13 @@
                             <tbody>
                             <tr v-for="product in filtersearch" :key="product.id">
                                 <td>{{ product.product_name}}</td>
-                                <td>{{ product.product_code}}</td>
+                                <!-- <td>{{ product.product_code}}</td> -->
                                 <td><img :src="product.image" id="em_photo"></td>
                                 <td>{{ product.category_name }}</td>
+                                <th><router-link :to="{path:`/stock/${product.product_name}/${product.id}`, name:'productSerials', params:{ id: product.id, productName:product.product_name}}"><h4 style="text-align: center;">{{ serialsBelong(product) }}</h4></router-link></th>
                                 <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Available</span></td>
                                 <td v-else=""><span class="badge badge-danger">Stock Out</span></td>
-                                <td><router-link :to="{path:`/stock/${product.product_name}/${product.id}`, name:'productSerials', params:{ id: product.id, productName:product.product_name}}"><h4 style="text-align: center;">{{ product.product_quantity }}</h4></router-link></td>
+                                <td>{{ product.product_quantity }}</td>
                                 <td>Available</td>
                                 <td>
                                     <router-link :to="{name: 'edit-stock', params:{id: product.id} }" class="btn btn-sm btn-info">Add Stock</router-link>
@@ -64,16 +66,19 @@
                 this.$router.push({ name:'/' })
             }
         },
-
-        created(){
-            this.allProduct();
-        },
-
         data(){
             return{
                 products:[],
                 searchTerm:'',
+                serialList:[]
             }
+        },
+        created(){
+            this.allProduct();
+            axios.get('/api/productSerials').then((res) => {
+                this.serialList = res.data;
+            })
+
         },
         computed:{
             filtersearch(){
@@ -88,6 +93,20 @@
                 axios.get('/api/product/')
                     .then(({data}) => (this.products = data))
                     .catch()
+            },
+            serialsBelong(product) {
+                // this.serialList.filter((x) => )
+                // console.log('product', product);
+                // console.log('serialList',this.serialList);
+                let allTrue = [];
+               this.serialList.map((z) => {
+                    if(z.product_id == product.id) {
+                        allTrue.push(z)
+                    }
+                });
+
+                // const allTrue = (filteredSers.filter(Boolean).length == arr.length);
+                return allTrue.length;
             }
         }
     }
