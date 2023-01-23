@@ -14,7 +14,6 @@
         </tr>
       </tbody>
     </table> -->
-   
     <ul v-for="i in serials">
       <li>{{ i }}</li>
     </ul>
