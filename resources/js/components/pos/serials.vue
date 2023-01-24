@@ -61,10 +61,12 @@ export default {
   created() {
     axios.get('/api/productSerials').then((res) => {
       res.data.forEach(element => {
-        this.serialList.push({
-          value:element.serial_number,
-          text:element.serial_number
-        })
+          if(element.status == 'in-stock') {
+              this.serialList.push({
+              value:element.serial_number,
+              text:element.serial_number
+            })
+          } 
       });
     })
   },
@@ -73,7 +75,36 @@ export default {
       // console.log('serials',serials);
       this.$emit('my-event',serials);
     }
-  }
+  },
+  // computed: {
+  //   availableSerials() { // all serials of serial object join to 1 array
+  //     let x = [];
+  //     for(let i=0; i < this.serials.length; i++) {
+  //       for(let j=0; j < this.serials[i].serials.length; j++) {
+  //         x.push(this.serials[i].serials[j])
+  //       }
+  //     }
+  //     let d = [];
+  //     for(let k=0; k < x.length; k++) {
+  //       d.push(x[k].serialnum);
+  //     }
+  //     return d;
+  //   },
+
+  //   filteredSerialList() { // filtering used/sold serial numbers
+  //     let abc = this.serialList;
+  //     if(this.availableSerials.includes("")) {
+  //       abc = this.serialList;
+  //     }
+  //     for(let i=0; i < abc.length; i++) {
+  //       if(this.availableSerials.includes(abc[i].value)) {
+  //         abc.splice([i], 1);
+  //       }
+  //     }
+  //     return abc;
+  //   }
+
+  // }
 }
 
 
