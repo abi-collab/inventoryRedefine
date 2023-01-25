@@ -207,19 +207,12 @@
                 <div class="card-footer small text-muted"></div>
             </div>
         </div>
-        <h1>for POS</h1>
-        <model-select :options="options" v-model="item" placeholder="select item">
-        </model-select>
     </div>
 </template>
 
 <script>
-import { ModelSelect } from 'vue-search-select'
 import Cookies from 'js-cookie'; //1
 export default {
-    components: {
-        ModelSelect
-    },
     mounted() {
         if (!User.loggedIn()) {
             this.$router.push({ name: '/' })
@@ -257,17 +250,6 @@ export default {
             errors: {},
             categories: {},      //--to take catagory from 'Category' controller
             suppliers: {},       //--to take supplier from 'Supplier' controller
-            options: [
-                { value: '1', text: 'aa' + ' - ' + '1' },
-                { value: '2', text: 'ab' + ' - ' + '2' },
-                { value: '3', text: 'bc' + ' - ' + '3' },
-                { value: '4', text: 'cd' + ' - ' + '4' },
-                { value: '5', text: 'de' + ' - ' + '5' }
-            ],
-            item: {
-                value: '',
-                text: ''
-            },
         }
     },
     created() {            //fatching data from Controller & keeping it in data() property

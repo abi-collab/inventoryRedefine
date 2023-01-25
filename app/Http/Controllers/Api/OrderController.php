@@ -9,6 +9,16 @@ use DB;
 
 class OrderController extends Controller
 {
+    public function AllOrder()
+    {
+        $order=DB::table('orders')
+            ->join('customers','orders.customer_id','customers.id')
+            // ->where('orders.order_date')
+            ->select('customers.name','orders.*')
+            ->orderBy('orders.id','DESC')->get();
+        return response()->json($order);
+    }
+
     public function TodayOrder()
     {
         $data=date('m/d/Y');

@@ -22,6 +22,11 @@ Vue.component("downloadExcel", JsonExcel);
 
 import 'vue-search-select/dist/VueSearchSelect.css';
 
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
+
 const options = {
   name: '_blank',
   specs: [

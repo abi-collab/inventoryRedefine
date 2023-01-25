@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4" v-if="form.category_id != 3">
                                     <div class="form-label-group">
                                         <label>Processor</label>
                                         <input type="text"  v-model="form.Processor"  class="form-control" required placeholder="Processor">
@@ -63,7 +63,7 @@
                                         }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" v-if="form.category_id != 3">
                                     <div class="form-label-group">
                                         <label>Connectivity</label>
                                         <input type="text"  v-model="form.connectivity"  class="form-control" required>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div><br>
-                        <div class="form-group">
+                        <div class="form-group" v-if="form.category_id != 3">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="input-group mb-3">

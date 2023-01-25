@@ -37,6 +37,16 @@
     </div> -->
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
+           
+            <div class="card-body"><h4>{{ orders.length }} </h4></div>
+            <router-link to="/searchorder" class="card-footer d-flex align-items-center justify-content-between" style="color: black;">
+                <a class="stretched-link" href="#">Purchased Orders</a>
+                <div><i class="fas fa-angle-right"></i></div>
+            </router-link>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mb-4">
             <div v-if="!soldItems" class="card-body">
                 <div class="spinner-grow text-success" role="status">
                     <span class="sr-only">Loading...</span>
@@ -65,6 +75,17 @@
     </div>
   
 </div>      <!------End_Dashboard------>
+<!---------------------------- Apex Charts -------------------------->
+<div>
+  <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+</div>
+<div>
+    <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
+</div>
+<div>
+    <apexchart width="500" type="donut" :options="options2" :series="series2"></apexchart>
+</div>
+<!---------------------------- Apex Charts -------------------------->
 
 <!------Stock_Out_Products------>
 <div class="row">
@@ -114,16 +135,24 @@
 
 
 <script>
+import ApexCharts from 'apexcharts'
 import Cookies from 'js-cookie'; 
     export default {
+        components: {
+            ApexCharts
+        },
         created(){
             if (!User.loggedIn()) {
                 this.$router.push({name : '/'})
-                  this.$router.push('/dashboard')
+                //   this.$router.push('/dashboard')
             }
             // window.location.reload();
             axios.get('/api/serials')
                 .then(({data}) => (this.soldItems = data))
+                .catch()
+
+                axios.get('/api/allOrder')
+                .then(({data}) => (this.orders = data))
                 .catch()
         },
         mounted(){
@@ -161,7 +190,24 @@ import Cookies from 'js-cookie';
                 products:'',
                 categories:'',
                 soldItems:'',
-                expenses:[]
+                orders:[],
+                expenses:[],
+                options: {
+                    chart: {
+                    id: 'vuechart-example'
+                    },
+                    xaxis: {
+                    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+                    }
+                },
+                series: [{
+                    name: 'series-1',
+                    data: [30, 40, 45, 50, 49, 60, 70, 91]
+                }],
+
+                options2: {},
+                series2: [44, 55, 41, 17, 15]
+            
             }
         },
         computed: {
