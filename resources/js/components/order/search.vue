@@ -44,6 +44,7 @@
                     </div>
                     <br>
                     <br>
+                    <h5> &#8369;&nbsp; {{(Number(allCost).toLocaleString() || 0)}}</h5>
                     <div class="table table-responsive">
                         <table class="table table-bordered table-striped table-hover table-warning border-light" id="tblToExcl"
                             width="100%" cellspacing="0">
@@ -53,7 +54,7 @@
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Total Due</th>
-                                    <td>View</td>
+                                    <th>View</th>
                                 </tr>
                             </thead>    
                             <tbody>
@@ -223,6 +224,14 @@ export default {
                 return this.filtersearch;
             }
         },
+        allCost() {
+            let cost = 0;
+
+            for(let i = 0; i < this.filterSearchWithDate.length; i++) {
+                cost += Number(this.filterSearchWithDate[i].sub_total);
+            }
+            return cost;
+        }
         
     },
     methods: {
