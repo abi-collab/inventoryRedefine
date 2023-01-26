@@ -11,8 +11,8 @@
         <div class="row noPrint" style="margin-bottom: 500px;">
             <div class="card col-lg-12 border-light shadow">
                 <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight: 700;">
-                    <i class="fas fa-chart-area"></i>
-                    Search Orders
+                    All Purchased Orders
+                    (Search Orders)
                     <router-link to="/order" class="btn btn-dark" id="add_new"> Today Order</router-link>
                 </div>
 
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col">
                             <div  style="display: flex;">
- <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
+                            <button type="button" class="btn btn-outline-success" style="margin-right: 10px;" @click="reload()">reset</button>
                             <button type="button" class="btn btn-outline-success" @click="htmlTableToExcel()">Export Excel</button>
                             </div>
                            

@@ -22,14 +22,14 @@
                         <small class="text-danger" v-if="errors.password" style="color:red">{{ errors.password[0] }}</small> <!----------->
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
                             <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <router-link to="/forget">Forgot Password?</router-link>
+                        <!-- <router-link to="/forget">Forgot Password?</router-link> -->
                         <button type="submit" class="btn btn-dark"> Login </button>
                     </div>
                 </form>

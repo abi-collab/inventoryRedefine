@@ -10,15 +10,15 @@
         <!-- Icon Cards-->
         <div class="row card shadow mb-3">
             <div class="card-header" style="font-size: 20px; font-weight:700;">
-                <i class="fas fa-chart-area"></i>
                 All Product
                 <router-link to="/store-product" class="btn btn-dark" id="add_new"> Add New</router-link>
             </div>
             <div class="card-body p-0 m-0">
                 <div class="card-body p-0 m-0">
-               
-                        <label class="d-inline">Search : </label>
-                        <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:200px;" placeholder="Search by name"><br><br>
+                        <div style="display: flex; justify-content: center; margin: 10px 0px;">
+                            <input type="text" v-model="searchTerm" class="form-control d-inline" style="width:50%;" placeholder="Search...">
+                        </div>
+                      
                         <table class="table table-bordered table-striped table-hover table-warning border-light" id="" width="100%" cellspacing="0">
 
                             <thead>
@@ -52,8 +52,8 @@
                                 <td>{{ product.ram }}</td>
                                 <td>{{ product.hard_drive}} {{ product.hard_drive_size }} {{ product.hard_drive_byte }}</td>
                                 <td>{{ product.os }} {{ product.os_version }}</td>
-                                <td>&#8369; &nbsp; &nbsp;{{ product.buying_price }} </td>
-                                <td>&#8369; &nbsp; &nbsp;{{ product.selling_price }}</td>
+                                <td>&#8369; &nbsp; &nbsp; {{ (Number(product.buying_price).toLocaleString() || 0)}}</td>
+                                <td>&#8369; &nbsp; &nbsp; {{ (Number(product.selling_price).toLocaleString() || 0)}}</td>
                                 <!-- <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.buying_price).toLocaleString() || 0)}}</td>
                                 <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.selling_price).toLocaleString() || 0)}}</td> -->
                                 <!-- <td>{{ product.root }}</td> -->
@@ -95,7 +95,19 @@
             filtersearch(){
                 return this.products.filter(product => {
                     //return product.product_name.match(this.searchTerm)
-                    return product.product_name.toLowerCase().match(this.searchTerm.toLowerCase())
+                    return product.product_name.toLowerCase().match(this.searchTerm.toLowerCase()) || 
+                    product.category_name.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.manufacturer.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.Processor.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    // product.ram.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.hard_drive.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    // product.hard_drive_size.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.hard_drive_byte.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.os.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    product.os_version.toLowerCase().match(this.searchTerm.toLowerCase()) 
+                    // product.buying_price.toLowerCase().match(this.searchTerm.toLowerCase()) ||
+                    // product.selling_price.toLowerCase().match(this.searchTerm.toLowerCase())
+
                 })
             }
         },

@@ -10,14 +10,14 @@
 
         <div class="row mb-4 noPrint">
             <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
-            <div class="card col-lg-6 shadow">
-                <div class="card-header flex">
+            <div class="col-lg-6 shadow">
+                <div class="card-header flex bg-light">
                     <!-- <i class="fas fa-chart-area"></i> -->
                     <b>Invoice #: {{ getRandomId }}</b>
                 </div>
 
                 <div class="card-body p-0 m-0">
-                    <table class="table table-sm table-striped">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col" style="text-align:left;">Item</th>
@@ -229,17 +229,17 @@
 
 
             <!--------------Right_Side_"Product"----------1st_task----------1----->
-            <div class="card col-lg-6 border-light">
-                <div class="card-header text-dark mb-4">
+            <div class="card col-lg-6 border-none pt-3">
+                <!-- <div class="card-header text-dark mb-4">
                     <i class="fas fa-chart-area"></i>
-                    <b>Products</b>
-                </div>
+                    <b>Product Items</b>
+                </div> -->
 
                 <div class="card-body p-0 m-0">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                                role="tab" aria-controls="pills-home" aria-selected="true">All Product</a>
+                                role="tab" aria-controls="pills-home" aria-selected="true">All Product Items</a>
                         </li>
 
                         <li class="nav-item" v-for="category in categories" :key="category.id">

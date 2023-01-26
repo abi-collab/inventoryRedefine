@@ -10,7 +10,6 @@
 
      <div class="row card shadow mb-3">
         <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
-          <i class="fas fa-chart-area"></i>
           Sold Items with Serial Numbers
         </div>
         <div class="card-body p-0 m-0">
@@ -18,8 +17,8 @@
             <div class="table-responsive">
               <div style="display: flex; justify-content: space-between; margin: 20px">
                 <div>
-                  <label class="d-inline">Search : </label>
-                  <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:500px;" placeholder="Enter Invoice Number or Serial Number">
+                  <!-- <label class="d-inline">Search : </label> -->
+                  <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:500px;" placeholder="Search Invoice Number or Serial Number">
                 </div>
                 <div style="display:flex; justify-content: end">
                     <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
@@ -53,7 +52,6 @@
                     </tbody>
                   </table>
                 </div>
-     
             </div>
               <!-------------- collapse ------------------>
              <br>
@@ -81,7 +79,6 @@
                     <td>{{returnName(item.created_by)}}</td>
                     <td>{{ returnStrtingDate(item.created_at) }}</td>
                     <td>{{ item.product_id }}</td>
-                    
                   </tr>
                 </tbody>
               </table>
@@ -114,8 +111,6 @@ import Cookies from 'js-cookie';
           axios.get('/api/users')
           .then(({data}) => (this.users = data, console.log('users', data)))
           .catch()
-
-          
       },
       data(){
         return{

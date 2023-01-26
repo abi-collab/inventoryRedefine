@@ -68,7 +68,7 @@
 
                       <button type="submit" class="btn btn-success">Update</button>
                   </form>
-                {{ form }}
+                <!-- {{ form }} -->
               </div>
               <div class="card-footer small text-muted"></div>
           </div>
@@ -102,12 +102,16 @@ import Cookies from 'js-cookie'; //1
       created(){                    //---for showing existing data in form to Edit/update
           let id = this.$route.params.user.id              //--taking id from route/url
           axios.get('/api/users/'+id)              //--targeting show() method
-              .then(({data}) => (
-                this.form.user_role = data[0].user_role,
-                this.form.username = data[0].username,
-                this.form.name = data[0].name,  
-                
-              this.oldName = this.form.name))
+              .then((data) => {
+                this.form.user_role = data.data.user_role,
+                this.form.username = data.data.username,
+                this.form.name = data.data.name,  
+              this.oldName = this.form.name;
+            
+              console.log('data',data);
+              console.log('id',id);
+            }
+              )
               .catch()
       },
       computed: { //3
@@ -136,13 +140,13 @@ import Cookies from 'js-cookie'; //1
           }
                                          //--updating process are here
               let id = this.$route.params.user.id                //--taking id from route/url
-              axios.patch('/api/Users/'+id,this.form)    //--patch will auto call update() mathod
+              axios.post('/api/users/'+id,this.form)    //--patch will auto call update() mathod
                   .then(() => {
                       this.$router.push({ name: 'Users' })
                       Notification.success();
                       axios.post('/api/activitylog',this.form2)  //5
                       .then((r) => {
-                          console.log('logssss',r)
+                          this.$router.push({ name:'/' });
                       })
                       .catch(error => this.errors = error.response.data.errors)
                       

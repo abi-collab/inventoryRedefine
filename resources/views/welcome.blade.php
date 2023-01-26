@@ -19,7 +19,7 @@
 
     <!-----------start_Top_Navbar----------->
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" id="topbar" v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true" style="display: none;"> <!-------------------->
-            <router-link class="navbar-brand" to="/home"> Inventory System </router-link>
+            <router-link class="navbar-brand" to="/home"> KYCC POS & Inventory</router-link>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </form> -->
-            <marquee class="text-white d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">Kuya  Allan Computer Center Sales and Inventory System</marquee>
+            <marquee class="text-white d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">Kuya Allan Computer Center Sales and Inventory System</marquee>
 
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
@@ -77,7 +77,7 @@
                             <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <!-- <router-link class="nav-link" to="/order">Today Order</router-link> -->
-                                    <router-link class="nav-link" to="/searchorder">Search</router-link>
+                                    <router-link class="nav-link" to="/searchorder">Purchased Orders</router-link>
                                     <router-link class="nav-link" to="/sold-items">Sold Items</router-link>
                                     <router-link class="nav-link" to="/return-items">In-Warranty</router-link>
                                 </nav>
@@ -202,8 +202,8 @@
                                 Stock
                             </router-link>
                             <router-link class="nav-link collapsed" to="/log" v-if="{{$_COOKIE['userNow']}} == 1">Audit Trail</router-link>
-                            <!-- <router-link class="nav-link collapsed" to="/users" v-if="{{$_COOKIE['userNow']}} == 1">Users</router-link>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1" >
+                            <router-link class="nav-link collapsed" to="/users" v-if="{{$_COOKIE['userNow']}} == 1">Users</router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1" >
                                 Archive
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>

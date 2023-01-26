@@ -10,7 +10,6 @@
         <!-- Icon Cards-->
         <div class="row card container-fluid shadow mb-3">
             <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
-                <i class="fas fa-chart-area"></i>
                 Stock
             </div>
             <div class="card-body p-0 m-0">

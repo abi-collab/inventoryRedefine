@@ -10,8 +10,7 @@
       <!-- Icon Cards-->
      <div class="row card shadow mb-3">
         <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
-          <i class="fas fa-chart-area"></i>
-          Logs
+          Audit Trail(Logs)
         </div>
         <div class="card-body p-0 m-0">
           <div class="card-body p-0 m-0">

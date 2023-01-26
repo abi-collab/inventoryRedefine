@@ -10,7 +10,6 @@
         <!-- Icon Cards-->
         <div class="row card container-fluid shadow">
             <div class="card-header" style="font-size: 20px; font-weight:700;">
-                <i class="fas fa-chart-area"></i>
                 All Supplier
                 <router-link to="/store-supplier" class="btn btn-dark" id="add_new"> Add New</router-link>
             </div>

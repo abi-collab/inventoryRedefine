@@ -10,9 +10,8 @@
       <!-- Icon Cards-->
       <div class="row card container-fluid shadow mb-3">  
           <div class="card-header" style="font-size: 20px; font-weight:700;">
-              <i class="fas fa-chart-area"></i>
               All Users
-              <router-link to="/store-user" class="btn btn-dark" id="add_new"> Users</router-link>  
+              <!-- <router-link to="/store-user" class="btn btn-dark" id="add_new"> Users</router-link>   -->
           </div>
           <div class="card-body p-0 m-0">   
               <div class="card-body p-0 m-0">
@@ -34,9 +33,12 @@
                           <tr v-for="user in filtersearch" :key="user.id">    
                               <td>{{ user.name }}</td>  
                               <td>{{ user.username }}</td>
-                              <td style="text-align: center;">{{ user.user_role }}</td>
+                              <td style="text-align: center;">
+                                <p v-if="user.user_role == 1">Admin</p>
+                                <p v-if="user.user_role == 2">Standard User</p>
+                                </td>
                               <td>
-                                  <router-link :to="{name: 'editUsers', params:{user: user} }" class="btn btn-sm btn-info">Edit</router-link>    
+                                  <router-link :to="{name: 'editUsers', params:{id: user.id, user: user} }" class="btn btn-sm btn-info">Edit</router-link>    
                                   <a @click="deleteuser(user.id)" class="btn btn-sm btn-danger text-white">Delete</a>
                               </td>
                           </tr>

@@ -10,7 +10,6 @@
         <!-- Icon Cards-->
        <div class="row card container ml-3 border-light shadow mb-3">
           <div class="card-header text-dark mb-4" style="font-size: 20px; font-weight:700;">
-            <i class="fas fa-chart-area"></i>
             All Expense
             <router-link to="/store-expense" class="btn btn-dark" id="add_new"> Add New</router-link>
           </div>
