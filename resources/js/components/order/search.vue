@@ -51,17 +51,19 @@
                             <thead class="noPrint">
                                 <tr class="bg-info text-white">
                                     <th>Invoice&nbsp;#</th>
+                                    <th>Order&nbsp;Date</th>
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Total Due</th>
-                                    <th>View</th>
+                                    <th>Option</th>
                                 </tr>
                             </thead>    
                             <tbody>
                                 <tr v-for="order in filterSearchWithDate.reverse()" :key="order.id">
                                     <td class="noPrint">{{ order.invoiceNum }}</td>
+                                    <td class="noPrint">{{ order.order_date }}</td>
                                     <td class="noPrint">{{ order.name }}</td>
-                                    <td class="noPrint" style="text-align: right;">{{ order.qty }}</td>
+                                    <td class="noPrint" style="text-align: center;">{{ order.qty }}</td>
                                     <td class="noPrint" style="text-align: right;">&#8369;&nbsp;
                                         {{(Number(order.sub_total).toLocaleString() || 0)}}</td>
                                     <td style="text-align: center;">
@@ -148,6 +150,7 @@ export default {
 
         this.month = monthName;
         this.searchMonth();
+        // this.searchDate();
 
     },
     mounted() {
@@ -243,13 +246,15 @@ export default {
         searchDate() {
             var data = { date: this.date }
             axios.post('/api/search/order', data)
-                .then(({ data }) => (this.orders = data))
+                .then(({ data }) => {this.orders = data;
+                console.log('serach order',data);})
                 .catch()
         },
         searchMonth() {
             var data = { month: this.month }
             axios.post('/api/search/month', data)
-                .then(({ data }) => (this.orders = data))
+                .then(({ data }) => {this.orders = data;
+                console.log('serach month order',data);})
         },
         ImgToModal(base64) {
             this.modalImg = base64;

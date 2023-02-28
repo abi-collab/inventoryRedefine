@@ -64,12 +64,12 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
-    public function SearchMonth(request $request){
-        $month = $request->month;
+    public function SearchMonth(request $request){ // I disable by month, so will display all
+        // $month = $request->month;
         $order = DB::table('orders')
                 ->join('customers','orders.customer_id','customers.id')
                 ->select('customers.name','orders.*')
-                ->where('orders.order_month',$month)
+                // ->where('orders.order_month',$month)
                 ->get();
 
         return response()->json($order);
