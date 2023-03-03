@@ -30,6 +30,7 @@ class ProductController extends Controller
             'product_name' => 'required|max:255',
             'category_id' => 'required',
             'selling_price' => 'required',
+            // 'product_quantity' => 'required',
 
             'manufacturer' => 'required',
             'connectivity' => 'required',
@@ -58,6 +59,8 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->selling_price = $request->selling_price;
             $product->image = $image_url;
+            $product->product_quantity = $request->product_quantity;
+
 
             $product->manufacturer = $request->manufacturer;
             $product->connectivity = $request->connectivity;
@@ -74,6 +77,7 @@ class ProductController extends Controller
             $product->product_name = $request->product_name;
             $product->category_id = $request->category_id;
             $product->selling_price = $request->selling_price;
+            $product->product_quantity = $request->product_quantity;
 
             $product->manufacturer = $request->manufacturer;
             $product->connectivity = $request->connectivity;
@@ -102,6 +106,7 @@ class ProductController extends Controller
             'product_name' => 'required|max:255',
             'category_id' => 'required',
             'selling_price' => 'required',
+            'product_quantity' => 'required',
 
             'manufacturer' => 'required',
             'connectivity' => 'required',
@@ -117,6 +122,7 @@ class ProductController extends Controller
         $data['product_name']=$request->product_name;
         $data['category_id']=$request->category_id;
         $data['selling_price']=$request->selling_price;
+        $data['product_quantity']=$request->product_quantity;
         
         $data['manufacturer']=$request->manufacturer;
         $data['connectivity']=$request->connectivity;

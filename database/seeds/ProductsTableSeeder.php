@@ -18,6 +18,7 @@ class ProductsTableSeeder extends Seeder
                     'category_id' => 1,
                     'selling_price' => 20000,
                     'image' => '',
+                    'product_quantity' => 0,
   
                     'manufacturer' => 'Asus',
                     'Processor' => 'Rogue Galaxy',
@@ -34,6 +35,7 @@ class ProductsTableSeeder extends Seeder
                     'category_id' => 1,
                     'selling_price' => 25000,
                     'image' => '',
+                    'product_quantity' => 0,
            
                     'manufacturer' => 'Lenovo',
                     'Processor' => 'Core i5',
@@ -50,6 +52,7 @@ class ProductsTableSeeder extends Seeder
                     'category_id' => 1,
                     'selling_price' => 31000,
                     'image' => '',
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'HP',
                     'Processor' => 'Ryzen 5',
@@ -66,6 +69,7 @@ class ProductsTableSeeder extends Seeder
                     'category_id' => 2,
                     'selling_price' => 35000,
                     'image' => '',
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Custom',
                     'Processor' => 'Ultra Dragon',
@@ -82,6 +86,7 @@ class ProductsTableSeeder extends Seeder
                     'category_id' => 3,
                     'selling_price' => 700,
                     'image' => '',
+                    'product_quantity' => 0,
 
                     'manufacturer' => 'Rapoo',
                     'Processor' => '',

@@ -229,7 +229,7 @@ export default {
                 // root: '', 
                 // supplier_id: '',
                 // buying_price: '',
-                // product_quantity: '',
+                product_quantity: '',
                 // buying_date: '',
                 manufacturer:'',
                 Processor:'',

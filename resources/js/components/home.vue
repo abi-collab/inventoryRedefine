@@ -115,8 +115,8 @@
         <apexchart width="100%" type="bar" :options="options" :series="sort"></apexchart>
     </div>
     <div class="col">
-        <h6 style="text-align: center;">Monthly Sales</h6>
-        <apexchart width="100%" type="line" :options="options2" :series="series"></apexchart>
+        <!-- <h6 style="text-align: center;">Monthly Sales</h6>
+        <apexchart width="100%" type="line" :options="options2" :series="series"></apexchart> -->
     </div>
 </div>
 
@@ -145,7 +145,7 @@
                             <thead>
                                 <tr class="bg-primary text-white">
                                     <th>Name</th>
-                                    <th>Code</th>
+                                    <!-- <th>Code</th> -->
                                     <th>Photo</th>
                                     <th>Status</th>
                                     <th>Available Product</th>
@@ -155,7 +155,7 @@
                             <tbody>
                                 <tr v-for="product in products" :key="product.id">
                                     <td>{{ product.product_name}}</td>
-                                    <td>{{ product.product_code}}</td>
+                                    <!-- <td>{{ product.product_code}}</td> -->
                                     <td><img :src="product.image" id="em_photo"></td>
                                     <td v-if="product.product_quantity >= 1"><span class="badge badge-success">Availble</span></td>
                                     <td v-else=""><span class="badge badge-danger">Stock Out</span></td>
@@ -168,7 +168,8 @@
             </div>
         </div>
     </div>
-</div>  <!------End_Stock_ Out_Products------>
+</div> 
+ <!------End_Stock_ Out_Products------>
     </div>  <!------End_total_<div>------>
 </template>
 

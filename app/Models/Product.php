@@ -11,6 +11,7 @@ class Product extends Model
         'product_name',
         'image',
         'selling_price',
+        'product_quantity',
 
         'manufacturer',
         'Processor',
