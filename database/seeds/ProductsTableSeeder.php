@@ -14,17 +14,11 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->insert(
             [
                 [   
-                    'category_id' => 1,
                     'product_name' => 'Asus Aspire',
-                    'product_code' => '090911',
-                    'root' => 'laptop',
-                    'buying_price' => 15000,
+                    'category_id' => 1,
                     'selling_price' => 20000,
-                    'supplier_id' => 2,
-                    'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 0,
-
+  
                     'manufacturer' => 'Asus',
                     'Processor' => 'Rogue Galaxy',
                     'ram' => 5,
@@ -36,17 +30,11 @@ class ProductsTableSeeder extends Seeder
                     'os_version' => '8'
                 ],
                 [   
-                    'category_id' => 1,
                     'product_name' => 'Lenovo ThinkAgain',
-                    'product_code' => '080811',
-                    'root' => 'laptop',
-                    'buying_price' => 16500,
+                    'category_id' => 1,
                     'selling_price' => 25000,
-                    'supplier_id' => 2,
-                    'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 0,
-
+           
                     'manufacturer' => 'Lenovo',
                     'Processor' => 'Core i5',
                     'ram' => 16,
@@ -58,16 +46,10 @@ class ProductsTableSeeder extends Seeder
                     'os_version' => '10'
                 ],
                 [   
-                    'category_id' => 1,
                     'product_name' => 'HP Ryzen 5',
-                    'product_code' => '070721',
-                    'root' => 'laptop',
-                    'buying_price' => 18500,
+                    'category_id' => 1,
                     'selling_price' => 31000,
-                    'supplier_id' => 2,
-                    'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 0,
 
                     'manufacturer' => 'HP',
                     'Processor' => 'Ryzen 5',
@@ -80,16 +62,10 @@ class ProductsTableSeeder extends Seeder
                     'os_version' => '10'
                 ],
                 [   
-                    'category_id' => 2,
                     'product_name' => 'Super Dragon Built Package ',
-                    'product_code' => '000021',
-                    'root' => 'pc built',
-                    'buying_price' => 28500,
+                    'category_id' => 2,
                     'selling_price' => 35000,
-                    'supplier_id' => 1,
-                    'buying_date' => '2022-11-5',
                     'image' => '',
-                    'product_quantity' => 0,
 
                     'manufacturer' => 'Custom',
                     'Processor' => 'Ultra Dragon',
@@ -102,16 +78,10 @@ class ProductsTableSeeder extends Seeder
                     'os_version' => '11'
                 ],
                 [   
-                    'category_id' => 3,
                     'product_name' => 'Rapoo Gaming Mouse',
-                    'product_code' => '01111',
-                    'root' => 'pc component',
-                    'buying_price' => 500,
+                    'category_id' => 3,
                     'selling_price' => 700,
-                    'supplier_id' => 3,
-                    'buying_date' => '2022-11-6',
                     'image' => '',
-                    'product_quantity' => 0,
 
                     'manufacturer' => 'Rapoo',
                     'Processor' => '',

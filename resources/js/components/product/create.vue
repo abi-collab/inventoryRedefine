@@ -46,7 +46,7 @@
                                     <div class="form-label-group">
                                         <label>Manufacturer/Brand</label>
                                         <input type="text" v-model="form.manufacturer" class="form-control" required placeholder="Enter Brand">
-                                        <small class="text-danger" v-if="errors.root">{{ errors.root[0] }}</small>
+                                        <!-- <small class="text-danger" v-if="errors.root">{{ errors.root[0] }}</small> -->
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-6">
@@ -64,9 +64,9 @@
                                     <div class="form-label-group">
                                         <label>Processor</label>
                                         <input type="text"  v-model="form.Processor"  class="form-control" required placeholder="Processor">
-                                        <small class="text-danger" v-if="errors.buying_price">{{
+                                        <!-- <small class="text-danger" v-if="errors.buying_price">{{
                                             errors.buying_price[0]
-                                        }}</small>
+                                        }}</small> -->
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -222,16 +222,15 @@ export default {
         return {
             form: {
                 product_name: '',
-                product_code: '',
                 category_id: '',
-                supplier_id: '',
-                root: '',
-                buying_price: '',
                 selling_price: '',
-                buying_date: '',
                 image: '',
-                product_quantity: '',
-
+                // product_code: '', 
+                // root: '', 
+                // supplier_id: '',
+                // buying_price: '',
+                // product_quantity: '',
+                // buying_date: '',
                 manufacturer:'',
                 Processor:'',
                 ram:0,

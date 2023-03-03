@@ -16,8 +16,8 @@ class ProductController extends Controller
     {
         $product=DB::table('products')
             ->join('categories','products.category_id','categories.id')
-            ->join('suppliers','products.supplier_id','suppliers.id')
-            ->select('categories.category_name','suppliers.name','products.*')
+            // ->join('suppliers','products.supplier_id','suppliers.id')
+            ->select('categories.category_name','products.*')
             ->orderBy('products.id','DESC')
             ->get();
         return response()->json($product);
@@ -28,14 +28,19 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'product_name' => 'required|max:255',
-            'product_code' => 'required|unique:products|max:255',
             'category_id' => 'required',
-            'supplier_id' => 'required',
-            'buying_price' => 'required',
-            'root' => 'required',
             'selling_price' => 'required',
-            'buying_date' => 'required',
-            'product_quantity' => 'required',
+
+            'manufacturer' => 'required',
+            'connectivity' => 'required',
+            'Processor' => 'required',
+            'ram' => 'required',
+            'hard_drive' => 'required',
+            'hard_drive_size' => 'required',
+            'hard_drive_byte' => 'required',
+            'os' => 'required',
+            'os_version' => 'required',
+
         ]);
 
         if($request->image){
@@ -50,27 +55,35 @@ class ProductController extends Controller
 
             $product = new Product;
             $product->product_name = $request->product_name;
-            $product->product_code = $request->product_code;
             $product->category_id = $request->category_id;
-            $product->supplier_id = $request->supplier_id;
-            $product->buying_price = $request->buying_price;
-            $product->root = $request->root;
             $product->selling_price = $request->selling_price;
-            $product->buying_date = $request->buying_date;
-            $product->product_quantity = $request->product_quantity;
-            $product->image =  $image_url;
+            $product->image = $image_url;
+
+            $product->manufacturer = $request->manufacturer;
+            $product->connectivity = $request->connectivity;
+            $product->Processor = $request->Processor;
+            $product->ram = $request->ram;
+            $product->hard_drive = $request->hard_drive;
+            $product->hard_drive_size = $request->hard_drive_size;
+            $product->hard_drive_byte = $request->hard_drive_byte;
+            $product->os = $request->os;
+            $product->os_version = $request->os_version;
             $product->save();
         }else{
             $product = new Product;
             $product->product_name = $request->product_name;
-            $product->product_code = $request->product_code;
             $product->category_id = $request->category_id;
-            $product->supplier_id = $request->supplier_id;
-            $product->root = $request->root;
-            $product->buying_price = $request->buying_price;
             $product->selling_price = $request->selling_price;
-            $product->buying_date = $request->buying_date;
-            $product->product_quantity = $request->product_quantity;
+
+            $product->manufacturer = $request->manufacturer;
+            $product->connectivity = $request->connectivity;
+            $product->Processor = $request->Processor;
+            $product->ram = $request->ram;
+            $product->hard_drive = $request->hard_drive;
+            $product->hard_drive_size = $request->hard_drive_size;
+            $product->hard_drive_byte = $request->hard_drive_byte;
+            $product->os = $request->os;
+            $product->os_version = $request->os_version;
             $product->save();
         }
     }
@@ -87,25 +100,33 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'product_name' => 'required|max:255',
-            'product_code' => 'required|max:255',
             'category_id' => 'required',
-            'supplier_id' => 'required',
-            'buying_price' => 'required',
-            'root' => 'required',
             'selling_price' => 'required',
-            'product_quantity' => 'required',
-        ]);
 
+            'manufacturer' => 'required',
+            'connectivity' => 'required',
+            'Processor' => 'required',
+            'ram' => 'required',
+            'hard_drive' => 'required',
+            'hard_drive_size' => 'required',
+            'hard_drive_byte' => 'required',
+            'os' => 'required',
+            'os_version' => 'required',
+        ]);
         $data=array();
         $data['product_name']=$request->product_name;
-        $data['product_code']=$request->product_code;
         $data['category_id']=$request->category_id;
-        $data['supplier_id']=$request->supplier_id;
-        $data['root']=$request->root;
-        $data['buying_price']=$request->buying_price;
         $data['selling_price']=$request->selling_price;
-        $data['buying_date']=$request->buying_date;
-        $data['product_quantity']=$request->product_quantity;
+        
+        $data['manufacturer']=$request->manufacturer;
+        $data['connectivity']=$request->connectivity;
+        $data['ram']=$request->ram;
+        $data['hard_drive']=$request->hard_drive;
+        $data['hard_drive_size']=$request->hard_drive_size;
+        $data['hard_drive_byte']=$request->hard_drive_byte;
+        $data['os']=$request->os;
+        $data['os_version']=$request->os_version;
+
         $image=$request->newphoto;
         if ($image) {
             $position = strpos($image, ';');

@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody> <!------Expense_Insert_Table(Top_Left)--------->
-                            <tr v-for="card in cards" :key="card.id"> <!-------pos_table---------3----->
+                            <tr v-for="card in cards"> <!-------pos_table---------3----->
                                 <th style="text-align:left;">{{ card.pro_name }}</th>
                                 <td style="display: flex;align-items: center;justify-content: space-between;">
                                     <button @click.prevent="decrement(card)" class="btn btn-sm btn-danger"
@@ -242,7 +242,7 @@
                                 role="tab" aria-controls="pills-home" aria-selected="true">All Product Items</a>
                         </li>
 
-                        <li class="nav-item" v-for="category in categories" :key="category.id">
+                        <li class="nav-item" v-for="category in categories">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
                                 role="tab" aria-controls="pills-profile" aria-selected="false"
                                 @click="subproduct(category.id)">{{ category.category_name }}</a>
@@ -257,7 +257,7 @@
                                 placeholder="Search here..."><br>
                             <div class="row">
                                 <!-- class="col-lg-3 col-md-4 col-sm-6 col-6" -->
-                                <div v-for="product in filtersearch" :key="product.id">
+                                <div v-for="product in filtersearch">
                                     <button v-if="product.product_quantity >= 1" class="btn btn-sm productCard"
                                         @click.prevent="AddToCart(product)"> <!--------3------->
                                         <div class="card" style="width: 9rem; height: 210px;">
@@ -310,8 +310,7 @@
                             <input type="text" v-model="getsearchTerm" class="form-control"
                                 placeholder="Search here..."><br>
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="getproduct in getfiltersearch"
-                                    :key="getproduct.id">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="getproduct in getfiltersearch">
                                     <button v-if="getproduct.product_quantity >= 1" class="btn btn-sm"
                                         @click.prevent="AddToCart(getproduct.id)">
                                         <div class="card" style="width: 9rem; height: 180px;">
@@ -389,7 +388,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="card in cards" :key="card.id">
+                                <tr v-for="card in cards">
                                     <th style="text-align:left;">{{ card.pro_name }}</th>
                                     <td>{{ card.pro_quantity }}</td>
                                     <td>

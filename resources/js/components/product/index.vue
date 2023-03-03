@@ -33,7 +33,7 @@
                                 <th>RAM</th>
                                 <th>Hard Drive</th>
                                 <th>OS</th>
-                                <th>Buying Price</th>
+                                <!-- <th>Buying Price</th> -->
                                 <th>Selling Price</th>
                                 <!-- <th>Root</th> -->
                                 <th>Action</th>
@@ -41,7 +41,7 @@
                             </thead>
 
                             <tbody>
-                            <tr v-for="product in filtersearch" :key="product.id">
+                            <tr v-for="product in filtersearch">
                                 <td>{{ product.product_name }}</td>
                                 <!-- <td>{{ product.product_code}}</td> -->
                                 <td><img :src="product.image" id="em_photo"></td>
@@ -52,7 +52,7 @@
                                 <td>{{ product.ram }}</td>
                                 <td>{{ product.hard_drive}} {{ product.hard_drive_size }} {{ product.hard_drive_byte }}</td>
                                 <td>{{ product.os }} {{ product.os_version }}</td>
-                                <td>&#8369; &nbsp; &nbsp; {{ (Number(product.buying_price).toLocaleString() || 0)}}</td>
+                                <!-- <td>&#8369; &nbsp; &nbsp; {{ (Number(product.buying_price).toLocaleString() || 0)}}</td> -->
                                 <td>&#8369; &nbsp; &nbsp; {{ (Number(product.selling_price).toLocaleString() || 0)}}</td>
                                 <!-- <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.buying_price).toLocaleString() || 0)}}</td>
                                 <td style="display:flex; justify-content: space-between;"><p>&#8369;</p>  {{ (Number(product.selling_price).toLocaleString() || 0)}}</td> -->

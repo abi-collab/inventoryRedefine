@@ -8,15 +8,9 @@ class Product extends Model
 {
     protected $fillable = [
         'category_id', 
-        'supplier_id', 
         'product_name',
-        'product_code',
-        'root',
         'image',
-        'buying_price',
         'selling_price',
-        'buying_date',
-        'product_quantity',
 
         'manufacturer',
         'Processor',
@@ -24,8 +18,8 @@ class Product extends Model
         'connectivity',
         'hard_drive',
         'hard_drive_size',
+        'hard_drive_byte',
         'os',
         'os_version'
-
     ];
 }
