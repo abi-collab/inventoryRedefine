@@ -74,7 +74,7 @@ class PosController extends Controller
     public function TodayIncome()
     {
         $date = date('m/d/Y');
-        $income = DB::table("orders")->where('order_date',$date)->sum('pay');
+        $income = DB::table("orders")->where('order_date',$date)->sum('sub_total');
         return response()->json($income);
     }
 
