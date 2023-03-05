@@ -124,9 +124,7 @@
     <apexchart width="500" type="donut" :options="options2" :series="series2"></apexchart>
 </div> -->
 <!---------------------------- Apex Charts -------------------------->
-
 <!------Stock_Out_Products------>
-
 <div class="row">
     <div class="col-xl-12">
         <div class="card border-none">
