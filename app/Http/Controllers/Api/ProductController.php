@@ -34,13 +34,13 @@ class ProductController extends Controller
 
             'manufacturer' => 'required',
             'connectivity' => 'required',
-            'Processor' => 'required',
-            'ram' => 'required',
-            'hard_drive' => 'required',
-            'hard_drive_size' => 'required',
-            'hard_drive_byte' => 'required',
-            'os' => 'required',
-            'os_version' => 'required',
+            // 'Processor' => 'required',
+            //'ram' => 'required',
+            //'hard_drive' => 'required',
+            //'hard_drive_size' => 'required',
+            //'hard_drive_byte' => 'required',
+            //'os' => 'required',
+            //'os_version' => 'required',
 
         ]);
 

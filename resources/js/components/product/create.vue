@@ -61,13 +61,11 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-label-group">
+                                    <!-- <div class="form-label-group">
                                         <label>Processor</label>
                                         <input type="text"  v-model="form.Processor"  class="form-control" required placeholder="Processor">
-                                        <!-- <small class="text-danger" v-if="errors.buying_price">{{
-                                            errors.buying_price[0]
-                                        }}</small> -->
-                                    </div>
+                                     
+                                    </div> -->
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-label-group">
@@ -140,7 +138,7 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <div class="input-group mb-3">
+                                    <!-- <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Hard Drive Type</span>
                                         </div>
@@ -156,7 +154,7 @@
                                                 <option value="TB">TB</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group mb-3">
