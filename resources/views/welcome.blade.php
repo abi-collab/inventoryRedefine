@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="csrf-token" content="{{ csrf_token() }}">   <!--this is for 'error free console'/(vue_devTool)-->
-        <title>Kuya Allan Computer Center</title>
+        <title>Sales & Inventory System</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">   <!--must be linked at the Top of All other CSS_files-->
         <link href="{{ asset('backend/css/styles.css') }}" rel="stylesheet" />
@@ -85,7 +85,7 @@
                             </div>
 
                     <!--------------Employee----------->
-                            <!-- <router-link class="nav-link" to="/employee" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <!-- <router-link class="nav-link" to="/employee" v-if="true == 1">
                               
                                 Employees 
                             </router-link> -->
@@ -102,7 +102,7 @@
                                 </nav>
                             </div> -->
                     <!--------------Supplier----------->
-                            <router-link class="nav-link" to="/supplier" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link" to="/supplier" v-if="true">
                                 Suppliers
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
@@ -116,9 +116,8 @@
                                     <router-link class="nav-link" to="/supplier">All Supplier</router-link>
                                 </nav>
                             </div> -->
-
                     <!--------------Categories----------->
-                            <!-- <router-link class="nav-link" to="/category" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <!-- <router-link class="nav-link" to="/category" v-if="userNow == 1">
                                 Categories
                             </router-link> -->
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
@@ -134,7 +133,7 @@
                             </div> -->
 
                     <!--------------Product----------->
-                            <router-link class="nav-link" to="/product" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link" to="/product" v-if="true">
                                 Products
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -166,7 +165,7 @@
                             </div> -->
 
                     <!--------------Expense----------->
-                            <router-link class="nav-link" to="/expense" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link" to="/expense" v-if="true">
                                 Expenses
                             </router-link>
                             <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts" >
@@ -182,10 +181,10 @@
                             </div> -->
 
                     <!--------------Salary----------->
-                            <!-- <router-link class="nav-link" to="/salary" v-if="{{$_COOKIE['userNow']}} == 1" >
+                            <!-- <router-link class="nav-link" to="/salary" v-if="userNow == 1" >
                                 Salary
                             </router-link> -->
-                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts"  v-if="{{$_COOKIE['userNow']}} == 1" >
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts"  v-if="userNow == 1" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Salary
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -198,13 +197,13 @@
                             </div> -->
 
                     <!--------------Stock----------->
-                            <router-link class="nav-link collapsed" to="/stock" v-if="{{$_COOKIE['userNow']}} == 1">
+                            <router-link class="nav-link collapsed" to="/stock" v-if="true">
                                 <!-- <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div> -->
                                 Stock
                             </router-link>
-                            <router-link class="nav-link collapsed" to="/log" v-if="{{$_COOKIE['userNow']}} == 1">Audit Trail</router-link>
-                            <router-link class="nav-link collapsed" to="/users" v-if="{{$_COOKIE['userNow']}} == 1">Users</router-link>
-                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="{{$_COOKIE['userNow']}} == 1" >
+                            <router-link class="nav-link collapsed" to="/log" v-if="true">Audit Trail</router-link>
+                            <router-link class="nav-link collapsed" to="/users" v-if="true">Users</router-link>
+                            <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="false" aria-controls="collapseLayouts" v-if="userNow == 1" >
                                 Archive
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
