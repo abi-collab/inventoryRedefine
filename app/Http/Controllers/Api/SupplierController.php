@@ -106,10 +106,9 @@ class SupplierController extends Controller
         $supplier = DB::table('suppliers')->where('id',$id)->first();
         $photo = $supplier->photo;
         if ($photo) {
-            unlink($photo);
-            DB::table('suppliers')->where('id',$id)->delete();
-        }else{
-            DB::table('suppliers')->where('id',$id)->delete();
+            @unlink($photo);
         }
+        DB::table('suppliers')->where('id',$id)->delete();
+        \App\Support\RecordsTombstone::for('suppliers', $id);
     }
 }

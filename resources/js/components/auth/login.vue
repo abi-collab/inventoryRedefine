@@ -37,7 +37,7 @@
             </div>
             <div class="card-footer text-center">
                 <div class="">
-                    <router-link to="/register">Need an account? Sign up!</router-link>
+                    <small class="text-muted">Accounts are created by an administrator.</small>
                 </div>
             </div>
         </div>
@@ -47,50 +47,46 @@
     </div>
 </template>
 
-<script> 
-import Cookies from 'js-cookie';           //-------------------------------------------
-    export default {
-        created(){                  //--will load created() before others
-            if(User.loggedIn()){
-                this.$router.push({name : 'home'})      // or, //this.$router.push('/home')
-            }
-        },
+<script>
+import { useAuthStore } from '../../store/auth';
 
-        data(){
-            return{
-                form:{
-                    username: null,        //--OR-- ''(blank)---
-                    password: null
-                },
-                errors:{}
-            }
-        },
-        methods:{
-            login(){
-                axios.post('/api/auth/login',this.form)
-                //.then(response => console.log(response.data))   //--here,(token+other's_info) situated in 'data' property
-                .then(response => {
-                    Cookies.set('userNow', response.data.user_role, { expires: 7 });
-                    Cookies.set('userId', response.data.user_id);
-                    Cookies.set('usersname', response.data.name);
-                    User.responseAfterLogin(response)
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Signed in Successfully'
-                    })
-                    this.$router.push({name:'home'})    // or, //this.$router.push('/home')
+export default {
+    created(){
+        if(User.loggedIn()){
+            this.$router.push({name : 'home'})
+        }
+    },
+
+    data(){
+        return{
+            form:{
+                username: null,
+                password: null
+            },
+            errors:{}
+        }
+    },
+    methods:{
+        login(){
+            axios.post('/api/auth/login',this.form)
+            .then(response => {
+                useAuthStore().applyLoginResponse(response)
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Signed in Successfully'
                 })
-                //.catch(error => console.log(error.response.data))
-                .catch(error => {
-                    this.errors = error.response.data.errors
-                    Toast.fire({
-                        icon: 'warning',
-                        title: 'Email or Password Invalid!!!'
-                    })
+                this.$router.push({name:'home'})
+            })
+            .catch(error => {
+                this.errors = error.response?.data?.errors || {}
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Email or Password Invalid!!!'
                 })
-            }
+            })
         }
     }
+}
 </script>
 
 

@@ -76,7 +76,6 @@ class SyncToSupabase extends Command
             try {
                 $rows = $this->syncTable($table, $full, $chunk);
                 $this->info("Synced {$table}: {$rows} row(s)");
-                $this->markCheckpoint($table, 'ok', null, $rows);
             } catch (Throwable $e) {
                 $ok = false;
                 $this->error("Failed {$table}: {$e->getMessage()}");
@@ -86,6 +85,16 @@ class SyncToSupabase extends Command
                 ]);
                 $this->markCheckpoint($table, 'error', $e->getMessage(), 0);
             }
+        }
+
+        try {
+            $deleted = $this->syncTombstones();
+            $this->info("Processed tombstones: {$deleted} delete(s)");
+        } catch (Throwable $e) {
+            $ok = false;
+            $this->error('Tombstone sync failed: '.$e->getMessage());
+            Log::error('sync:supabase tombstones failed', ['error' => $e->getMessage()]);
+            $this->markCheckpoint('_tombstones', 'error', $e->getMessage(), 0);
         }
 
         return $ok ? self::SUCCESS : self::FAILURE;
@@ -116,15 +125,20 @@ class SyncToSupabase extends Command
 
         $total = 0;
         $maxId = $checkpoint->last_id ?? null;
-        $syncedAt = now();
+        $latestUpdatedAt = $since;
 
-        $query->chunkById($chunkSize, function ($rows) use ($table, &$total, &$maxId) {
+        $query->chunkById($chunkSize, function ($rows) use ($table, &$total, &$maxId, &$latestUpdatedAt) {
             $payload = [];
             foreach ($rows as $row) {
                 $data = (array) $row;
-                // Keep password hashes for admin recovery on cloud; never log them.
+                if ($table === 'users') {
+                    unset($data['password'], $data['remember_token']);
+                }
                 $payload[] = $data;
                 $maxId = max((int) $maxId, (int) $row->id);
+                if (isset($row->updated_at) && ($latestUpdatedAt === null || $row->updated_at > $latestUpdatedAt)) {
+                    $latestUpdatedAt = $row->updated_at;
+                }
             }
 
             if ($payload === []) {
@@ -133,31 +147,93 @@ class SyncToSupabase extends Command
 
             DB::connection('supabase')->transaction(function () use ($table, $payload) {
                 foreach ($payload as $row) {
+                    $updateCols = array_values(array_diff(array_keys($row), ['id']));
+                    if ($updateCols === []) {
+                        continue;
+                    }
                     DB::connection('supabase')->table($table)->upsert(
                         $row,
                         ['id'],
-                        array_values(array_diff(array_keys($row), ['id']))
+                        $updateCols
                     );
                 }
             });
 
             $total += count($payload);
+
+            // Checkpoint after each successful chunk so a later failure does not skip unsynced rows.
+            DB::table('sync_checkpoints')->updateOrInsert(
+                ['table_name' => $table],
+                [
+                    'last_synced_at' => $latestUpdatedAt ?? now(),
+                    'last_id' => $maxId,
+                    'status' => 'ok',
+                    'error' => null,
+                    'rows_synced' => $total,
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]
+            );
         });
 
+        if ($total === 0) {
+            $this->markCheckpoint($table, 'ok', null, 0);
+        }
+
+        return $total;
+    }
+
+    protected function syncTombstones(): int
+    {
+        if (! Schema::hasTable('sync_tombstones')) {
+            return 0;
+        }
+
+        $checkpoint = DB::table('sync_checkpoints')->where('table_name', '_tombstones')->first();
+        $since = $checkpoint?->last_synced_at;
+
+        $query = DB::table('sync_tombstones')->orderBy('id');
+        if ($since) {
+            $query->where('deleted_at', '>', $since);
+        }
+
+        $processed = 0;
+        $maxDeletedAt = $since;
+        $idsToClear = [];
+
+        $query->chunkById(100, function ($rows) use (&$processed, &$maxDeletedAt, &$idsToClear) {
+            foreach ($rows as $row) {
+                if (Schema::connection('supabase')->hasTable($row->table_name)) {
+                    DB::connection('supabase')->table($row->table_name)
+                        ->where('id', $row->record_id)
+                        ->delete();
+                }
+                $idsToClear[] = $row->id;
+                $processed++;
+                if ($maxDeletedAt === null || $row->deleted_at > $maxDeletedAt) {
+                    $maxDeletedAt = $row->deleted_at;
+                }
+            }
+        });
+
+        if ($idsToClear !== []) {
+            DB::table('sync_tombstones')->whereIn('id', $idsToClear)->delete();
+        }
+
         DB::table('sync_checkpoints')->updateOrInsert(
-            ['table_name' => $table],
+            ['table_name' => '_tombstones'],
             [
-                'last_synced_at' => $syncedAt,
-                'last_id' => $maxId,
+                'last_synced_at' => $maxDeletedAt ?? now(),
+                'last_id' => null,
                 'status' => 'ok',
                 'error' => null,
-                'rows_synced' => $total,
+                'rows_synced' => $processed,
                 'updated_at' => now(),
                 'created_at' => $checkpoint->created_at ?? now(),
             ]
         );
 
-        return $total;
+        return $processed;
     }
 
     protected function markCheckpoint(string $table, string $status, ?string $error, int $rows): void

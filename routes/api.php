@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('signup', [AuthController::class, 'signup']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
     Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
     Route::post('me', [AuthController::class, 'me'])->middleware('auth:api');
@@ -52,11 +51,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/cart/remove/{id}', [CartController::class, 'removeCart']);
     Route::post('/cart/increment/{id}', [CartController::class, 'Increment']);
     Route::post('/cart/decrement/{id}', [CartController::class, 'Decrement']);
-    // Legacy GET cart routes (compat during frontend migration)
-    Route::get('/addTocart/{id}', [CartController::class, 'AddToCart']);
-    Route::get('/remove/cart/{id}', [CartController::class, 'removeCart']);
-    Route::get('/increment/{id}', [CartController::class, 'Increment']);
-    Route::get('/decrement/{id}', [CartController::class, 'Decrement']);
     Route::get('/vats', [CartController::class, 'Vats']);
 
     Route::post('/orderdone', [PosController::class, 'OrderDone']);
@@ -77,9 +71,15 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/activitylog', [ActivitylogController::class, 'savelog']);
     Route::get('/activitylog', [ActivitylogController::class, 'getlog']);
 
-    Route::get('/users', [UserController::class, 'getUsers']);
-    Route::get('/users/{id}', [UserController::class, 'getTheUser']);
-    Route::post('/users/{id}', [UserController::class, 'updateUser']);
+    Route::middleware('role.admin')->group(function () {
+        Route::get('/users', [UserController::class, 'getUsers']);
+        Route::post('/users', [UserController::class, 'store']);
+        Route::get('/users/{id}', [UserController::class, 'getTheUser']);
+        Route::post('/users/{id}', [UserController::class, 'updateUser']);
+        Route::post('/sync/now', [SyncStatusController::class, 'syncNow']);
+    });
+
+    Route::get('/sync/status', [SyncStatusController::class, 'status']);
 
     Route::post('/serials', [SerialsController::class, 'saveSerials']);
     Route::get('/serials', [SerialsController::class, 'getSerials']);
@@ -91,7 +91,4 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/saveSerialNumbers', [SerialnumbersController::class, 'saveSerialNumbers']);
     Route::get('/productSerials/{id}', [SerialnumbersController::class, 'getProductSerials']);
     Route::patch('/productSerials/{id}', [SerialnumbersController::class, 'SerialNumberUpdate']);
-
-    Route::get('/sync/status', [SyncStatusController::class, 'status']);
-    Route::post('/sync/now', [SyncStatusController::class, 'syncNow']);
 });

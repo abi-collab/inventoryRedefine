@@ -137,14 +137,16 @@
 // import $ from 'jquery'; 
 import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
-import moment from 'moment'
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 export default {
     created() {
         let dateNow = new Date();
         let month = dateNow.getMonth() + 1;
-        let monthName = moment(month, "MM-DD-YYYY")
-            .format('MMMM')
+        let monthName = dayjs(String(month).padStart(2, '0'), 'MM').format('MMMM');
 
         this.month = monthName;
         this.searchMonth();

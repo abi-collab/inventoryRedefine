@@ -2,84 +2,136 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-
-    public function AddToCart(Request $request,$id)
+    protected function cartQuery()
     {
-        $product = DB::table('products')->where('id',$id)->first();
+        return DB::table('pos')->where('user_id', auth()->id());
+    }
 
-        $check = DB::table('pos')->where('pro_id',$id)->first();
+    protected function ownedCartRow(int $id)
+    {
+        return $this->cartQuery()->where('id', $id)->first();
+    }
+
+    public function AddToCart(Request $request, $id)
+    {
+        $userId = auth()->id();
+        $product = DB::table('products')->where('id', $id)->first();
+
+        if (! $product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $check = $this->cartQuery()->where('pro_id', $id)->first();
 
         if ($check) {
-            $increment = DB::table('pos')->where('pro_id',$id)->increment('pro_quantity');
+            $available = (int) $product->product_quantity;
+            if ((int) $check->pro_quantity >= $available) {
+                return response()->json(['error' => 'Quantity exceeds available stock'], 422);
+            }
 
-            $pos = DB::table('pos')->where('pro_id',$id)->first();
+            $this->cartQuery()->where('pro_id', $id)->increment('pro_quantity');
+            $pos = $this->cartQuery()->where('pro_id', $id)->first();
             $subtotal = $pos->pro_quantity * $pos->product_price;
-            DB::table('pos')->where('pro_id',$id)->update(['sub_total' => $subtotal]);
+            $this->cartQuery()->where('pro_id', $id)->update([
+                'sub_total' => $subtotal,
+                'updated_at' => now(),
+            ]);
+        } else {
+            if ((int) $product->product_quantity < 1) {
+                return response()->json(['error' => 'Product is out of stock'], 422);
+            }
 
-        }else{
-            $data = array();
-            $data['pro_id']=$id;
-            $data['pro_name']=$product->product_name;
-            $data['pro_quantity']= 1;
-            $data['product_price']=$product->selling_price;
-            $data['sub_total']=$product->selling_price;
-            DB::table('pos')->insert($data);
+            DB::table('pos')->insert([
+                'user_id' => $userId,
+                'pro_id' => $id,
+                'pro_name' => $product->product_name,
+                'pro_quantity' => 1,
+                'product_price' => $product->selling_price,
+                'sub_total' => $product->selling_price,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
+
         return response()->json('done');
     }
-//----------------------------------------------------------
 
     public function CartProduct()
     {
-        // ->join('products','products.id', '=', 'pos.pro_id')
-        $cart=DB::table('pos')->get();
+        $cart = $this->cartQuery()->orderBy('id')->get();
+
         return response()->json($cart);
     }
-//----------------------------------------------------------
 
-    public function removeCart($id){
-        DB::table('pos')->where('id',$id)->delete();
+    public function removeCart($id)
+    {
+        $row = $this->ownedCartRow((int) $id);
+        if (! $row) {
+            return response()->json(['error' => 'Cart item not found'], 404);
+        }
+
+        $this->cartQuery()->where('id', $id)->delete();
+
         return response('done');
     }
-//----------------------------------------------------------
 
     public function Increment($id)
     {
-        $quantity=DB::table('pos')->where('id',$id)->increment('pro_quantity');
+        $row = $this->ownedCartRow((int) $id);
+        if (! $row) {
+            return response()->json(['error' => 'Cart item not found'], 404);
+        }
 
-        $product=DB::table('pos')->where('id',$id)->first();
+        $product = DB::table('products')->where('id', $row->pro_id)->first();
+        if ($product && (int) $row->pro_quantity >= (int) $product->product_quantity) {
+            return response()->json(['error' => 'Quantity exceeds available stock'], 422);
+        }
 
-        $subtotal=$product->pro_quantity * $product->product_price;
-
-        DB::table('pos')->where('id',$id)->update(['sub_total' => $subtotal]);
+        $this->cartQuery()->where('id', $id)->increment('pro_quantity');
+        $productRow = $this->ownedCartRow((int) $id);
+        $subtotal = $productRow->pro_quantity * $productRow->product_price;
+        $this->cartQuery()->where('id', $id)->update([
+            'sub_total' => $subtotal,
+            'updated_at' => now(),
+        ]);
 
         return response('done');
     }
-//----------------------------------------------------------
 
     public function decrement($id)
     {
-        $quantity=DB::table('pos')->where('id',$id)->decrement('pro_quantity');
+        $row = $this->ownedCartRow((int) $id);
+        if (! $row) {
+            return response()->json(['error' => 'Cart item not found'], 404);
+        }
 
-        $product=DB::table('pos')->where('id',$id)->first();
+        if ((int) $row->pro_quantity <= 1) {
+            $this->cartQuery()->where('id', $id)->delete();
 
-        $subtotal=$product->pro_quantity * $product->product_price;
+            return response('done');
+        }
 
-        DB::table('pos')->where('id',$id)->update(['sub_total' => $subtotal]);
+        $this->cartQuery()->where('id', $id)->decrement('pro_quantity');
+        $productRow = $this->ownedCartRow((int) $id);
+        $subtotal = $productRow->pro_quantity * $productRow->product_price;
+        $this->cartQuery()->where('id', $id)->update([
+            'sub_total' => $subtotal,
+            'updated_at' => now(),
+        ]);
 
         return response('done');
     }
-//----------------------------------------------------------
 
     public function Vats()
     {
-        $vat=DB::table('extras')->first();
+        $vat = DB::table('extras')->first();
+
         return response()->json($vat);
     }
 }

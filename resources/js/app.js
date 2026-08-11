@@ -14,6 +14,7 @@ import { routes } from './routes';
 import AppShell from './AppShell.vue';
 import User from './helpers/User';
 import Notification from './helpers/Notification';
+import { useAuthStore } from './store/auth';
 
 window.User = User;
 window.Notification = Notification;
@@ -35,13 +36,31 @@ window.Toast = Swal.mixin({
     timerProgressBar: true,
 });
 
+const pinia = createPinia();
+const app = createApp(AppShell);
+app.use(pinia);
+
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
 
-const app = createApp(AppShell);
-app.use(createPinia());
+const authPages = new Set(['/', 'register', 'forget']);
+
+router.beforeEach((to, from, next) => {
+    const isAuthPage = authPages.has(to.name) || authPages.has(to.path);
+    const auth = useAuthStore(pinia);
+    if (!isAuthPage && !auth.isLoggedIn && !User.loggedIn()) {
+        next({ name: '/' });
+        return;
+    }
+    if ((to.name === 'users' || to.name === 'editUsers') && !auth.isAdmin) {
+        next({ name: 'home' });
+        return;
+    }
+    next();
+});
+
 app.use(router);
 app.use(VueApexCharts);
 app.use(htmlToPaper);

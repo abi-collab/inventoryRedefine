@@ -110,10 +110,9 @@ class CustomerController extends Controller
         $customer=DB::table('customers')->where('id',$id)->first();
         $photo=$customer->photo;
         if ($photo) {
-            unlink($photo);
-            DB::table('customers')->where('id',$id)->delete();
-        }else{
-            DB::table('customers')->where('id',$id)->delete();
+            @unlink($photo);
         }
+        DB::table('customers')->where('id',$id)->delete();
+        \App\Support\RecordsTombstone::for('customers', $id);
     }
 }

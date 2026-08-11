@@ -21,7 +21,7 @@
         <router-link to="/supplier">Suppliers</router-link>
         <router-link to="/expense">Expenses</router-link>
         <router-link to="/log">Audit trail</router-link>
-        <router-link to="/users">Users</router-link>
+        <router-link v-if="isAdmin" to="/users">Users</router-link>
         <router-link to="/logout">Logout</router-link>
       </aside>
 
@@ -31,7 +31,13 @@
             <strong>{{ userName || 'Staff' }}</strong>
             <div class="kycc-sync">{{ syncLabel }}</div>
           </div>
-          <button class="kycc-btn" type="button" @click="syncNow" :disabled="syncing">
+          <button
+            v-if="isAdmin"
+            class="kycc-btn"
+            type="button"
+            @click="syncNow"
+            :disabled="syncing"
+          >
             {{ syncing ? 'Syncing…' : 'Sync now' }}
           </button>
         </header>
@@ -44,6 +50,9 @@
 </template>
 
 <script>
+import { mapState } from 'pinia';
+import { useAuthStore } from './store/auth';
+
 export default {
   name: 'AppShell',
   data() {
@@ -54,12 +63,13 @@ export default {
     };
   },
   computed: {
+    ...mapState(useAuthStore, ['name', 'isAdmin']),
     isAuthPage() {
       const p = this.$route.path;
       return p === '/' || p === '/register' || p === '/forget';
     },
     userName() {
-      return localStorage.getItem('user');
+      return this.name || localStorage.getItem('user');
     },
     syncLabel() {
       if (this.syncError) return 'Cloud sync: last run had errors';
@@ -68,7 +78,7 @@ export default {
     },
   },
   watch: {
-    '$route.path'(path) {
+    '$route.path'() {
       if (!this.isAuthPage) this.loadSyncStatus();
     },
   },
@@ -86,6 +96,7 @@ export default {
       }
     },
     async syncNow() {
+      if (!this.isAdmin) return;
       this.syncing = true;
       try {
         await window.axios.post('/api/sync/now');

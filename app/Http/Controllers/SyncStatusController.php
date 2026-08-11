@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SyncStatusController extends Controller
@@ -24,6 +25,16 @@ class SyncStatusController extends Controller
 
     public function syncNow(Request $request)
     {
+        $key = 'sync_now_'.auth()->id();
+        if (Cache::has($key)) {
+            return response()->json([
+                'ok' => false,
+                'error' => 'Sync was just triggered. Wait 60 seconds before retrying.',
+            ], 429);
+        }
+
+        Cache::put($key, true, 60);
+
         $exit = Artisan::call('sync:supabase', ['--force' => true]);
 
         return response()->json([

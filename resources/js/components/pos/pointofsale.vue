@@ -9,145 +9,37 @@
         </ol>
 
         <div class="row mb-4 noPrint">
-            <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
-            <div class="col-lg-6 shadow">
-                <div class="card-header flex bg-light">
-                    <!-- <i class="fas fa-chart-area"></i> -->
-                    <b>Invoice #: {{ getRandomId }}</b>
-                </div>
+            <PosCart
+                :cards="cards"
+                :qty="qty"
+                :subtotal="subtotal"
+                :invoice-num="getRandomId"
+                @increment="increment"
+                @decrement="decrement"
+                @remove="removeItem"
+            >
+                <template #checkout>
+                    <PosCheckout
+                        :customers="customers"
+                        :customer-id="customer_id"
+                        :pay="pay"
+                        :subtotal="subtotal"
+                        :change="displayChange"
+                        :cards-length="cards.length"
+                        @place-order="orderdone"
+                        @update:customer-id="customer_id = $event"
+                        @update:pay="onPayUpdate"
+                    />
+                </template>
+            </PosCart>
 
-                <div class="card-body p-0 m-0">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="text-align:left;">Item</th>
-                                <th scope="col">Qty</th>
-                                <!-- <th scope="col">Serials</th> -->
-                                <th scope="col">Unit</th>
-                                <th scope="col">Sub-Total</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody> <!------Expense_Insert_Table(Top_Left)--------->
-                            <tr v-for="card in cards"> <!-------pos_table---------3----->
-                                <th style="text-align:left;">{{ card.pro_name }}</th>
-                                <td style="display: flex;align-items: center;justify-content: space-between;">
-                                    <button @click.prevent="decrement(card)" class="btn btn-sm btn-danger"
-                                        v-if="card.pro_quantity >= 2">-</button>
-                                    <button class="btn btn-sm btn-danger" v-else="" disabled>-</button>
-                                    <!-------------->
-                                    <input type="text" readonly="" style="width: 30px; text-align: center;"
-                                        :value="card.pro_quantity">
-                                    <button @click.prevent="increment(card)" class="btn btn-sm btn-success"
-                                        :disabled="(card.pro_quantity > card.product_quantity)">+</button>
-                                </td>
-                                <!-- <td v-for="i in serials" :key="i"><p v-if="(i.pro_code == card.product_code)">{{i}}</p></td> -->
-                                <td>
-                                    <div style="display:flex; justify-content: space-between">&#8369;<p>{{
-                                    (Number(card.product_price).toLocaleString() || 0)
-                                    }}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="display:flex; justify-content: space-between">
-                                        &#8369;&nbsp;<p>{{ (Number(card.sub_total).toLocaleString() || 0) }}</p>
-                                    </div>
-                                </td>
-                                <td><a @click="removeItem(card)" class="btn btn-sm btn-outline-danger text-danger">x</a>
-                                </td>
-                            </tr>
+            <PosSerials
+                :serial-numbers="serialNumbersForItemQnty"
+                :computed-serials="cardsx"
+                @submit="printNa"
+                @close="showNow = false"
+            />
 
-                        </tbody>
-                    </table>
-                    <hr>
-                </div>
-                <div class="card-footer"> <!-----Expense_Insert_Table(Middle_Left)------->
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Total Quantity:
-                            <strong>{{ qty }}</strong>
-                        </li>
-                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Sub Total:
-                            <strong> &#8369; {{ subtotal.toFixed(2) }} </strong>
-                        </li> -->
-                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Vat:
-                            <strong> {{ vats.vat }} % </strong>
-                        </li> -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Total Due:
-                            <!-- <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong> -->
-                            <strong> &#8369; {{ (Number(subtotal).toLocaleString() || 0) }} </strong>
-
-                        </li>
-                    </ul>
-                    <br> <!-----Expense_Insert_Table(Bottom_Left)------>
-                    <form @submit.prevent="orderdone"> <!--------------2----------------->
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label>Customer Name</label>
-                                <div class="input-group ">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-secondary text-white" data-toggle="modal"
-                                            data-target="#exampleModal" id="add_new" type="button"> + </button>
-                                    </div>
-                                    <select class="form-control" v-model="customer_id" required>
-                                        <option :value="customer.id" v-for="customer in customers">{{ customer.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <!-- <label>Pay By</label>
-                                <select class="form-control" v-model="payby">
-                                    <option value="HandCash">Hand Cash</option>
-                                    <option value="Cheaque">Cheaque</option>
-                                    <option value="GiftCard">Gift Card</option>
-                                </select> -->
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- <label>Due</label>                              -->
-                                <!-- <input type="text" class="form-control" required v-model="due"> -->
-                                <!-- <input type="text" class="form-control mb-2" required :value="subtotal.toFixed(2)"> -->
-                                <!-- :value="((subtotal*vats.vat /100 +subtotal) - pay).toFixed(2)" -->
-                                <label>Cash Recieved</label>
-                                <input type="text" class="form-control mb-2" required v-model="pay">
-                                <div v-if="(pay > subtotal)">
-                                    <label>Change</label>
-                                    <input type="text" class="form-control mb-2" required :value="sukli(pay, subtotal)"
-                                        disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-success mb-4"
-                            v-if="cards.length > 0 && pay >= subtotal">Place Order</button>
-                        <!-- <a class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#serialnums"
-                            id="add_new"> Submit2</a> -->
-                    </form>
-                </div>
-            </div>
-
-            <!------------------ serial number modal------------------2-------->
-            <div class="modal fade" id="serialnums" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Provide the serial numbers for the ordered
-                                items</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal" @click="showNow=false" >
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <serials :serials="serialNumbersForItemQnty" :computedSerials="cardsx"
-                                @my-event="printNa" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!------------end serial number modal------------------------->
             <!------------------customer add modal------------------2-------->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
@@ -440,12 +332,18 @@
 
 <script>
 import Cookies from 'js-cookie';
-import serials from './serials.vue'
 import html2canvas from 'html2canvas';
+import PosCart from './PosCart.vue';
+import PosCheckout from './PosCheckout.vue';
+import PosSerials from './PosSerials.vue';
+import PosCatalog from './PosCatalog.vue';
 
 export default {
     components: {
-        serials
+        PosCart,
+        PosCheckout,
+        PosSerials,
+        PosCatalog,
     },
     mounted() {
         if (!User.loggedIn()) {
@@ -597,9 +495,16 @@ export default {
         },
         nameIs() {
             return this.form.name;
-        }
+        },
+        displayChange() {
+            return Number(this.pay) - Number(this.subtotal);
+        },
     },
     methods: {
+        onPayUpdate(value) {
+            this.pay = value;
+            this.change = this.displayChange;
+        },
         returnCategory(id) {
             let h = this.products.filter((x) => x.id == id);
             return h[0].category_id;
@@ -686,10 +591,14 @@ export default {
                     icon: "warning",
                 })
             } else {
-                axios.get('/api/addTocart/' + card.id)
+                axios.post('/api/cart/add/' + card.id)
                     .then(() => {
                         Reload.$emit('AfterAdd');
                         Notification.cart_success()
+                    })
+                    .catch((error) => {
+                        const msg = error.response?.data?.error || 'Could not add to cart';
+                        Swal.fire({ title: 'Oops!', text: msg, icon: 'warning' });
                     })
             }
         },
@@ -706,7 +615,7 @@ export default {
                 }
             }
 
-            axios.get('/api/remove/cart/' + card.id)
+            axios.post('/api/cart/remove/' + card.id)
                 .then(() => {
                     Reload.$emit('AfterAdd');
                     Notification.success()
@@ -725,10 +634,14 @@ export default {
                         })
                     } else {
                         this.serialNumbersForItemQnty[j].serials.push({ serialnum: '' })
-                        axios.get('/api/increment/' + card.id)
+                        axios.post('/api/cart/increment/' + card.id)
                             .then(() => {
                                 Reload.$emit('AfterAdd');
                                 Notification.success()
+                            })
+                            .catch((error) => {
+                                const msg = error.response?.data?.error || 'Could not update cart';
+                                Swal.fire({ title: 'Oops!', text: msg, icon: 'warning' });
                             })
                     }
                 }
@@ -741,7 +654,7 @@ export default {
                 }
             }
 
-            axios.get('/api/decrement/' + card.id)
+            axios.post('/api/cart/decrement/' + card.id)
                 .then(() => {
                     Reload.$emit('AfterAdd');
                     Notification.success()
@@ -760,6 +673,27 @@ export default {
         orderSave(serialsRecieved) {
             let total = this.subtotal * this.vats.vat / 100 + this.subtotal;
             let due = (total - this.pay).toFixed(2)         //variable.toFixed(2)=take 2 specified decimal number
+            let customer = this.customers.filter((h) => h.id == this.customer_id);
+
+            let serialList = [];
+            for (let j = 0; j < serialsRecieved.length; j++) {
+                for (let x = 0; x < serialsRecieved[j].serials.length; x++) {
+                    serialList.push({
+                        invoiceNumber: this.getRandomId,
+                        customerId: this.customer_id,
+                        customerName: customer[0]?.name,
+                        serialNo: serialsRecieved[j].serials[x].serialnum,
+                        id: serialsRecieved[j].id,
+                        product_id: serialsRecieved[j].pro_id,
+                        product_name: serialsRecieved[j].pro_name,
+                        category_id: serialsRecieved[j].category_id,
+                        order_quantity: serialsRecieved[j].pro_quantity,
+                        product_price: serialsRecieved[j].product_price,
+                        created_by: localStorage.getItem('user_id'),
+                    })
+                }
+            }
+
             var data = {
                     invoiceNum: this.getRandomId,
                     qty: this.qty,
@@ -771,61 +705,25 @@ export default {
                     vat: this.vats.vat,
                     total: total,
                     change: this.change,
-                    invoiceImg: this.ssImg
-                    // cashTendered: this.
-                }       //due:this.due //due_dynamic
+                    invoiceImg: this.ssImg,
+                    serial_numbers: serialList,
+                }
 
             axios.post('/api/orderdone/', data)
-                .then((res) => {
+                .then(() => {
                     Notification.success()
-                    // this.$router.push({ name: 'home' })
-                    // console.log('res', res);
+                    this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;
+                    return axios.post('/api/activitylog', this.form3)
                 })
-
-            let customer = this.customers.filter((h) => h.id == this.customer_id);
-    
-            let serialList = [];
-            for (let j = 0; j < serialsRecieved.length; j++) {
-                for (let x = 0; x < serialsRecieved[j].serials.length; x++) {
-                    serialList.push({
-                        invoiceNumber: this.getRandomId,
-                        customerId: this.customer_id,
-                        customerName: customer[0].name,
-                        serialNo: serialsRecieved[j].serials[x].serialnum,
-                        id: serialsRecieved[j].id,
-                        product_id: serialsRecieved[j].pro_id,
-                        product_name: serialsRecieved[j].pro_name,
-                        category_id: serialsRecieved[j].category_id,
-                        order_quantity: serialsRecieved[j].pro_quantity,
-                        product_price: serialsRecieved[j].product_price,
-                        created_by: Cookies.get('userNow'),
-                    })
-                }
-            }
-            
-            for (let l = 0; l < serialList.length; l++) {
-                axios.post('/api/serials', serialList[l])
-                    .then(() => {
-                        axios.get('/api/productSerials/').then((data) => {
-                            let g = data.data.filter(i => i.serial_number == serialList[l].serialNo)
-                            axios.patch('/api/productSerials/'+ g[0].id, {
-                            status:'sold'
-                            // sold_date: moment(new Date).format("MMM Do YY")
-                                }).then((ress) => {
-                                    console.log(ress);
-                                })
-                        })
-                        
-                    })
-            }
-
-            this.form3.activity = `Successful purchase transaction, invoice number ${this.getRandomId}`;//4
-            axios.post('/api/activitylog', this.form3)  //5
-                .then((r) => {
+                .then(() => {
                     this.showNow = true;
                     this.print();
                 })
-                .catch(error => this.errors = error.response.data.errors)
+                .catch(error => {
+                    this.errors = error.response?.data?.errors || {}
+                    const msg = error.response?.data?.error || 'Checkout failed'
+                    Swal.fire({ title: 'Checkout failed', text: msg, icon: 'error' })
+                })
         },
         //---End_cart_methods----
 

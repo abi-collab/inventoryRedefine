@@ -77,7 +77,8 @@
                 <span class="badge badge-warning badge-pill" v-if="item.status === 'Under Repair' "><p style="padding:4px;margin: auto 0;font-size: 14px;"> {{item.status}} </p></span>
                 <span class="badge badge-info badge-pill" v-if="item.status === 'Fixed'" ><p style="padding:4px;margin: auto 0;font-size: 14px;"> {{item.status}} </p></span>
                 <span class="badge badge-success badge-pill" v-if="item.status === 'For Release' "><p style="padding:4px;margin: auto 0;font-size: 14px;"> {{item.status}} </p></span>
-                <button class="btn btn-secondary text-white btn-sm" data-toggle="modal" data-target="#updateStatus" type="button" @click="getStat(item)">update</button>
+                <span class="badge badge-dark badge-pill" v-if="item.status === 'completed' "><p style="padding:4px;margin: auto 0;font-size: 14px;"> {{item.status}} </p></span>
+                <button class="btn btn-secondary text-white btn-sm" data-toggle="modal" data-target="#updateStatus" type="button" @click="getStat(item)" :disabled="item.status === 'completed'">update</button>
               </td>
                 <!------------------ update status modal------------------2-------->
                 <div class="modal fade center" id="updateStatus" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -95,6 +96,7 @@
                                   <option value="Under Repair">Under Repair</option>
                                   <option value="Fixed">Fixed</option>
                                   <option value="For Release">For Release</option>
+                                  <option value="completed">completed (restock)</option>
                                 </select>
                             </div>
                             <button class="btn btn-success text-white btn-lg" @click="confirm2(item)">Update Status</button>

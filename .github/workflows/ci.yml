@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, Revamp]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_sqlite, sqlite3, mbstring, openssl, fileinfo
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php -r "file_put_contents('.env', preg_replace('/^JWT_SECRET=.*/m', 'JWT_SECRET=ci-testing-jwt-secret-key-32chars', file_get_contents('.env')));"
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm and build
+        run: |
+          npm ci
+          npm run build

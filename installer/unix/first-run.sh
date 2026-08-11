@@ -29,9 +29,11 @@ file_put_contents(".env",$env);
 
 php artisan migrate --force
 php artisan db:seed --force || true
+php artisan backup:sqlite --keep=14 || true
 
 if [[ -z "${JWT_SECRET:-}" ]] && ! grep -q '^JWT_SECRET=.\+' .env; then
   php artisan jwt:secret --force || true
 fi
 
 echo "Bootstrap complete. Start with: installer/unix/start.sh"
+echo "Daily SQLite backup runs via scheduler at 01:30 (backup:sqlite)."

@@ -23,6 +23,13 @@ php artisan serve
 
 Open http://127.0.0.1:8000
 
-## Seeded users
+## Seeded users (dev-only)
 
-See `database/seeders/UsersTableSeeder.php` (adminRey / 123456).
+See `database/seeders/UsersTableSeeder.php`:
+
+| Username | Password  | Role    |
+|----------|-----------|---------|
+| rey      | admin123  | Admin   |
+| ben      | user1234  | Standard|
+
+Change these immediately on any shop install. Public signup is disabled; admins create users in-app.

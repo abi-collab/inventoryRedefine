@@ -92,8 +92,12 @@
  </div>
 </template>
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import Cookies from 'js-cookie';
+
+dayjs.extend(advancedFormat);
+
   export default {
     mounted(){
           if (!User.loggedIn()) {
@@ -136,7 +140,7 @@ import Cookies from 'js-cookie';
        },
        filterSearchWithDate() {
             let filtered = this.filtersearch2.filter((x) => {
-                if (moment(new Date(x?.created_at)).format('M/D/YYYY') >= moment(new Date(this.startDate)).format('M/D/YYYY') && moment(new Date(x?.created_at)).format('M/D/YYYY') <= moment(new Date(this.endDate)).format('M/D/YYYY')) {
+                if (dayjs(new Date(x?.created_at)).format('M/D/YYYY') >= dayjs(new Date(this.startDate)).format('M/D/YYYY') && dayjs(new Date(x?.created_at)).format('M/D/YYYY') <= dayjs(new Date(this.endDate)).format('M/D/YYYY')) {
                     return x;
                 }
             });
@@ -165,8 +169,8 @@ import Cookies from 'js-cookie';
           return a[0]?.name;
         },
         getDates(i) {
-            this.startDate = moment(new Date(i.startDate)).format('M/D/YYYY');
-            this.endDate = moment(new Date(i.endDate)).format('M/D/YYYY');
+            this.startDate = dayjs(new Date(i.startDate)).format('M/D/YYYY');
+            this.endDate = dayjs(new Date(i.endDate)).format('M/D/YYYY');
         },
         emitDateRange() {
             if (this.rangeStart && this.rangeEnd) {
@@ -180,7 +184,7 @@ import Cookies from 'js-cookie';
           this.endDate = '';
         },
         returnStrtingDate(petsa) {
-          return moment(petsa).format("MMM Do YY");
+          return dayjs(petsa).format("MMM Do YY");
         }
       }
   }

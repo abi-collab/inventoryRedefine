@@ -28,7 +28,8 @@ class ExpenseController extends Controller
         $expense = new Expense;
         $expense->details = $request->details;
         $expense->amount = $request->amount;
-        $expense->expense_date = date('d/m/Y');
+        $expense->expense_date = date('m/d/Y');
+        $expense->spent_on = now()->toDateString();
         $expense->save();
     }
 
@@ -57,6 +58,7 @@ class ExpenseController extends Controller
     public function destroy($id)
     {
         DB::table('expenses')->where('id',$id)->delete();
+        \App\Support\RecordsTombstone::for('expenses', $id);
     }
 
 }

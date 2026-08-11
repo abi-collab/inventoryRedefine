@@ -31,7 +31,7 @@ class AuthController extends Controller
     {
         $validateData = $request->validate([
             'username' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'min:4'],
+            'password' => ['required', 'min:8'],
         ]);
 
         $credentials = request(['username', 'password']);
@@ -77,26 +77,11 @@ class AuthController extends Controller
     }
 
 
-    public function signup(Request $request)    //---------------------------
+    public function signup(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:4', 'confirmed'],
-            'user_role' => ['required', 'string', 'max:255'],
-        ]);
-
-        $data = array();
-        $data['name'] = $request->username;
-        $data['username'] = $request->username;
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
-        $data['user_role'] = $request->user_role;
-
-        DB::table('users')->insert($data);
-
-        return $this->login($request);      //------------------------
+        return response()->json([
+            'error' => 'Public signup is disabled. Ask an admin to create your account.',
+        ], 403);
     }
 
     /**

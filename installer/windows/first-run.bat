@@ -12,8 +12,10 @@ php -r "$e=file_get_contents('.env');$e=preg_replace('/^DB_CONNECTION=.*/m','DB_
 php artisan migrate --force
 php artisan db:seed --force
 php artisan jwt:secret --force
+php artisan backup:sqlite --keep=14
 
 echo.
 echo First-run complete. Use start.bat to launch the app.
 echo Register the scheduler with register-scheduler.bat (as Administrator if needed).
+echo Daily SQLite backup runs via scheduler at 01:30.
 pause

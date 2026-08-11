@@ -1,55 +1,38 @@
-<div align="center">
-  
-# Inventory(POS) using Vue + Laravel
+# KYCC Inventory (POS)
 
-</div>
-
-<p align="center"><img src="https://github.com/Shahed-Chy-Suzan/Web_NOTE_MY_txt_file/blob/903fe32ea3eafe35a74af9179eb86b4953a827c7/Others/Z/Sample%20Pictures/vue%2Blaravel2.png"></p>
+Local-first Point of Sale for KYCC — **Laravel 11 + Vue 3 + Vite**, SQLite on the shop PC, optional daily mirror to Supabase Postgres.
 
 ## Features
 
-- JWT Auth
-- RESTful API
-- Single Page Application(SPA)
-- POS
-- Category
-- Employee
-- Supplier
-- Products setup
-- Image upload
-- Customer
-- Salary
-- Expense
-- Cart
-- Order
-- Order details
-- Sell
-- Income
-- Due
-- Report
-- Errors validation
-- Stock management
-- Search
-- Settings
+- JWT auth with admin / standard roles
+- Multi-cashier carts (isolated per user)
+- Products, stock, serial numbers, customers, suppliers
+- POS checkout with atomic stock updates
+- Orders, returns (completed returns restock), expenses, audit log
+- Optional Supabase sync (`sync:supabase`) with delete tombstones
+- Daily SQLite backup (`backup:sqlite`)
 
-## Database Schema
+## Quick start
 
-- Visit this - 
+See **[PROJECT_SETUP.md](PROJECT_SETUP.md)** and **[docs/INSTALL.md](docs/INSTALL.md)**.
 
-## Packages
+```bash
+cp .env.example .env
+touch database/database.sqlite
+composer install
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate --force
+php artisan db:seed --force
+npm install
+npm run build   # or npm run dev
+php artisan serve
+```
 
-- Image Intervention : http://image.intervention.io/
-- Alert (sweetalert2) : https://sweetalert2.github.io/
-- Notification (Noti) : https://ned.im/noty/#/
-- etc
+Open http://127.0.0.1:8000
 
-## After clone or download this project, please follow the instructions
+Dev-only seeded users are documented in `PROJECT_SETUP.md` — change them on any shop install.
 
-- Clone the repository with **_angit clone https://github.com/Shahed-Chy-Suzan/Inventory.git_**
-- Run **_cd Inventory_**
-- Copy **.env.example** file to **.env** and edit **Database** credentials there
-- Run **_composer install_**
-- Run **_php artisan key:generate_**
-- Run **_php artisan migrate_**
-- Run **_npm install_**
-- Run **_php artisan serve_**
+## Verify
+
+Use **[docs/SMOKE_CHECKLIST.md](docs/SMOKE_CHECKLIST.md)** after install or upgrades.

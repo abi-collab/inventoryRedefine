@@ -115,10 +115,9 @@ class EmployeeController extends Controller
         $employee = DB::table('employees')->where('id',$id)->first();
         $photo = $employee->photo;
         if ($photo) {
-            unlink($photo);
-            DB::table('employees')->where('id',$id)->delete();
-        }else{
-            DB::table('employees')->where('id',$id)->delete();
+            @unlink($photo);
         }
+        DB::table('employees')->where('id',$id)->delete();
+        \App\Support\RecordsTombstone::for('employees', $id);
     }
 }

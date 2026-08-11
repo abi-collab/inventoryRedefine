@@ -165,11 +165,10 @@ class ProductController extends Controller
         $product=DB::table('products')->where('id',$id)->first();
         $image=$product->image;
         if ($image) {
-            unlink($image);
-            DB::table('products')->where('id',$id)->delete();
-        }else{
-            DB::table('products')->where('id',$id)->delete();
+            @unlink($image);
         }
+        DB::table('products')->where('id',$id)->delete();
+        \App\Support\RecordsTombstone::for('products', $id);
     }
 
     public function StockUpdate(Request $request, $id)
@@ -180,6 +179,7 @@ class ProductController extends Controller
 
         DB::table('products')->where('id', $id)->update([
             'product_quantity' => $request->product_quantity,
+            'updated_at' => now(),
         ]);
 
         return response()->json(['message' => 'stock updated']);

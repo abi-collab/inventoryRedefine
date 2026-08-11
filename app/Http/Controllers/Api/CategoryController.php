@@ -58,7 +58,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         DB::table('categories')->where('id',$id)->delete();
-        // $category=Category::findorfail($id);
-        // $category->delete();
+        \App\Support\RecordsTombstone::for('categories', $id);
     }
 }
