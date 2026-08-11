@@ -24,8 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // OS Task Scheduler / cron should run `php artisan schedule:run` every minute.
+        $schedule->command('sync:supabase')
+            ->dailyAt('02:00')
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/supabase-sync.log'));
     }
 
     /**

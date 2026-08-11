@@ -173,18 +173,12 @@
 
 
 <script>
-import ApexCharts from 'apexcharts'
-import Cookies from 'js-cookie'; 
+import Cookies from 'js-cookie';
     export default {
-        components: {
-            ApexCharts
-        },
         created(){
             if (!User.loggedIn()) {
                 this.$router.push({name : '/'})
-                //   this.$router.push('/dashboard')
             }
-            // window.location.reload();
             axios.get('/api/serials')
                 .then(({data}) => (this.soldItems = data))
                 .catch()
@@ -194,19 +188,9 @@ import Cookies from 'js-cookie';
                 .catch()
         },
         mounted(){
-            if(!Cookies.get('userId')) {
-                // this.$router.push({name : '/logout'})
+            if(!Cookies.get('userId') && !localStorage.getItem('token')) {
                 this.$router.push('/logout');
-    
-            }
-            if (localStorage.getItem('reloaded')) {
-                // The page was just reloaded. Clear the value from local storage
-                // so that it will reload the next time this page is visited.
-                localStorage.removeItem('reloaded');
-            } else {
-                // Set a flag so that we know not to reload the page twice.
-                localStorage.setItem('reloaded', '1');
-                window.location.reload();
+                return;
             }
 
             this.TodaySell();

@@ -21,8 +21,10 @@
                   <input type="text" v-model="searchTerm2" class="form-control d-inline" style="width:500px;" placeholder="Search Invoice Number or Serial Number">
                 </div>
                 <div style="display:flex; justify-content: end">
-                    <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
-                        start-place-holders="12/01/2000" end-place-holders="04/01/2030" @get-dates="getDates" />
+                    <div style="display:flex; gap:8px; align-items:center;">
+                      <input type="date" class="form-control" v-model="rangeStart" @change="emitDateRange">
+                      <input type="date" class="form-control" v-model="rangeEnd" @change="emitDateRange">
+                    </div>
                 </div> 
                 <div>
                   <button class="btn btn-outline-secondary" type="button" @click="clear()">
@@ -91,13 +93,8 @@
 </template>
 <script>
 import moment from 'moment'
-import VueDaterangePicker from 'vue-daterange-picker';
 import Cookies from 'js-cookie';
   export default {
-    components: {
-        VueDaterangePicker,
-  
-    },
     mounted(){
           if (!User.loggedIn()) {
              this.$router.push({ name:'/' })
@@ -105,11 +102,11 @@ import Cookies from 'js-cookie';
       },
       created(){
           axios.get('/api/serials')
-          .then(({data}) => (this.soldItems = data, console.log(data)))
+          .then(({data}) => (this.soldItems = data))
           .catch()
 
           axios.get('/api/users')
-          .then(({data}) => (this.users = data, console.log('users', data)))
+          .then(({data}) => (this.users = data))
           .catch()
       },
       data(){
@@ -122,9 +119,10 @@ import Cookies from 'js-cookie';
           userNow: Cookies.get('userNow'),
           startDate:'',
           endDate:'',
+          rangeStart:'',
+          rangeEnd:'',
           labels: ['January', 'February', 'March'],
           datasets: [{ data: [40, 20, 12] }]
-        
         }
       },
       options: {
@@ -140,16 +138,12 @@ import Cookies from 'js-cookie';
             let filtered = this.filtersearch2.filter((x) => {
                 if (moment(new Date(x?.created_at)).format('M/D/YYYY') >= moment(new Date(this.startDate)).format('M/D/YYYY') && moment(new Date(x?.created_at)).format('M/D/YYYY') <= moment(new Date(this.endDate)).format('M/D/YYYY')) {
                     return x;
-                } else {
-                  console.log('walang returnnnnnn');
                 }
             });
 
             if (this.startDate && this.endDate) {
-              console.log(true)
-                return filtered;xa
+                return filtered;
             } else {
-              console.log(false)
                 return this.filtersearch2;
             }
         },
@@ -174,8 +168,16 @@ import Cookies from 'js-cookie';
             this.startDate = moment(new Date(i.startDate)).format('M/D/YYYY');
             this.endDate = moment(new Date(i.endDate)).format('M/D/YYYY');
         },
+        emitDateRange() {
+            if (this.rangeStart && this.rangeEnd) {
+                this.getDates({ startDate: this.rangeStart, endDate: this.rangeEnd });
+            }
+        },
         clear() {
-          location.reload();
+          this.rangeStart = '';
+          this.rangeEnd = '';
+          this.startDate = '';
+          this.endDate = '';
         },
         returnStrtingDate(petsa) {
           return moment(petsa).format("MMM Do YY");

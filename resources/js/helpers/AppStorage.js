@@ -1,31 +1,29 @@
-class AppStorage{
-
-    storeToken(token){      //--To store the 'token' in browser's "Application > Local Storage"
-        localStorage.setItem('token',token);
+class AppStorage {
+    storeToken(token) {
+        localStorage.setItem('token', token);
     }
 
-    storeUser(user){       //----To store user's all info-----
-        localStorage.setItem('user',user);
+    storeUser(user) {
+        localStorage.setItem('user', user);
     }
 
-    store(token, user){ 
-        this.storeToken(token)
-        this.storeUser(user)
+    store(token, user) {
+        this.storeToken(token);
+        this.storeUser(user);
     }
 
-    clear(){              //-------for logout-----
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
+    clear() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
     }
 
-    getToken(){
-        localStorage.getItem('token');
+    getToken() {
+        return localStorage.getItem('token');
     }
 
-    getUser(){
-        localStorage.getItem('user');
+    getUser() {
+        return localStorage.getItem('user');
     }
-
 }
 
-export default AppStorage = new AppStorage();
+export default new AppStorage();

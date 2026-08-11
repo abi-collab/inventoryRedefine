@@ -1,59 +1,59 @@
+import Noty from 'noty';
 
-class Notification{
-
-    success(){
-        new Noty({
-            type:'success',
-            layout:'topRight',
-            text: 'Successfully Done !',
-            timeout:1000,
-        }).show();
-    }
-
-    cart_success(){
+class Notification {
+    success() {
         new Noty({
             type: 'success',
             layout: 'topRight',
-            text: 'Successfully Added !',
+            text: 'Successfully Done',
+            timeout: 2000,
+        }).show();
+    }
+
+    cart_success() {
+        new Noty({
+            type: 'success',
+            layout: 'topRight',
+            text: 'Successfully Added',
             timeout: 1000,
         }).show();
     }
 
-    alert(){
+    image_validation() {
         new Noty({
-            type:'alert',
-            layout:'topRight',
-            text: 'Are you sure ?',
-            timeout:1000,
+            type: 'error',
+            layout: 'topRight',
+            text: 'Upload image less than 1MB',
+            timeout: 2000,
         }).show();
     }
 
-    error(){
+    alert(text = 'Something went wrong') {
         new Noty({
-            type:'error',
-            layout:'topRight',
-            text: 'Something went wrong !',
-            timeout:1000,
+            type: 'alert',
+            layout: 'topRight',
+            text,
+            timeout: 2000,
         }).show();
     }
 
-    warning(){
+    error(text = 'Error') {
         new Noty({
-            type:'warning',
-            layout:'topRight',
-            text: 'Oops! Wrong',
-            timeout:1000,
+            type: 'error',
+            layout: 'topRight',
+            text,
+            timeout: 2000,
         }).show();
     }
 
-    image_validation(){
+    warning(text = 'Warning') {
         new Noty({
-            type:'error',
-            layout:'topRight',
-            text:'Image should be less than 1MB',
-            timeout:1000,
+            type: 'warning',
+            layout: 'topRight',
+            text,
+            timeout: 2000,
         }).show();
     }
 }
 
-export default Notification = new Notification()
+export default new Notification();

@@ -171,4 +171,17 @@ class ProductController extends Controller
             DB::table('products')->where('id',$id)->delete();
         }
     }
+
+    public function StockUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'product_quantity' => 'required',
+        ]);
+
+        DB::table('products')->where('id', $id)->update([
+            'product_quantity' => $request->product_quantity,
+        ]);
+
+        return response()->json(['message' => 'stock updated']);
+    }
 }

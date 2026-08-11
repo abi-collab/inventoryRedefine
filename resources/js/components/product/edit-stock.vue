@@ -58,8 +58,10 @@
                     <div class="col-lg-4">
                         <div>
                             <h6>Select Supplier</h6>
-                        <model-select :options="selectSuppliers" v-model="item" placeholder="select item" aria-required="true" required>
-                        </model-select>
+                        <select class="form-control" v-model="item" required>
+                            <option disabled value="">Select supplier</option>
+                            <option v-for="opt in selectSuppliers" :key="opt.value" :value="opt">{{ opt.text }}</option>
+                        </select>
                         </div>
                         <h6>Buying Price</h6>
                         <div>
@@ -78,12 +80,8 @@
 
 
 <script>
-import { ModelSelect } from 'vue-search-select'
 import Cookies from 'js-cookie'; //1
     export default {
-        components: {
-        ModelSelect
-    },
         mounted(){
             if (!User.loggedIn()) {
                 this.$router.push({ name:'/' })

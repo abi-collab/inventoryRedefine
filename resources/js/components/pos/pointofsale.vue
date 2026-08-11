@@ -440,7 +440,6 @@
 
 <script>
 import Cookies from 'js-cookie';
-import $ from 'jquery';
 import serials from './serials.vue'
 import html2canvas from 'html2canvas';
 
@@ -755,7 +754,7 @@ export default {
         },
         orderdone() {
             this.showNow = true;
-            $('#serialnums').modal('toggle');
+            document.getElementById('serialnums')?.classList.toggle('show');
         },
 
         orderSave(serialsRecieved) {

@@ -25,8 +25,10 @@
                                 placeholder="Enter Invoice Number ">
                         </div>
                         <div class="col" style="display:flex; justify-content: end">
-                            <vue-daterange-picker double start-date="12/01/2022" end-date="12/01/2023"
-                                start-place-holders="12/01/2000" end-place-holders="04/01/2030" @get-dates="getDates" />
+                            <div style="display:flex; gap:8px; align-items:center;">
+                              <input type="date" class="form-control" v-model="rangeStart" @change="emitDateRange">
+                              <input type="date" class="form-control" v-model="rangeEnd" @change="emitDateRange">
+                            </div>
                         </div>
                         <div class="col">
                             <div  style="display: flex;">
@@ -133,15 +135,11 @@
 
 <script>
 // import $ from 'jquery'; 
-import XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
 import moment from 'moment'
-import VueDaterangePicker from 'vue-daterange-picker';
 
 export default {
-    components: {
-        VueDaterangePicker
-    },
     created() {
         let dateNow = new Date();
         let month = dateNow.getMonth() + 1;
@@ -170,6 +168,8 @@ export default {
             datesss: {},
             startDate: '',
             endDate: '',
+            rangeStart: '',
+            rangeEnd: '',
             excelData:[]
         }
     },
@@ -242,6 +242,11 @@ export default {
             this.startDate = i.startDate;
             this.endDate = i.endDate;
 
+        },
+        emitDateRange() {
+            if (this.rangeStart && this.rangeEnd) {
+                this.getDates({ startDate: this.rangeStart, endDate: this.rangeEnd });
+            }
         },
         searchDate() {
             var data = { date: this.date }

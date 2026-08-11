@@ -1,0 +1,17 @@
+# WinSW service template for KYCC Inventory
+# 1. Download WinSW.exe, rename to kycc-inventory-service.exe next to this XML
+# 2. Edit <executable> / paths for your install directory
+# 3. Run: kycc-inventory-service.exe install && kycc-inventory-service.exe start
+#
+# Docs: https://github.com/winsw/winsw
+
+<service>
+  <id>kycc-inventory</id>
+  <name>KYCC Inventory POS</name>
+  <description>Local Laravel POS API (SQLite). Cloud sync via Task Scheduler + artisan schedule:run.</description>
+  <executable>php</executable>
+  <arguments>artisan serve --host=127.0.0.1 --port=8000</arguments>
+  <workingdirectory>%BASE%</workingdirectory>
+  <log mode="roll"></log>
+  <onfailure action="restart" delay="10 sec"/>
+</service>

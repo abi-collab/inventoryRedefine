@@ -24,8 +24,14 @@
                       @keypress.13.prevent
                       required
                   > -->
-                  <model-select :options="serialList"  v-model="serials[sIndex].serials[iIndex].serialnum" placeholder="select serial"  @keypress.13.prevent
-                      required></model-select>
+                  <select class="form-control" style="margin: 2px 0px"
+                      v-model="serials[sIndex].serials[iIndex].serialnum"
+                      required>
+                    <option disabled value="">Select serial</option>
+                    <option v-for="opt in serialList" :key="opt.value || opt" :value="opt.value || opt">
+                      {{ opt.text || opt }}
+                    </option>
+                  </select>
               </span>
             </td>
         </tr>
@@ -38,11 +44,7 @@
   </div>
 </template>
 <script>
-import { ModelSelect } from 'vue-search-select'
 export default {
-  components: {
-        ModelSelect
-    },
   props:{
     serials: Array
   },

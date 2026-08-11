@@ -1,118 +1,43 @@
-
-//--------Authenticaton_Components----------
-let Login = require('./components/auth/login.vue').default;
-let Register = require('./components/auth/register.vue').default;
-let forgetPass = require('./components/auth/forget.vue').default;
-let logout = require('./components/auth/logout.vue').default;
-//--or--import Register from './components/auth/register.vue' //--or--
-//-------Home/Dashboard_Components----------
-let home = require('./components/home.vue').default;
-//--------Employee_Components---------------
-let storeEmployee = require('./components/employee/create.vue').default;
-let employee = require('./components/employee/index.vue').default;
-let editEmployee = require('./components/employee/edit.vue').default;
-//--------Supplier_Components---------------
-let storeSupplier = require('./components/supplier/create.vue').default;
-let Supplier = require('./components/supplier/index.vue').default;
-let editSupplier = require('./components/supplier/edit.vue').default;
-//-------Category_Components---------------
-let storecategory = require('./components/category/create.vue').default;
-let category = require('./components/category/index.vue').default;
-let editcategory = require('./components/category/edit.vue').default;
-//-------Product_Components---------------
-let storeproduct = require('./components/product/create.vue').default;
-let product = require('./components/product/index.vue').default;
-let editproduct = require('./components/product/edit.vue').default;
-//-------Expense_Components---------------
-let storeexpense = require('./components/expense/create.vue').default;
-let expense = require('./components/expense/expense.vue').default;
-let editexpense = require('./components/expense/edit.vue').default;
-//-------Salary_Components----------------
-let salary = require('./components/salary/all_employee.vue').default;
-let paysalary = require('./components/salary/create.vue').default;
-let allsalary = require('./components/salary/index.vue').default;
-let viewsalary = require('./components/salary/view.vue').default;
-let editsalary = require('./components/salary/edit.vue').default;
-//------Stock_Components-----------------
-let editstock = require('./components/product/edit-stock.vue').default;
-let stock = require('./components/product/stock.vue').default;
-//------Customers_Components-----------------
-let storeCustomer = require('./components/customer/create.vue').default;
-let Customer = require('./components/customer/index.vue').default;
-let editCustomer = require('./components/customer/edit.vue').default;
-//------point_of_sale-----------------------
-let pos = require('./components/pos/pointofsale.vue').default;
-//------Orders_Components-----------------------
-let order = require('./components/order/order.vue').default;
-let vieworder = require('./components/order/viewOrder.vue').default;
-let searchorder = require('./components/order/search.vue').default;
-//------Log_Components-----------------------
-let log = require('./components/log/Activity_log.vue').default;
-let solditems = require('./components/order/soldItems.vue').default;
-let returnItems = require('./components/order/returnItems.vue').default;
-//------users-----------------------
-let users = require('./components/users/users.vue').default;
-let editUsers = require('./components/users/edit.vue').default;
-//------serailnumbers-----------------------
-let serialnumbers = require('./components/product/serial-numbers.vue').default;
-let productSerials = require('./components/product/product-serials.vue').default;
-
-
 export const routes = [
-    //-------JWT/auth_routes--------
-    { path: '/', component: Login, name: '/' },   //--amra ekane (name:'blah') ta use korteo pari,Nao pari,Not mendatory
-    { path: '/register', component: Register, name: 'register' },   //--JWT-auth
-    { path: '/forget', component: forgetPass, name: 'forget' },
-    { path: '/logout', component: logout, name: 'logout' },
-    //-------home_route----------
-    { path: '/home', component: home, name: 'home' },       //--home_route
-    //-------Employee_routes-------
-    { path: '/store-employee', component: storeEmployee, name:'store-employee' },
-    { path: '/employee', component: employee, name:'employee' },   //route'r sate 'path' working,'name' not working
-    { path: '/edit-employee/:id', component: editEmployee, name:'edit-employee' },  //-------------------
-    //-------Supplier_routes-----------
-    { path: '/store-supplier', component: storeSupplier, name:'store-supplier' },
-    { path: '/supplier', component: Supplier, name:'supplier' },
-    { path: '/edit-supplier/:id', component: editSupplier, name:'edit-supplier' },
-    //-------Category_routes-----------
-    { path: '/store-category', component: storecategory, name:'store-category' },
-    { path: '/category', component: category, name:'category' },
-    { path: '/edit-category/:id', component: editcategory, name:'edit-category' },
-    //-------Product_routes------------
-    { path: '/store-product', component: storeproduct, name:'store-product' },
-    { path: '/product', component: product, name:'product' },
-    { path: '/edit-product/:id', component: editproduct, name:'edit-product' },
-    //-------Expense_routes-----------
-    { path: '/store-expense', component: storeexpense, name:'store-expense' },
-    { path: '/expense', component: expense, name:'expense' },
-    { path: '/edit-expense/:id', component: editexpense, name:'edit-expense' },
-    //-------Salary_routes------------
-    { path: '/given-salary', component: salary, name:'given-salary' },
-    { path: '/pay-salary/:id', component: paysalary, name:'pay-salary' },
-    { path: '/salary', component: allsalary, name:'salary' },
-    { path: '/view-salary/:id', component: viewsalary, name:'view-salary' },
-    { path: '/edit-salary/:id', component: editsalary, name:'edit-salary' },
-    //-------Stock_routes------------
-    { path: '/stock', component: stock , name:'stock' },
-    { path: '/edit-stock/:id', component: editstock, name:'edit-stock' },
-    //-------Customers---------------
-    { path: '/store-Customer', component: storeCustomer, name:'store-Customer' },
-    { path: '/Customer', component: Customer, name:'Customer' },
-    { path: '/edit-Customer/:id', component: editCustomer, name:'edit-Customer' },
-    //-------point of sale-----------
-    { path: '/pos', component: pos, name:'pos' },
-    //-------Order-----------
-    { path: '/order', component: order, name:'order' },
-    { path: '/view-order/:id', component: vieworder, name:'view-order' },
-    { path: '/searchorder', component: searchorder, name:'searchorder' },
-    //-------Order-----------
-    { path: '/log', component: log, name:'log' },
-    { path: '/sold-items', component: solditems, name:'solditems' },
-    { path: '/return-items', component: returnItems, name:'returnItems' },
-    //-------Users-----------
-    { path: '/users', component: users, name:'users' },
-    { path: '/edit-users/:id', component: editUsers, name:'editUsers' },
-    //-------Serial Numbers-----------
-    { path: '/serial-numbers', component: serialnumbers, name:'serialnumbers' },
-    { path: '/stock/:id', component: productSerials, name:'productSerials' },
-]
+    { path: '/', component: () => import('./components/auth/login.vue'), name: '/' },
+    { path: '/register', component: () => import('./components/auth/register.vue'), name: 'register' },
+    { path: '/forget', component: () => import('./components/auth/forget.vue'), name: 'forget' },
+    { path: '/logout', component: () => import('./components/auth/logout.vue'), name: 'logout' },
+    { path: '/home', component: () => import('./components/home.vue'), name: 'home' },
+    { path: '/store-employee', component: () => import('./components/employee/create.vue'), name: 'store-employee' },
+    { path: '/employee', component: () => import('./components/employee/index.vue'), name: 'employee' },
+    { path: '/edit-employee/:id', component: () => import('./components/employee/edit.vue'), name: 'edit-employee' },
+    { path: '/store-supplier', component: () => import('./components/supplier/create.vue'), name: 'store-supplier' },
+    { path: '/supplier', component: () => import('./components/supplier/index.vue'), name: 'supplier' },
+    { path: '/edit-supplier/:id', component: () => import('./components/supplier/edit.vue'), name: 'edit-supplier' },
+    { path: '/store-category', component: () => import('./components/category/create.vue'), name: 'store-category' },
+    { path: '/category', component: () => import('./components/category/index.vue'), name: 'category' },
+    { path: '/edit-category/:id', component: () => import('./components/category/edit.vue'), name: 'edit-category' },
+    { path: '/store-product', component: () => import('./components/product/create.vue'), name: 'store-product' },
+    { path: '/product', component: () => import('./components/product/index.vue'), name: 'product' },
+    { path: '/edit-product/:id', component: () => import('./components/product/edit.vue'), name: 'edit-product' },
+    { path: '/store-expense', component: () => import('./components/expense/create.vue'), name: 'store-expense' },
+    { path: '/expense', component: () => import('./components/expense/expense.vue'), name: 'expense' },
+    { path: '/edit-expense/:id', component: () => import('./components/expense/edit.vue'), name: 'edit-expense' },
+    { path: '/given-salary', component: () => import('./components/salary/all_employee.vue'), name: 'given-salary' },
+    { path: '/pay-salary/:id', component: () => import('./components/salary/create.vue'), name: 'pay-salary' },
+    { path: '/salary', component: () => import('./components/salary/index.vue'), name: 'salary' },
+    { path: '/view-salary/:id', component: () => import('./components/salary/view.vue'), name: 'view-salary' },
+    { path: '/edit-salary/:id', component: () => import('./components/salary/edit.vue'), name: 'edit-salary' },
+    { path: '/stock', component: () => import('./components/product/stock.vue'), name: 'stock' },
+    { path: '/edit-stock/:id', component: () => import('./components/product/edit-stock.vue'), name: 'edit-stock' },
+    { path: '/store-Customer', component: () => import('./components/customer/create.vue'), name: 'store-Customer' },
+    { path: '/Customer', component: () => import('./components/customer/index.vue'), name: 'Customer' },
+    { path: '/edit-Customer/:id', component: () => import('./components/customer/edit.vue'), name: 'edit-Customer' },
+    { path: '/pos', component: () => import('./components/pos/pointofsale.vue'), name: 'pos' },
+    { path: '/order', component: () => import('./components/order/order.vue'), name: 'order' },
+    { path: '/view-order/:id', component: () => import('./components/order/viewOrder.vue'), name: 'view-order' },
+    { path: '/searchorder', component: () => import('./components/order/search.vue'), name: 'searchorder' },
+    { path: '/log', component: () => import('./components/log/Activity_log.vue'), name: 'log' },
+    { path: '/sold-items', component: () => import('./components/order/soldItems.vue'), name: 'solditems' },
+    { path: '/return-items', component: () => import('./components/order/returnItems.vue'), name: 'returnItems' },
+    { path: '/users', component: () => import('./components/users/users.vue'), name: 'users' },
+    { path: '/edit-users/:id', component: () => import('./components/users/edit.vue'), name: 'editUsers' },
+    { path: '/serial-numbers', component: () => import('./components/product/serial-numbers.vue'), name: 'serialnumbers' },
+    { path: '/stock/:id', component: () => import('./components/product/product-serials.vue'), name: 'productSerials' },
+];
